@@ -119,8 +119,8 @@ P0가 기대는 차량 이벤트는 에뮬레이터에서 아직 확인하지 �
 | 패키지 | `com.example.carlog_hd_frontend` |
 
 ```bash
-git clone https://github.com/Carlog-hd/calog_hd_frontend.git
-cd calog_hd_frontend
+git clone https://github.com/Carlog-hd/carlog_hd_frontend.git
+cd carlog_hd_frontend
 ./gradlew assembleDebug    # Windows: gradlew.bat assembleDebug
 ```
 

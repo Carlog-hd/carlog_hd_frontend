@@ -76,4 +76,8 @@
     <dimen name="cl_text_caption">12sp</dimen>       <!-- .muted -->
     <dimen name="cl_text_badge">11sp</dimen>         <!-- 칭호 칩 -->
     <dimen name="cl_text_small">10.5sp</dimen>       <!-- 통계 라벨, 탭 라벨 -->
+
+    <!-- 줄 높이 (한글/숫자 혼합 시 높이 통일) -->
+    <dimen name="cl_line_height_stat">20sp</dimen>
+    <dimen name="cl_line_height_small">14sp</dimen>
 </resources>

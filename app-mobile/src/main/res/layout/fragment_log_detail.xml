@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  M03 기록 상세 (드라이브 로그): 원본 경로·통계·모먼트, 편집 진입
+  기록 탭의 최근 로그를 누르면 열리는 하위 화면 (fragment_template_sub 기반)
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,ContentDescription,TooManyViews">
+
+    <!-- 상단바 -->
+    <LinearLayout style="@style/Widget.Carlog.TopBar">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.Carlog.IconButton"
+            android:contentDescription="@string/cd_back"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            style="@style/Carlog.Text.TopBarTitle"
+            android:text="@string/log_detail_title" />
+
+        <!-- 제목 가운데 정렬용 빈 자리 -->
+        <ImageButton
+            style="@style/Widget.Carlog.IconButton"
+            android:importantForAccessibility="no"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 원본 경로 지도 -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cl_detail_map_height">
+
+                <com.carlog.mobile.ui.common.MapBoxView
+                    android:id="@+id/map_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    style="@style/Widget.Carlog.MapTag"
+                    android:drawableStart="@drawable/ic_car_small"
+                    android:drawableTint="@color/cl_accent"
+                    android:text="@string/log_detail_auto_recorded"
+                    android:textColor="@color/cl_accent" />
+            </FrameLayout>
+
+            <!-- 기록 요약 카드 (지도 위로 살짝 겹침) -->
+            <LinearLayout
+                style="@style/Widget.Carlog.Section"
+                android:layout_marginTop="@dimen/cl_detail_card_overlap">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout style="@style/Widget.Carlog.CardContent">
+
+                        <TextView
+                            android:id="@+id/tv_log_name"
+                            style="@style/Carlog.Text.Body.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="동해 해안도로 드라이브"
+                            android:textSize="@dimen/cl_text_detail_title" />
+
+                        <TextView
+                            android:id="@+id/tv_log_meta"
+                            style="@style/Carlog.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/cl_space_4"
+                            android:text="11월 7일 (토) · 오후 2:12 출발 · 맑음 14°C" />
+
+                        <LinearLayout style="@style/Widget.Carlog.StatsRow">
+
+                            <com.carlog.mobile.ui.common.StatView
+                                android:id="@+id/stat_distance"
+                                style="@style/Widget.Carlog.Stat"
+                                app:statLabel="@string/log_detail_stat_km"
+                                app:statValue="132.4" />
+
+                            <com.carlog.mobile.ui.common.StatView
+                                android:id="@+id/stat_time"
+                                style="@style/Widget.Carlog.Stat"
+                                app:statLabel="@string/log_detail_stat_time"
+                                app:statValue="1h 52m" />
+
+                            <com.carlog.mobile.ui.common.StatView
+                                android:id="@+id/stat_avg_speed"
+                                style="@style/Widget.Carlog.Stat"
+                                app:statLabel="@string/log_detail_stat_avg_speed"
+                                app:statValue="71" />
+
+                            <com.carlog.mobile.ui.common.StatView
+                                android:id="@+id/stat_stops"
+                                style="@style/Widget.Carlog.Stat"
+                                app:statLabel="정차 18분"
+                                app:statValue="1회" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- 속도 변화 -->
+            <LinearLayout style="@style/Widget.Carlog.Section">
+
+                <LinearLayout style="@style/Widget.Carlog.SectionHeader">
+
+                    <TextView
+                        style="@style/Carlog.Text.SectionTitle.Fill"
+                        android:text="@string/log_detail_speed_title" />
+
+                    <TextView
+                        style="@style/Carlog.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/log_detail_speed_sub" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout style="@style/Widget.Carlog.CardContent">
+
+                        <ImageView
+                            android:id="@+id/iv_speed_graph"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/cl_spark_height"
+                            android:contentDescription="@string/cd_speed_graph"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/img_speed_spark" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/cl_space_4"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/Carlog.Text.Caption"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="14:12" />
+
+                            <TextView
+                                style="@style/Carlog.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="홍천휴게소" />
+
+                            <TextView
+                                style="@style/Carlog.Text.Caption"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:text="16:04" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- 안전운전 피드백: 점수 링 + 항목별 막대 -->
+            <LinearLayout style="@style/Widget.Carlog.Section">
+
+                <LinearLayout style="@style/Widget.Carlog.SectionHeader">
+
+                    <TextView
+                        style="@style/Carlog.Text.SectionTitle.Fill"
+                        android:text="@string/log_detail_safety_title" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        style="@style/Widget.Carlog.CardContent"
+                        android:baselineAligned="false"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="@dimen/cl_ring_size"
+                            android:layout_height="@dimen/cl_ring_size">
+
+                            <com.google.android.material.progressindicator.CircularProgressIndicator
+                                android:id="@+id/ring_safety_score"
+                                style="@style/Widget.Carlog.ScoreRing"
+                                android:progress="92" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_safety_score"
+                                    style="@style/Carlog.Text.StatValue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="92"
+                                    android:textSize="@dimen/cl_text_ring_value" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.StatLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/log_detail_safety_score" />
+                            </LinearLayout>
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/cl_space_14"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/Carlog.Text.ScoreBarLabel"
+                                    android:text="급제동 없음" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.ScoreBarValue"
+                                    android:text="100" />
+                            </LinearLayout>
+
+                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                style="@style/Widget.Carlog.ScoreBar"
+                                android:progress="100" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="7dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/Carlog.Text.ScoreBarLabel"
+                                    android:text="부드러운 가속" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.ScoreBarValue"
+                                    android:text="88" />
+                            </LinearLayout>
+
+                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                style="@style/Widget.Carlog.ScoreBar"
+                                android:progress="88" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="7dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/Carlog.Text.ScoreBarLabel"
+                                    android:text="제한속도 준수" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.ScoreBarValue"
+                                    android:text="97" />
+                            </LinearLayout>
+
+                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                style="@style/Widget.Carlog.ScoreBar"
+                                android:progress="97" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="7dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/Carlog.Text.ScoreBarLabel"
+                                    android:text="방향지시등 사용" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.ScoreBarValue"
+                                    android:text="92" />
+                            </LinearLayout>
+
+                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                style="@style/Widget.Carlog.ScoreBar"
+                                android:progress="92" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- 획득한 칭호 -->
+            <LinearLayout style="@style/Widget.Carlog.Section">
+
+                <LinearLayout style="@style/Widget.Carlog.SectionHeader">
+
+                    <TextView
+                        style="@style/Carlog.Text.SectionTitle.Fill"
+                        android:text="@string/log_detail_titles_title" />
+
+                    <TextView
+                        style="@style/Carlog.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3개 NEW" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        style="@style/Widget.Carlog.CardContent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <!-- 칭호 칩: 줄바꿈 가능 -->
+                        <com.google.android.material.chip.ChipGroup
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:chipSpacingHorizontal="@dimen/cl_space_6"
+                            app:chipSpacingVertical="@dimen/cl_space_6">
+
+                            <TextView
+                                style="@style/Widget.Carlog.TitleChip.Teal"
+                                android:drawableStart="@drawable/ic_title_shield"
+                                android:text="부드러운 브레이커" />
+
+                            <TextView
+                                style="@style/Widget.Carlog.TitleChip"
+                                android:drawableStart="@drawable/ic_title_gauge"
+                                android:text="크루즈 마스터" />
+
+                            <TextView
+                                style="@style/Widget.Carlog.TitleChip.Blue"
+                                android:drawableStart="@drawable/ic_title_wave"
+                                android:text="해안선 수집가" />
+                        </com.google.android.material.chip.ChipGroup>
+
+                        <TextView
+                            android:id="@+id/btn_go_dex"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/cl_space_8"
+                            android:background="@drawable/bg_chip_outline"
+                            android:paddingStart="@dimen/cl_space_10"
+                            android:paddingTop="@dimen/cl_space_4"
+                            android:paddingEnd="@dimen/cl_space_10"
+                            android:paddingBottom="@dimen/cl_space_4"
+                            android:text="@string/log_detail_titles_go_dex"
+                            android:textColor="@color/cl_ink2"
+                            android:textSize="@dimen/cl_text_badge" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- 드라이브 모먼트 타임라인 -->
+            <LinearLayout style="@style/Widget.Carlog.Section">
+
+                <LinearLayout style="@style/Widget.Carlog.SectionHeader">
+
+                    <TextView
+                        style="@style/Carlog.Text.SectionTitle.Fill"
+                        android:text="@string/log_detail_moments_title" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout style="@style/Widget.Carlog.CardContent">
+
+                        <!-- 1. 출발 -->
+                        <LinearLayout style="@style/Widget.Carlog.MomentRow">
+
+                            <FrameLayout style="@style/Widget.Carlog.MomentRail">
+
+                                <View style="@style/Widget.Carlog.MomentLine" />
+
+                                <ImageView
+                                    style="@style/Widget.Carlog.MomentIcon"
+                                    android:backgroundTint="@color/cl_ink_12"
+                                    android:src="@drawable/ic_play"
+                                    app:tint="@color/cl_ink" />
+                            </FrameLayout>
+
+                            <LinearLayout style="@style/Widget.Carlog.MomentText">
+
+                                <TextView
+                                    style="@style/Carlog.Text.MomentTitle"
+                                    android:text="내비 안내 시작 · 자동 기록" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.MomentSub"
+                                    android:text="14:12 · 서울 강동구" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- 2. 크루즈 -->
+                        <LinearLayout style="@style/Widget.Carlog.MomentRow">
+
+                            <FrameLayout style="@style/Widget.Carlog.MomentRail">
+
+                                <View style="@style/Widget.Carlog.MomentLine" />
+
+                                <ImageView
+                                    style="@style/Widget.Carlog.MomentIcon"
+                                    android:backgroundTint="@color/cl_accent_12"
+                                    android:src="@drawable/ic_gauge"
+                                    app:tint="@color/cl_accent" />
+                            </FrameLayout>
+
+                            <LinearLayout style="@style/Widget.Carlog.MomentText">
+
+                                <TextView
+                                    style="@style/Carlog.Text.MomentTitle"
+                                    android:text="크루즈 컨트롤 22분 유지" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.MomentSub"
+                                    android:text="14:41 · 서울양양고속도로" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- 3. 휴게소 정차 -->
+                        <LinearLayout style="@style/Widget.Carlog.MomentRow">
+
+                            <FrameLayout style="@style/Widget.Carlog.MomentRail">
+
+                                <View style="@style/Widget.Carlog.MomentLine" />
+
+                                <ImageView
+                                    style="@style/Widget.Carlog.MomentIcon"
+                                    android:backgroundTint="@color/cl_accent2_12"
+                                    android:src="@drawable/ic_cup"
+                                    app:tint="@color/cl_accent2" />
+                            </FrameLayout>
+
+                            <LinearLayout style="@style/Widget.Carlog.MomentText">
+
+                                <TextView
+                                    style="@style/Carlog.Text.MomentTitle"
+                                    android:text="홍천휴게소 18분 정차 → 이어서 기록" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.MomentSub"
+                                    android:text="15:03 · 하나의 로그로 연결" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- 4. 챌린지 -->
+                        <LinearLayout style="@style/Widget.Carlog.MomentRow">
+
+                            <FrameLayout style="@style/Widget.Carlog.MomentRail">
+
+                                <View style="@style/Widget.Carlog.MomentLine" />
+
+                                <ImageView
+                                    style="@style/Widget.Carlog.MomentIcon"
+                                    android:backgroundTint="@color/cl_teal_12"
+                                    android:src="@drawable/ic_shield"
+                                    app:tint="@color/cl_teal" />
+                            </FrameLayout>
+
+                            <LinearLayout style="@style/Widget.Carlog.MomentText">
+
+                                <TextView
+                                    style="@style/Carlog.Text.MomentTitle"
+                                    android:text="급제동 없이 100km 돌파" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.MomentSub"
+                                    android:text="15:40 · 챌린지 달성" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- 5. 모먼트 -->
+                        <LinearLayout style="@style/Widget.Carlog.MomentRow">
+
+                            <FrameLayout style="@style/Widget.Carlog.MomentRail">
+
+                                <View style="@style/Widget.Carlog.MomentLine" />
+
+                                <ImageView
+                                    style="@style/Widget.Carlog.MomentIcon"
+                                    android:backgroundTint="@color/cl_violet_12"
+                                    android:src="@drawable/ic_window"
+                                    app:tint="@color/cl_violet" />
+                            </FrameLayout>
+
+                            <LinearLayout style="@style/Widget.Carlog.MomentText">
+
+                                <TextView
+                                    style="@style/Carlog.Text.MomentTitle"
+                                    android:text="창문 열림 · 해안 구간 진입" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.MomentSub"
+                                    android:text="15:58 · 모먼트 기록" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- 6. 도착 (마지막 줄: 세로선 없음) -->
+                        <LinearLayout style="@style/Widget.Carlog.MomentRow">
+
+                            <FrameLayout style="@style/Widget.Carlog.MomentRail">
+
+                                <ImageView
+                                    style="@style/Widget.Carlog.MomentIcon"
+                                    android:backgroundTint="@color/cl_accent_12"
+                                    android:src="@drawable/ic_flag"
+                                    app:tint="@color/cl_accent" />
+                            </FrameLayout>
+
+                            <LinearLayout style="@style/Widget.Carlog.MomentText.Last">
+
+                                <TextView
+                                    style="@style/Carlog.Text.MomentTitle"
+                                    android:text="강릉 안목해변 도착" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.MomentSub"
+                                    android:text="16:04" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- 하단 고정 버튼 -->
+    <LinearLayout style="@style/Widget.Carlog.ButtonBar">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_share"
+            style="@style/Widget.Carlog.Button.Accent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/log_detail_edit_share"
+            app:icon="@drawable/ic_scissors"
+            app:iconSize="@dimen/cl_icon_size_medium" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  피드 카드 (데모 feedCard): 친구 드라이브 1건
+  지금은 데모 데이터(하늘 · 7번 국도 새벽 바닷길)를 고정으로 표시한다.
+  나중에 RecyclerView 아이템으로 그대로 사용할 수 있도록 별도 파일로 분리.
+-->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/cl_space_14"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 작성자 줄: 프로필 + 이름·시간 + 칭호 -->
+        <LinearLayout
+            style="@style/Widget.Carlog.CardContent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_avatar"
+                style="@style/Widget.Carlog.Avatar"
+                android:backgroundTint="@color/cl_violet"
+                android:text="하" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/cl_space_10"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_author"
+                        style="@style/Carlog.Text.Body.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="하늘" />
+
+                    <TextView
+                        android:id="@+id/tv_posted_at"
+                        style="@style/Carlog.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/cl_space_4"
+                        android:text="· 어제" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_drive_meta"
+                    style="@style/Carlog.Text.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/cl_space_4"
+                    android:text="새벽 5:40 출발 · 맑음 9°C" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_title_chip"
+                style="@style/Widget.Carlog.TitleChip.Violet"
+                android:layout_marginStart="@dimen/cl_space_8"
+                android:drawableStart="@drawable/ic_title_moon"
+                android:text="새벽 탐험가" />
+        </LinearLayout>
+
+        <!-- 코스 지도 + 장소 라벨 -->
+        <com.carlog.mobile.ui.common.MapBoxView
+            android:id="@+id/map_box"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/cl_map_height"
+            app:mapTagText="7번 국도 새벽 바닷길" />
+
+        <!-- 통계 4개 -->
+        <LinearLayout style="@style/Widget.Carlog.StatsRow">
+
+            <com.carlog.mobile.ui.common.StatView
+                android:id="@+id/stat_distance"
+                style="@style/Widget.Carlog.Stat"
+                app:statLabel="@string/feed_stat_distance"
+                app:statValue="167km" />
+
+            <com.carlog.mobile.ui.common.StatView
+                android:id="@+id/stat_time"
+                style="@style/Widget.Carlog.Stat"
+                app:statLabel="@string/feed_stat_time"
+                app:statValue="2h 14m" />
+
+            <com.carlog.mobile.ui.common.StatView
+                android:id="@+id/stat_avg_speed"
+                style="@style/Widget.Carlog.Stat"
+                app:statLabel="@string/feed_stat_avg_speed"
+                app:statValue="74" />
+
+            <com.carlog.mobile.ui.common.StatView
+                android:id="@+id/stat_speed_keep"
+                style="@style/Widget.Carlog.Stat"
+                app:statLabel="@string/feed_stat_speed_keep"
+                app:statValue="98%" />
+        </LinearLayout>
+
+        <!-- 하단 버튼: 좋아요 / 댓글 / 저장 / 내 차로 -->
+        <View
+            style="@style/Widget.Carlog.Divider"
+            android:layout_marginTop="@dimen/cl_space_8" />
+
+        <LinearLayout style="@style/Widget.Carlog.FeedActions">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_like"
+                style="@style/Widget.Carlog.FeedAction"
+                android:text="24"
+                app:icon="@drawable/ic_heart" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_comment"
+                style="@style/Widget.Carlog.FeedAction"
+                android:text="2"
+                app:icon="@drawable/ic_chat" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save"
+                style="@style/Widget.Carlog.FeedAction"
+                android:text="@string/feed_action_save"
+                app:icon="@drawable/ic_bookmark" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_send_to_car"
+                style="@style/Widget.Carlog.FeedAction"
+                android:text="@string/feed_action_send_to_car"
+                app:icon="@drawable/ic_car" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

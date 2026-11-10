@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- M01 홈 화면 문구 (공통 strings.xml 충돌 방지를 위해 화면별 파일로 분리) -->
+<resources>
+    <string name="home_logo_car">CAR</string>
+    <string name="home_logo_log">LOG</string>
+
+    <string name="home_arrived_kicker">차량에서 방금 도착</string>
+    <string name="home_arrived_cta">기록 확인하고 공유하기</string>
+
+    <string name="home_connected_title">차량과 연결됨</string>
+    <string name="home_connected_desc">내비 안내를 시작하면 차량에서 자동으로 기록돼요</string>
+
+    <string name="home_feed_title">친구들의 드라이브</string>
+    <string name="home_feed_sub">실제로 달린 코스</string>
+
+    <!-- 피드 카드 -->
+    <string name="feed_stat_distance">거리</string>
+    <string name="feed_stat_time">실제 소요</string>
+    <string name="feed_stat_avg_speed">평균 km/h</string>
+    <string name="feed_stat_speed_keep">제한속도 준수</string>
+    <string name="feed_action_save">저장</string>
+    <string name="feed_action_send_to_car">내 차로</string>
+</resources>

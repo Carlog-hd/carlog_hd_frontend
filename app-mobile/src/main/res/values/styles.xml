@@ -244,4 +244,91 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- ===== 화면 틀 (layout/fragment_template_*.xml 참고) ===== -->
+
+    <!-- 탭 첫 화면 상단: 큰 제목 + 오른쪽 아이콘 (.phead) -->
+    <style name="Widget.Carlog.PageHeader" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/cl_header_padding</item>
+        <item name="android:paddingEnd">@dimen/cl_space_12</item>
+        <item name="android:paddingTop">@dimen/cl_space_8</item>
+        <item name="android:paddingBottom">@dimen/cl_space_12</item>
+    </style>
+
+    <!-- 하위 화면 상단: 뒤로가기 + 가운데 제목 (.navbar) -->
+    <style name="Widget.Carlog.TopBar" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/cl_space_10</item>
+        <item name="android:paddingEnd">@dimen/cl_space_10</item>
+        <item name="android:paddingTop">@dimen/cl_space_6</item>
+        <item name="android:paddingBottom">@dimen/cl_space_8</item>
+        <item name="android:background">@color/cl_bg</item>
+    </style>
+
+    <!-- 상단바 가운데 제목: 좌우 아이콘 버튼 사이에서 가운데 정렬 -->
+    <style name="Carlog.Text.TopBarTitle" parent="Carlog.Text.NavTitle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- 섹션 (.sec): 좌우 16dp, 아래 16dp -->
+    <style name="Widget.Carlog.Section" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingStart">@dimen/cl_screen_padding</item>
+        <item name="android:paddingEnd">@dimen/cl_screen_padding</item>
+        <item name="android:paddingBottom">@dimen/cl_space_16</item>
+    </style>
+
+    <!-- 섹션 제목 줄 (.sec h2): 왼쪽 제목 + 오른쪽 작은 글씨 -->
+    <style name="Widget.Carlog.SectionHeader" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:baselineAligned">true</item>
+        <item name="android:layout_marginStart">@dimen/cl_space_4</item>
+        <item name="android:layout_marginEnd">@dimen/cl_space_4</item>
+        <item name="android:layout_marginTop">@dimen/cl_space_6</item>
+        <item name="android:layout_marginBottom">@dimen/cl_space_10</item>
+    </style>
+
+    <!-- 섹션 제목 (SectionHeader 안에서 왼쪽을 채움) -->
+    <style name="Carlog.Text.SectionTitle.Fill">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <!-- 카드 안쪽 여백 (.pad) : 카드 안 LinearLayout 등에 적용 -->
+    <style name="Widget.Carlog.CardContent" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingStart">@dimen/cl_card_padding_h</item>
+        <item name="android:paddingEnd">@dimen/cl_card_padding_h</item>
+        <item name="android:paddingTop">@dimen/cl_card_padding_v</item>
+        <item name="android:paddingBottom">@dimen/cl_card_padding_v</item>
+    </style>
+
+    <!-- 하단 고정 버튼 영역 (.btnbar) -->
+    <style name="Widget.Carlog.ButtonBar" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">@dimen/cl_screen_padding</item>
+        <item name="android:paddingEnd">@dimen/cl_screen_padding</item>
+        <item name="android:paddingTop">@dimen/cl_space_12</item>
+        <item name="android:paddingBottom">@dimen/cl_space_20</item>
+        <item name="android:background">@color/cl_bg</item>
+    </style>
+
 </resources>

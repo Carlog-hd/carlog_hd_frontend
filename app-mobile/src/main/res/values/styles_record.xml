@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- M03 내 기록 / 기록 상세 화면 전용 색상 / 크기 / 스타일 -->
+<resources>
+    <color name="cl_progress_track">#EDF0F4</color>
+    <!-- 모먼트 아이콘 원 배경 (각 색 12%) -->
+    <color name="cl_ink_12">#1F0E1A2B</color>
+    <color name="cl_accent_12">#1FFF6B3D</color>
+    <color name="cl_accent2_12">#1FFFB547</color>
+    <color name="cl_teal_12">#1F12B5A5</color>
+    <color name="cl_violet_12">#1F7B5CFF</color>
+
+    <dimen name="cl_log_thumb_width">64dp</dimen>
+    <dimen name="cl_log_thumb_height">48dp</dimen>
+    <dimen name="cl_log_thumb_radius">10dp</dimen>
+    <dimen name="cl_detail_map_height">270dp</dimen>
+    <dimen name="cl_detail_card_overlap">-24dp</dimen>
+    <dimen name="cl_text_detail_title">19sp</dimen>
+    <dimen name="cl_spark_height">56dp</dimen>
+    <dimen name="cl_ring_size">86dp</dimen>
+    <dimen name="cl_ring_thickness">8dp</dimen>
+    <dimen name="cl_text_ring_value">24sp</dimen>
+    <dimen name="cl_bar_thickness">6dp</dimen>
+    <dimen name="cl_bar_radius">4dp</dimen>
+    <dimen name="cl_moment_icon_size">32dp</dimen>
+    <dimen name="cl_moment_gap">16dp</dimen>
+    <dimen name="cl_text_moment_title">13.5sp</dimen>
+    <dimen name="cl_text_moment_sub">11.5sp</dimen>
+
+    <!-- ===== 안전운전 피드백 ===== -->
+    <!-- 점수 링 -->
+    <style name="Widget.Carlog.ScoreRing" parent="Widget.MaterialComponents.CircularProgressIndicator">
+        <item name="android:layout_width">@dimen/cl_ring_size</item>
+        <item name="android:layout_height">@dimen/cl_ring_size</item>
+        <item name="android:indeterminate">false</item>
+        <item name="android:max">100</item>
+        <item name="indicatorSize">@dimen/cl_ring_size</item>
+        <item name="indicatorInset">0dp</item>
+        <item name="trackThickness">@dimen/cl_ring_thickness</item>
+        <item name="trackCornerRadius">@dimen/cl_bar_radius</item>
+        <item name="indicatorColor">@color/cl_teal</item>
+        <item name="trackColor">@color/cl_progress_track</item>
+    </style>
+
+    <!-- 항목별 막대 -->
+    <style name="Widget.Carlog.ScoreBar" parent="Widget.MaterialComponents.LinearProgressIndicator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:indeterminate">false</item>
+        <item name="android:max">100</item>
+        <item name="trackThickness">@dimen/cl_bar_thickness</item>
+        <item name="trackCornerRadius">@dimen/cl_bar_radius</item>
+        <item name="indicatorColor">@color/cl_teal</item>
+        <item name="trackColor">@color/cl_progress_track</item>
+    </style>
+
+    <style name="Carlog.Text.ScoreBarLabel">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/cl_text_caption</item>
+        <item name="android:textColor">@color/cl_ink2</item>
+    </style>
+
+    <style name="Carlog.Text.ScoreBarValue">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/cl_text_caption</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- ===== 드라이브 모먼트 타임라인 ===== -->
+    <!-- 한 줄: 왼쪽 아이콘 열 + 오른쪽 글 -->
+    <style name="Widget.Carlog.MomentRow" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:baselineAligned">false</item>
+    </style>
+
+    <!-- 왼쪽 아이콘 열 (세로선 + 아이콘 원을 겹쳐 놓는 FrameLayout) -->
+    <style name="Widget.Carlog.MomentRail" parent="">
+        <item name="android:layout_width">@dimen/cl_moment_icon_size</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <!-- 다음 모먼트로 이어지는 세로선 (마지막 줄에는 넣지 않음) -->
+    <style name="Widget.Carlog.MomentLine" parent="">
+        <item name="android:layout_width">2dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/cl_moment_icon_size</item>
+        <item name="android:background">@color/cl_line</item>
+    </style>
+
+    <!-- 아이콘 원: backgroundTint(12% 색) + app:tint(아이콘 색) 지정 -->
+    <style name="Widget.Carlog.MomentIcon" parent="">
+        <item name="android:layout_width">@dimen/cl_moment_icon_size</item>
+        <item name="android:layout_height">@dimen/cl_moment_icon_size</item>
+        <item name="android:background">@drawable/bg_circle</item>
+        <item name="android:padding">@dimen/cl_space_8</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+
+    <style name="Widget.Carlog.MomentText" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">@dimen/cl_space_12</item>
+        <item name="android:orientation">vertical</item>
+        <!-- 다음 모먼트까지 간격. 여기 두어야 왼쪽 세로선이 다음 아이콘까지 이어진다 -->
+        <item name="android:paddingBottom">@dimen/cl_moment_gap</item>
+    </style>
+
+    <!-- 마지막 모먼트: 아래 간격 없음 -->
+    <style name="Widget.Carlog.MomentText.Last">
+        <item name="android:paddingBottom">0dp</item>
+    </style>
+
+    <style name="Carlog.Text.MomentTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/cl_text_moment_title</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Carlog.Text.MomentSub">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:textSize">@dimen/cl_text_moment_sub</item>
+        <item name="android:textColor">@color/cl_ink3</item>
+    </style>
+</resources>

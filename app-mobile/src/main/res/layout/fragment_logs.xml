@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- M03 내 기록 -->
+<!--
+  M03 내 기록 (기록 탭)
+  - 이번 달 드라이브 요약 (주행 횟수 / 총 거리 / 평균 안전점수)
+  - 최근 로그 목록: 누르면 기록 상세(fragment_log_detail)로 이동 예정
+-->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -20,11 +24,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/tab_logs" />
-
+                android:text="@string/logs_title" />
         </LinearLayout>
 
-        <!-- TODO: M03 내 기록 화면 구성 -->
+        <!-- 이번 달 요약 -->
         <LinearLayout style="@style/Widget.Carlog.Section">
 
             <com.google.android.material.card.MaterialCardView
@@ -37,8 +40,79 @@
                         style="@style/Carlog.Text.Caption"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="M03 내 기록 화면 작업 예정" />
+                        android:text="@string/logs_month_summary" />
 
+                    <LinearLayout style="@style/Widget.Carlog.StatsRow">
+
+                        <com.carlog.mobile.ui.common.StatView
+                            android:id="@+id/stat_drive_count"
+                            style="@style/Widget.Carlog.Stat"
+                            app:statLabel="@string/logs_stat_count"
+                            app:statValue="6회" />
+
+                        <com.carlog.mobile.ui.common.StatView
+                            android:id="@+id/stat_total_distance"
+                            style="@style/Widget.Carlog.Stat"
+                            app:statLabel="@string/logs_stat_total_distance"
+                            app:statValue="412km" />
+
+                        <com.carlog.mobile.ui.common.StatView
+                            android:id="@+id/stat_avg_score"
+                            style="@style/Widget.Carlog.Stat"
+                            app:statLabel="@string/logs_stat_avg_score"
+                            app:statValue="89" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <!-- 최근 로그 -->
+        <LinearLayout style="@style/Widget.Carlog.Section">
+
+            <LinearLayout style="@style/Widget.Carlog.SectionHeader">
+
+                <TextView
+                    style="@style/Carlog.Text.SectionTitle.Fill"
+                    android:text="@string/logs_recent_title" />
+
+                <TextView
+                    style="@style/Carlog.Text.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/logs_recent_sub" />
+            </LinearLayout>
+
+            <!-- 지금은 같은 데모 줄을 반복 표시. 데이터 연동 시 RecyclerView + item_log_row로 교체 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/log_row_1"
+                        layout="@layout/item_log_row" />
+
+                    <View style="@style/Widget.Carlog.Divider" />
+
+                    <include
+                        android:id="@+id/log_row_2"
+                        layout="@layout/item_log_row" />
+
+                    <View style="@style/Widget.Carlog.Divider" />
+
+                    <include
+                        android:id="@+id/log_row_3"
+                        layout="@layout/item_log_row" />
+
+                    <View style="@style/Widget.Carlog.Divider" />
+
+                    <include
+                        android:id="@+id/log_row_4"
+                        layout="@layout/item_log_row" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

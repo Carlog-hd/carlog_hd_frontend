@@ -8,6 +8,7 @@
     <string name="nav_drive">주행</string>
     <string name="nav_course">코스</string>
     <string name="nav_titles">칭호</string>
+    <string name="drive_navigation_locked">시뮬레이션 주행 중에는 주행 화면만 사용할 수 있어요.</string>
     <string name="rail_foot">PLEOS\nCONNECT</string>
 
     <!-- 상단 상태 바 -->
@@ -36,4 +37,26 @@
     <string name="home_received_course">휴대전화에서 받은 코스</string>
     <string name="home_received_course_empty">친구 피드에서 코스를 보내면 여기에 표시돼요</string>
     <string name="home_open">열기</string>
+
+    <!-- Simulation demo -->
+    <string name="drive_pause">정차 / 일시정지</string>
+    <string name="drive_resume">주행 재개</string>
+    <string name="drive_finish_sim">도착 처리</string>
+    <string name="drive_paused">정차 중</string>
+    <string name="drive_sim_progress_start">시뮬레이션 준비 중</string>
+    <string name="drive_sim_progress">모의 경로 진행률 %1$d%%</string>
+    <string name="drive_sim_turn_first">다음 교차로에서 우회전</string>
+    <string name="drive_sim_turn_last">목적지 방면으로 계속 이동</string>
+    <string name="drive_sim_event_pending">주행 이벤트 대기 중 · 경로 진행에 따라 샘플 이벤트가 기록돼요.</string>
+    <string name="drive_sim_event_done">모의 차량 이벤트 2건을 기록했어요.</string>
+    <string name="result_title">드라이브 기록 완료</string>
+    <string name="result_saved">이 기록은 이 에뮬레이터에 저장됐어요.</string>
+    <string name="result_distance_label">주행 거리</string>
+    <string name="result_duration_label">주행 시간</string>
+    <string name="result_average_label">평균 속도</string>
+    <string name="result_duration_format">%1$d분 %2$02d초</string>
+    <string name="result_speed_format">%1$d km/h</string>
+    <string name="result_course_events">친구 코스 경유 안내 · 샘플 차량 이벤트 기록</string>
+    <string name="result_home_events">내비 안내 시작 · 샘플 주행 이벤트 기록</string>
+    <string name="result_home_button">홈으로</string>
 </resources>

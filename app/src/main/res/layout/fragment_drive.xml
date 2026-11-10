@@ -315,6 +315,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/drive_challenge_status_sample" />
+
+            <TextView
+                android:id="@+id/driveProgressText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/drive_sim_progress_start"
+                android:textColor="@color/cl_muted"
+                android:textSize="22sp" />
         </LinearLayout>
 
         <Space
@@ -333,5 +342,29 @@
             android:text="@string/drive_note"
             android:textColor="@color/cl_muted"
             android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPauseResume"
+                style="@style/Carlog.Button.GhostSmall"
+                android:layout_width="0dp"
+                android:layout_height="84dp"
+                android:layout_weight="1"
+                android:text="@string/drive_pause" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFinishTrip"
+                style="@style/Carlog.Button"
+                android:layout_width="0dp"
+                android:layout_height="84dp"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="@string/drive_finish_sim" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

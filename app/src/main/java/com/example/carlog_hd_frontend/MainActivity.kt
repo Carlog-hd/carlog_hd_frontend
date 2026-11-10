@@ -1,23 +1,28 @@
 package com.example.carlog_hd_frontend
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.carlog_hd_frontend.ui.CourseFragment
+import com.example.carlog_hd_frontend.ui.DriveActions
 import com.example.carlog_hd_frontend.ui.DriveFragment
+import com.example.carlog_hd_frontend.ui.DriveHistoryStore
+import com.example.carlog_hd_frontend.ui.DriveRecord
 import com.example.carlog_hd_frontend.ui.HomeFragment
 import com.example.carlog_hd_frontend.ui.TitlesFragment
+import com.example.carlog_hd_frontend.ui.TripResultFragment
+import java.util.Locale
 
-/**
- * CARLOG IVI 메인 화면. 왼쪽 레일의 탭에 따라 가운데 화면(Fragment)을 바꿔 끼웁니다.
- * 각 화면과 상단 상태 바의 값은 carlog-demo.html 과 같은 샘플 문구입니다.
- */
-class MainActivity : AppCompatActivity() {
+/** CARLOG IVI shell and repeatable local drive simulator. */
+class MainActivity : AppCompatActivity(), DriveActions {
 
     private enum class Tab(@IdRes val navId: Int, val recording: Boolean, val create: () -> Fragment) {
         HOME(R.id.navHome, recording = false, create = ::HomeFragment),
@@ -26,32 +31,74 @@ class MainActivity : AppCompatActivity() {
         TITLES(R.id.navTitles, recording = false, create = ::TitlesFragment),
     }
 
+    private val handler = Handler(Looper.getMainLooper())
     private var current = Tab.HOME
+    private var seconds = 0
+    private var isDriving = false
+    private var isPaused = false
+    private var followingFriendCourse = false
+    private val simulationDurationSeconds = 45
+    private val tick = object : Runnable {
+        override fun run() {
+            if (!isDriving || isPaused) return
+            seconds += 1
+            if (seconds >= simulationDurationSeconds) {
+                finishDemoDrive()
+            } else {
+                updateDriveScreen()
+                updateChrome()
+                handler.postDelayed(this, 1_000L)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         Tab.values().forEach { tab ->
-            findViewById<View>(tab.navId).setOnClickListener { select(tab) }
+            findViewById<View>(tab.navId).setOnClickListener {
+                if (tab == Tab.DRIVE && !isDriving) startDemoDrive(followCourse = false) else select(tab)
+            }
         }
 
-        // 화면 회전 등으로 다시 만들어질 때는 FragmentManager 가 화면을 복원하므로 상태만 맞춥니다.
-        val restored = savedInstanceState?.getString(KEY_TAB)?.let { Tab.valueOf(it) }
+        val restored = savedInstanceState?.getString(KEY_TAB)?.let { runCatching { Tab.valueOf(it) }.getOrNull() }
         if (restored != null) {
             current = restored
-            updateChrome()
+            select(restored, force = true)
+            seconds = savedInstanceState?.getInt(KEY_SECONDS, 0) ?: 0
+            isDriving = savedInstanceState?.getBoolean(KEY_IS_DRIVING, false) ?: false
+            isPaused = savedInstanceState?.getBoolean(KEY_IS_PAUSED, false) ?: false
+            followingFriendCourse = savedInstanceState?.getBoolean(KEY_FOLLOWING_COURSE, false) ?: false
+            if (isDriving) {
+                supportFragmentManager.executePendingTransactions()
+                updateDriveScreen()
+                if (!isPaused) handler.postDelayed(tick, 1_000L)
+            }
         } else {
             select(Tab.HOME, force = true)
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         outState.putString(KEY_TAB, current.name)
+        outState.putInt(KEY_SECONDS, seconds)
+        outState.putBoolean(KEY_IS_DRIVING, isDriving)
+        outState.putBoolean(KEY_IS_PAUSED, isPaused)
+        outState.putBoolean(KEY_FOLLOWING_COURSE, followingFriendCourse)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        handler.removeCallbacks(tick)
+        super.onDestroy()
     }
 
     private fun select(tab: Tab, force: Boolean = false) {
+        if (isDriving && tab != Tab.DRIVE) {
+            Toast.makeText(this, R.string.drive_navigation_locked, Toast.LENGTH_SHORT).show()
+            return
+        }
         if (tab == current && !force) return
         current = tab
         supportFragmentManager.beginTransaction()
@@ -60,28 +107,108 @@ class MainActivity : AppCompatActivity() {
         updateChrome()
     }
 
-    /** 레일 선택 표시와 상단 상태 바(대기 중 / 자동 기록 중)를 현재 탭에 맞춥니다. */
+    override fun startDemoDrive(followCourse: Boolean) {
+        handler.removeCallbacks(tick)
+        followingFriendCourse = followCourse
+        seconds = 0
+        isDriving = true
+        isPaused = false
+        current = Tab.DRIVE
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.screenContainer, DriveFragment())
+            .commit()
+        updateChrome()
+        handler.postDelayed(tick, 1_000L)
+    }
+
+    override fun toggleDemoDrive() {
+        if (!isDriving) return
+        isPaused = !isPaused
+        if (isPaused) {
+            handler.removeCallbacks(tick)
+        } else {
+            handler.postDelayed(tick, 1_000L)
+        }
+        updateDriveScreen()
+        updateChrome()
+    }
+
+    override fun finishDemoDrive() {
+        if (!isDriving) return
+        handler.removeCallbacks(tick)
+        val totalDistance = if (followingFriendCourse) 167.0 else 60.4
+        val progress = (seconds.toFloat() / simulationDurationSeconds).coerceIn(0f, 1f)
+        val record = DriveRecord(
+            id = System.currentTimeMillis().toString(),
+            destination = if (followingFriendCourse) getString(R.string.course_dest_sample) else getString(R.string.home_dest_name_sample),
+            distanceKm = totalDistance * progress,
+            durationSeconds = (seconds * 90).coerceAtLeast(1),
+            averageSpeedKmh = if (followingFriendCourse) 72 else 54,
+            followedFriendCourse = followingFriendCourse,
+            completedAt = System.currentTimeMillis(),
+        )
+        DriveHistoryStore.save(this, record)
+        isDriving = false
+        isPaused = false
+        current = Tab.HOME
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.screenContainer, TripResultFragment.newInstance(record))
+            .commit()
+        updateChrome()
+    }
+
+    override fun returnHome() {
+        handler.removeCallbacks(tick)
+        isDriving = false
+        isPaused = false
+        select(Tab.HOME, force = true)
+    }
+
+    override fun showCourses() {
+        select(Tab.COURSE)
+    }
+
+    private fun updateDriveScreen() {
+        val fragment = supportFragmentManager.findFragmentById(R.id.screenContainer) as? DriveFragment ?: return
+        fragment.renderSession(
+            elapsedSeconds = seconds,
+            durationSeconds = simulationDurationSeconds,
+            paused = isPaused,
+            friendCourse = followingFriendCourse,
+        )
+    }
+
+    /** Top status reflects the same deterministic values as the simulator. */
     private fun updateChrome() {
         Tab.values().forEach { findViewById<View>(it.navId).isSelected = it == current }
 
-        val rec = current.recording
+        val recording = isDriving
         findViewById<View>(R.id.liveDot).setBackgroundResource(
-            if (rec) R.drawable.bg_live_dot_rec else R.drawable.bg_live_dot,
+            if (recording) R.drawable.bg_live_dot_rec else R.drawable.bg_live_dot,
         )
         findViewById<TextView>(R.id.liveText).apply {
-            setText(if (rec) R.string.status_recording else R.string.status_idle)
-            setTextColor(ContextCompat.getColor(context, if (rec) R.color.cl_rec_text else R.color.cl_aqua))
+            setText(if (recording) R.string.status_recording else R.string.status_idle)
+            setTextColor(ContextCompat.getColor(context, if (recording) R.color.cl_rec_text else R.color.cl_aqua))
         }
-        setText(R.id.statusClock, if (rec) R.string.status_clock_drive_sample else R.string.status_clock_sample)
-        setText(R.id.statusSpeed, if (rec) R.string.status_speed_drive_sample else R.string.status_speed_sample)
-        setText(R.id.statusGear, if (rec) R.string.status_gear_drive_sample else R.string.status_gear_sample)
-    }
-
-    private fun setText(@IdRes id: Int, @StringRes text: Int) {
-        findViewById<TextView>(id).setText(text)
+        findViewById<TextView>(R.id.statusClock).text = if (recording) {
+            val simulationMinutes = seconds * 90 / 60
+            String.format(Locale.getDefault(), "%02d:%02d", 14 + (12 + simulationMinutes) / 60, (12 + simulationMinutes) % 60)
+        } else {
+            getString(R.string.status_clock_sample)
+        }
+        findViewById<TextView>(R.id.statusSpeed).text = if (recording && !isPaused) {
+            "${35 + (seconds * 7 % 31)} km/h"
+        } else {
+            "0 km/h"
+        }
+        findViewById<TextView>(R.id.statusGear).text = if (recording && !isPaused) "D" else "P"
     }
 
     private companion object {
         const val KEY_TAB = "tab"
+        const val KEY_SECONDS = "seconds"
+        const val KEY_IS_DRIVING = "is_driving"
+        const val KEY_IS_PAUSED = "is_paused"
+        const val KEY_FOLLOWING_COURSE = "following_course"
     }
 }

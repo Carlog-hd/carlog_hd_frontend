@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- M03 내 기록 / 기록 상세 화면 문구 -->
+<resources>
+    <!-- 기록 탭 -->
+    <string name="logs_title">내 기록</string>
+    <string name="logs_month_summary">11월 드라이브</string>
+    <string name="logs_stat_count">주행</string>
+    <string name="logs_stat_total_distance">총 거리</string>
+    <string name="logs_stat_avg_score">평균 안전점수</string>
+    <string name="logs_recent_title">최근 로그</string>
+    <string name="logs_recent_sub">차량에서 자동 생성</string>
+
+    <!-- 기록 상세 -->
+    <string name="log_detail_title">드라이브 로그</string>
+    <string name="log_detail_auto_recorded">차량에서 자동 기록됨</string>
+    <string name="log_detail_stat_km">km</string>
+    <string name="log_detail_stat_time">소요시간</string>
+    <string name="log_detail_stat_avg_speed">평균 km/h</string>
+    <string name="log_detail_speed_title">속도 변화</string>
+    <string name="log_detail_speed_sub">정차 구간 포함</string>
+    <string name="log_detail_safety_title">안전운전 피드백</string>
+    <string name="log_detail_safety_score">안전점수</string>
+    <string name="log_detail_titles_title">획득한 칭호</string>
+    <string name="log_detail_titles_go_dex">도감 보기</string>
+    <string name="log_detail_moments_title">드라이브 모먼트</string>
+    <string name="log_detail_edit_share">편집하고 공유하기</string>
+    <string name="cd_speed_graph">속도 변화 그래프</string>
+</resources>

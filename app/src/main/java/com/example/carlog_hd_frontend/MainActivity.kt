@@ -5,7 +5,6 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +17,7 @@ import com.example.carlog_hd_frontend.ui.DriveHistoryStore
 import com.example.carlog_hd_frontend.ui.DriveRecord
 import com.example.carlog_hd_frontend.ui.DemoCourses
 import com.example.carlog_hd_frontend.ui.HomeFragment
+import com.example.carlog_hd_frontend.ui.MyFragment
 import com.example.carlog_hd_frontend.ui.TitlesFragment
 import com.example.carlog_hd_frontend.ui.TripResultFragment
 import java.util.Locale
@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity(), DriveActions {
         DRIVE(R.id.navDrive, recording = true, create = ::DriveFragment),
         COURSE(R.id.navCourse, recording = false, create = ::CourseFragment),
         TITLES(R.id.navTitles, recording = false, create = ::TitlesFragment),
+        MY(R.id.navMy, recording = false, create = ::MyFragment),
     }
 
     private val handler = Handler(Looper.getMainLooper())
@@ -96,14 +97,11 @@ class MainActivity : AppCompatActivity(), DriveActions {
     }
 
     private fun select(tab: Tab, force: Boolean = false) {
-        if (isDriving && tab != Tab.DRIVE) {
-            Toast.makeText(this, R.string.drive_navigation_locked, Toast.LENGTH_SHORT).show()
-            return
-        }
         if (tab == current && !force) return
         current = tab
         supportFragmentManager.beginTransaction()
             .replace(R.id.screenContainer, tab.create())
+            .runOnCommit { if (tab == Tab.DRIVE && isDriving) updateDriveScreen() }
             .commit()
         updateChrome()
     }
@@ -149,6 +147,7 @@ class MainActivity : AppCompatActivity(), DriveActions {
             averageSpeedKmh = selectedCourse?.averageSpeedKmh ?: 54,
             followedFriendCourse = selectedCourse != null,
             completedAt = System.currentTimeMillis(),
+            courseId = selectedCourse?.id,
         )
         DriveHistoryStore.save(this, record)
         isDriving = false
@@ -169,6 +168,18 @@ class MainActivity : AppCompatActivity(), DriveActions {
 
     override fun showCourses() {
         select(Tab.COURSE)
+    }
+
+    override fun showDriveLog(record: DriveRecord) {
+        current = Tab.MY
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.screenContainer, TripResultFragment.newInstance(record, historyDetail = true))
+            .commit()
+        updateChrome()
+    }
+
+    override fun returnToMy() {
+        select(Tab.MY, force = true)
     }
 
     private fun updateDriveScreen() {

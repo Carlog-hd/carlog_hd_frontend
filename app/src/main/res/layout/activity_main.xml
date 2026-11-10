@@ -99,6 +99,19 @@
                 android:text="@string/nav_titles" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/navMy"
+            style="@style/Carlog.NavItem">
+
+            <ImageView
+                style="@style/Carlog.NavItem.Icon"
+                android:src="@drawable/ic_nav_my" />
+
+            <TextView
+                style="@style/Carlog.NavItem.Label"
+                android:text="@string/nav_my" />
+        </LinearLayout>
+
         <Space
             android:layout_width="0dp"
             android:layout_height="0dp"

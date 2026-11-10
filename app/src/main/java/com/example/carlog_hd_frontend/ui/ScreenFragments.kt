@@ -1,14 +1,23 @@
 package com.example.carlog_hd_frontend.ui
 
 import android.os.Bundle
+import android.content.Intent
+import android.media.MediaMetadataRetriever
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.FrameLayout
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import android.graphics.drawable.GradientDrawable
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import com.example.carlog_hd_frontend.R
@@ -21,6 +30,8 @@ interface DriveActions {
     fun finishDemoDrive()
     fun returnHome()
     fun showCourses()
+    fun showDriveLog(record: DriveRecord)
+    fun returnToMy()
 }
 
 /** Home screen with a runnable, local-only guidance simulation. */
@@ -39,6 +50,180 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             isEnabled = true
             alpha = 1f
             setOnClickListener { (activity as? DriveActions)?.showCourses() }
+        }
+    }
+}
+
+/** Car-display MY screen modeled after the vehicle settings panel in the HTML demo. */
+class MyFragment : Fragment(R.layout.fragment_my) {
+    private val exportBackup = registerForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
+        if (uri == null) return@registerForActivityResult
+        val context = context ?: return@registerForActivityResult
+        val result = runCatching {
+            val output = context.contentResolver.openOutputStream(uri, "wt")
+                ?: error(getString(R.string.my_backup_open_failed))
+            output.bufferedWriter(Charsets.UTF_8).use { it.write(CarlogBackupStore.export(context)) }
+        }
+        Toast.makeText(
+            context,
+            if (result.isSuccess) R.string.my_backup_exported else R.string.my_backup_failed,
+            Toast.LENGTH_LONG,
+        ).show()
+    }
+
+    private val importBackup = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri == null) return@registerForActivityResult
+        val context = context ?: return@registerForActivityResult
+        val result = runCatching {
+            val input = context.contentResolver.openInputStream(uri)
+                ?: error(getString(R.string.my_backup_open_failed))
+            val contents = input.bufferedReader(Charsets.UTF_8).use { it.readText() }
+            CarlogBackupStore.import(context, contents)
+        }
+        result.onSuccess { summary ->
+            view?.let { root ->
+                bindSetting(root, R.id.switchAutoRecord, "auto_record", true,
+                    context.getSharedPreferences("carlog_my_settings", android.content.Context.MODE_PRIVATE))
+                bindSetting(root, R.id.switchResumeAfterStop, "resume_after_stop", true,
+                    context.getSharedPreferences("carlog_my_settings", android.content.Context.MODE_PRIVATE))
+                refreshMyData(root)
+            }
+            Toast.makeText(
+                context,
+                getString(R.string.my_backup_imported, summary.driveRecords, summary.savedCourses, summary.likedCourses),
+                Toast.LENGTH_LONG,
+            ).show()
+        }.onFailure {
+            Toast.makeText(context, getString(R.string.my_backup_import_error, it.message.orEmpty()), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val prefs = requireContext().getSharedPreferences("carlog_my_settings", android.content.Context.MODE_PRIVATE)
+        bindSetting(view, R.id.switchAutoRecord, "auto_record", defaultValue = true, prefs = prefs)
+        bindSetting(view, R.id.switchResumeAfterStop, "resume_after_stop", defaultValue = true, prefs = prefs)
+        refreshMyData(view)
+        view.findViewById<View>(R.id.btnExportBackup).setOnClickListener {
+            val date = java.text.SimpleDateFormat("yyyyMMdd", Locale.US).format(java.util.Date())
+            exportBackup.launch("carlog-backup-$date.json")
+        }
+        view.findViewById<View>(R.id.btnImportBackup).setOnClickListener {
+            importBackup.launch(arrayOf("application/json", "text/*"))
+        }
+        view.findViewById<View>(R.id.btnPhoneLinkDetails).setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle(R.string.my_phone_title)
+                .setMessage(R.string.my_phone_details)
+                .setPositiveButton(android.R.string.ok, null)
+                .show()
+        }
+    }
+
+    private fun refreshMyData(root: View) {
+        val records = DriveHistoryStore.all(requireContext())
+        val now = java.util.Calendar.getInstance()
+        val monthly = records.filter { record ->
+            val date = java.util.Calendar.getInstance().apply { timeInMillis = record.completedAt }
+            date.get(java.util.Calendar.YEAR) == now.get(java.util.Calendar.YEAR) &&
+                date.get(java.util.Calendar.MONTH) == now.get(java.util.Calendar.MONTH)
+        }
+        root.findViewById<TextView>(R.id.myDriveCount).text = monthly.size.toString()
+        root.findViewById<TextView>(R.id.myTotalDistance).text = String.format(
+            Locale.getDefault(), "%.1f km", monthly.sumOf { it.distanceKm },
+        )
+        root.findViewById<TextView>(R.id.myReceivedLikes).text = monthly.sumOf { it.likesReceived }.toString()
+        root.findViewById<TextView>(R.id.myAverageSpeed).text = if (monthly.isEmpty()) "—" else {
+            "${monthly.map { it.averageSpeedKmh }.average().toInt()} km/h"
+        }
+
+        val container = root.findViewById<LinearLayout>(R.id.myRecentDrives)
+        container.removeAllViews()
+        if (records.isEmpty()) {
+            container.addView(TextView(requireContext()).apply {
+                text = getString(R.string.my_no_drives)
+                setTextColor(ContextCompat.getColor(context, R.color.cl_muted))
+                textSize = 20f
+                setPadding(0, dp(18), 0, dp(8))
+            })
+            return
+        }
+        records.take(8).forEachIndexed { index, record ->
+            val row = LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = android.view.Gravity.CENTER_VERTICAL
+                setPadding(0, dp(16), 0, dp(16))
+                isClickable = true
+                isFocusable = true
+                val selectable = android.util.TypedValue()
+                context.theme.resolveAttribute(android.R.attr.selectableItemBackground, selectable, true)
+                if (selectable.resourceId != 0) setBackgroundResource(selectable.resourceId)
+                contentDescription = getString(R.string.my_open_drive_log, record.destination)
+                setOnClickListener { (activity as? DriveActions)?.showDriveLog(record) }
+            }
+            row.addView(TextView(requireContext()).apply {
+                text = "${index + 1}"
+                gravity = android.view.Gravity.CENTER
+                setTextColor(ContextCompat.getColor(context, R.color.cl_rail))
+                textSize = 20f
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+                setBackgroundResource(R.drawable.bg_wp_num)
+                layoutParams = LinearLayout.LayoutParams(dp(48), dp(48))
+            })
+            val details = LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(dp(18), 0, 0, 0)
+            }
+            details.addView(TextView(requireContext()).apply {
+                text = record.destination
+                setTextColor(ContextCompat.getColor(context, R.color.cl_fg))
+                textSize = 22f
+            })
+            details.addView(TextView(requireContext()).apply {
+                text = getString(
+                    R.string.my_drive_row_meta,
+                    String.format(Locale.getDefault(), "%.1f", record.distanceKm),
+                    record.durationSeconds / 60,
+                )
+                setTextColor(ContextCompat.getColor(context, R.color.cl_muted))
+                textSize = 18f
+            })
+            row.addView(details, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+            row.addView(TextView(requireContext()).apply {
+                text = "♥ ${record.likesReceived}"
+                setTextColor(ContextCompat.getColor(context, R.color.cl_aqua))
+                textSize = 20f
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+            })
+            row.addView(TextView(requireContext()).apply {
+                text = "›"
+                setTextColor(ContextCompat.getColor(context, R.color.cl_muted))
+                textSize = 32f
+                setPadding(dp(18), 0, dp(8), 0)
+            })
+            container.addView(row)
+            if (index < minOf(records.size, 8) - 1) {
+                container.addView(View(requireContext()).apply {
+                    setBackgroundColor(ContextCompat.getColor(context, R.color.cl_edge))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(1))
+                })
+            }
+        }
+    }
+
+    private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
+
+    private fun bindSetting(
+        root: View,
+        viewId: Int,
+        key: String,
+        defaultValue: Boolean,
+        prefs: android.content.SharedPreferences,
+    ) {
+        val toggle = root.findViewById<com.google.android.material.switchmaterial.SwitchMaterial>(viewId)
+        toggle.isChecked = prefs.getBoolean(key, defaultValue)
+        toggle.setOnCheckedChangeListener { _, checked ->
+            prefs.edit().putBoolean(key, checked).apply()
+            Toast.makeText(requireContext(), R.string.my_setting_saved, Toast.LENGTH_SHORT).show()
         }
     }
 }
@@ -129,8 +314,18 @@ class CourseFragment : Fragment(R.layout.fragment_course) {
             bindCourse(view, DemoCourses.byId(selectedCourseId) ?: return@setOnClickListener)
             renderChoices(view)
         }
+        view.findViewById<View>(R.id.btnLikeCourse).setOnClickListener {
+            LikedCourseStore.toggle(requireContext(), selectedCourseId)
+            bindCourse(view, DemoCourses.byId(selectedCourseId) ?: return@setOnClickListener)
+        }
         view.findViewById<View>(R.id.btnFollowCourse).setOnClickListener {
             (activity as? DriveActions)?.startDemoDrive(courseId = selectedCourseId)
+        }
+        view.findViewById<View>(R.id.btnCourseBack).setOnClickListener {
+            view.findViewById<View>(R.id.courseDetails).visibility = View.GONE
+            view.findViewById<View>(R.id.courseList).visibility = View.VISIBLE
+            renderChoices(view)
+            view.findViewById<NestedScrollView>(R.id.courseScroll).smoothScrollTo(0, 0)
         }
     }
 
@@ -181,7 +376,6 @@ class CourseFragment : Fragment(R.layout.fragment_course) {
         container.removeAllViews()
         val choices = filteredCourses()
         if (choices.isEmpty()) {
-            root.findViewById<View>(R.id.courseDetails).visibility = View.GONE
             container.addView(TextView(requireContext()).apply {
                 text = getString(R.string.course_empty_filter)
                 setTextColor(ContextCompat.getColor(context, R.color.cl_muted))
@@ -189,41 +383,65 @@ class CourseFragment : Fragment(R.layout.fragment_course) {
             })
             return
         }
-        root.findViewById<View>(R.id.courseDetails).visibility = View.VISIBLE
-        choices.forEach { course ->
-            val card = LinearLayout(requireContext()).apply {
-                orientation = LinearLayout.VERTICAL
-                gravity = android.view.Gravity.CENTER_VERTICAL
-                setPadding(dp(24), dp(16), dp(24), dp(16))
-                background = ResourcesCompat.getDrawable(
-                    resources,
-                    if (course.id == selectedCourseId) R.drawable.bg_navcard else R.drawable.bg_panel,
-                    requireContext().theme,
-                )
-                isClickable = true
-                isFocusable = true
-                contentDescription = getString(R.string.course_choice_format, course.name, course.distanceKm.toInt())
-                setOnClickListener {
-                    selectedCourseId = course.id
-                    renderChoices(root)
-                    bindCourse(root, course)
+        choices.chunked(2).forEach { pair ->
+            val row = LinearLayout(requireContext()).apply { orientation = LinearLayout.HORIZONTAL }
+            pair.forEach { course ->
+                val isSelected = course.id == selectedCourseId
+                val card = LinearLayout(requireContext()).apply {
+                    orientation = LinearLayout.VERTICAL
+                    val inset = dp(if (isSelected) 3 else 1)
+                    setPadding(inset, inset, inset, inset)
+                    background = GradientDrawable().apply {
+                        cornerRadius = dp(24).toFloat()
+                        setColor(ContextCompat.getColor(context, if (isSelected) R.color.cl_nav_active_bg else R.color.cl_panel))
+                        setStroke(dp(if (isSelected) 3 else 1), ContextCompat.getColor(context, if (isSelected) R.color.cl_lime else R.color.cl_edge))
+                    }
+                    clipToOutline = true
+                    isClickable = true
+                    isFocusable = true
+                    this.isSelected = isSelected
+                    contentDescription = getString(R.string.course_choice_format, course.name, course.distanceKm.toInt())
+                    setOnClickListener {
+                        selectedCourseId = course.id
+                        bindCourse(root, course)
+                        root.findViewById<View>(R.id.courseList).visibility = View.GONE
+                        root.findViewById<View>(R.id.courseDetails).visibility = View.VISIBLE
+                        root.findViewById<NestedScrollView>(R.id.courseScroll).smoothScrollTo(0, 0)
+                    }
                 }
+                card.addView(ImageView(requireContext()).apply {
+                    setImageResource(course.coverDrawable)
+                    scaleType = ImageView.ScaleType.CENTER_CROP
+                    contentDescription = getString(R.string.course_cover_desc, course.name)
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(180))
+                })
+                val cardText = LinearLayout(requireContext()).apply {
+                    orientation = LinearLayout.VERTICAL
+                    setPadding(dp(22), dp(16), dp(22), dp(18))
+                }
+                cardText.addView(TextView(requireContext()).apply {
+                    text = course.name
+                    setTextColor(ContextCompat.getColor(context, if (isSelected) R.color.cl_lime else R.color.cl_fg))
+                    textSize = 24f
+                    setTypeface(typeface, android.graphics.Typeface.BOLD)
+                    maxLines = 1
+                    ellipsize = android.text.TextUtils.TruncateAt.END
+                })
+                cardText.addView(TextView(requireContext()).apply {
+                    text = getString(R.string.course_route_meta_format, course.author, course.distanceKm.toInt(), course.waypoints.size)
+                    setTextColor(ContextCompat.getColor(context, if (isSelected) R.color.cl_fg else R.color.cl_muted))
+                    textSize = 18f
+                    maxLines = 1
+                })
+                card.addView(cardText)
+                row.addView(card, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                    marginEnd = dp(14)
+                })
             }
-            card.addView(TextView(requireContext()).apply {
-                text = course.name
-                setTextColor(ContextCompat.getColor(context, R.color.cl_fg))
-                textSize = 24f
-                setTypeface(typeface, android.graphics.Typeface.BOLD)
-                maxLines = 1
-                ellipsize = android.text.TextUtils.TruncateAt.END
+            if (pair.size == 1) row.addView(View(requireContext()), LinearLayout.LayoutParams(0, 1, 1f))
+            container.addView(row, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                bottomMargin = dp(14)
             })
-            card.addView(TextView(requireContext()).apply {
-                text = getString(R.string.course_route_meta_format, course.author, course.distanceKm.toInt(), course.waypoints.size)
-                setTextColor(ContextCompat.getColor(context, R.color.cl_muted))
-                textSize = 19f
-                maxLines = 1
-            })
-            container.addView(card, LinearLayout.LayoutParams(dp(390), dp(112)).apply { marginEnd = dp(16) })
         }
     }
 
@@ -248,16 +466,89 @@ class CourseFragment : Fragment(R.layout.fragment_course) {
             hideStart = true
             contentDescription = getString(R.string.course_map_desc, course.name)
         }
-        root.findViewById<TextView>(R.id.courseDistance).text = course.distanceKm.toInt().toString()
+        root.findViewById<TextView>(R.id.courseDistance).text = if (course.distanceKm % 1.0 == 0.0) {
+            "${course.distanceKm.toInt()} km"
+        } else {
+            String.format(Locale.getDefault(), "%.1f km", course.distanceKm)
+        }
         root.findViewById<TextView>(R.id.courseTime).text = course.duration
-        root.findViewById<TextView>(R.id.courseWaypoint1).text = course.waypoints.getOrElse(0) { "-" }
-        root.findViewById<TextView>(R.id.courseWaypoint2).text = course.waypoints.getOrElse(1) { "-" }
-        root.findViewById<TextView>(R.id.courseWaypoint3).text = course.waypoints.getOrElse(2) { "-" }
-        root.findViewById<TextView>(R.id.courseDestination).text = course.destination
+        renderWaypoints(root, course)
         root.findViewById<TextView>(R.id.courseDemoNotice).setText(R.string.course_note_dynamic)
         root.findViewById<MaterialButton>(R.id.btnSaveCourse).setText(
             if (SavedCourseStore.contains(requireContext(), course.id)) R.string.course_unsave else R.string.course_save,
         )
+        root.findViewById<MaterialButton>(R.id.btnLikeCourse).setText(
+            if (LikedCourseStore.contains(requireContext(), course.id)) R.string.course_unlike else R.string.course_like,
+        )
+    }
+
+    private fun renderWaypoints(root: View, course: DemoCourse) {
+        val container = root.findViewById<LinearLayout>(R.id.courseWaypoints)
+        container.removeAllViews()
+        val legs = course.legs()
+        fun addStop(label: String, marker: String, arrival: Boolean = false) {
+            val row = LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = android.view.Gravity.CENTER_VERTICAL
+                setMinimumHeight(dp(48))
+            }
+            row.addView(TextView(requireContext()).apply {
+                text = marker
+                gravity = android.view.Gravity.CENTER
+                setTextColor(ContextCompat.getColor(context, R.color.cl_rail))
+                textSize = if (arrival || marker == "출") 14f else 20f
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+                setBackgroundResource(if (arrival) R.drawable.bg_wp_end else R.drawable.bg_wp_num)
+                layoutParams = LinearLayout.LayoutParams(dp(48), dp(48))
+            })
+            row.addView(TextView(requireContext()).apply {
+                text = label
+                setPadding(dp(16), 0, 0, 0)
+                setTextColor(ContextCompat.getColor(context, R.color.cl_fg))
+                textSize = 22f
+                maxLines = 1
+                ellipsize = android.text.TextUtils.TruncateAt.END
+            })
+            container.addView(row)
+        }
+
+        fun addLeg(leg: CourseLeg) {
+            val segment = LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = android.view.Gravity.CENTER_VERTICAL
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    dp(34),
+                )
+            }
+            val lineSlot = FrameLayout(requireContext()).apply {
+                layoutParams = LinearLayout.LayoutParams(dp(48), LinearLayout.LayoutParams.MATCH_PARENT)
+                addView(View(context).apply {
+                    setBackgroundColor(ContextCompat.getColor(context, R.color.cl_aqua))
+                    layoutParams = FrameLayout.LayoutParams(dp(3), FrameLayout.LayoutParams.MATCH_PARENT, android.view.Gravity.CENTER)
+                })
+            }
+            segment.addView(lineSlot)
+            segment.addView(TextView(requireContext()).apply {
+                text = getString(R.string.course_leg_format, leg.distanceKm, leg.durationMinutes)
+                setTextColor(ContextCompat.getColor(context, R.color.cl_aqua))
+                textSize = 17f
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+                setPadding(dp(16), 0, 0, 0)
+            })
+            container.addView(segment)
+        }
+
+        addStop(getString(R.string.course_start_hidden_short), "출")
+        legs.forEachIndexed { index, leg ->
+            addLeg(leg)
+            val isArrival = index == legs.lastIndex
+            addStop(
+                leg.destination,
+                if (isArrival) getString(R.string.course_arrival) else (index + 1).toString(),
+                arrival = isArrival,
+            )
+        }
     }
 
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
@@ -265,9 +556,45 @@ class CourseFragment : Fragment(R.layout.fragment_course) {
 
 /** Result of the last locally persisted demo drive. */
 class TripResultFragment : Fragment(R.layout.fragment_trip_result) {
+    private val chooseLogMedia = registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
+        if (uris.isEmpty()) return@registerForActivityResult
+        val context = context ?: return@registerForActivityResult
+        val recordId = arguments?.getString(ARG_RECORD_ID) ?: return@registerForActivityResult
+        uris.forEach { uri ->
+            runCatching {
+                context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+        }
+        DriveLogContentStore.addMedia(context, recordId, uris)
+        val record = DriveHistoryStore.all(context).firstOrNull { it.id == recordId }
+        if (record != null && DriveLogContentStore.caption(context, recordId) == null) {
+            DriveLogContentStore.saveCaption(context, recordId, autoCaption(record, uris.size))
+        }
+        view?.let { root ->
+            renderLogMedia(root, recordId)
+            if (record != null) renderLogCaption(root, record)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val args = requireArguments()
+        val historyDetail = args.getBoolean(ARG_HISTORY_DETAIL)
+        val recordId = args.getString(ARG_RECORD_ID).orEmpty()
+        view.findViewById<TextView>(R.id.resultHeadline).setText(
+            if (historyDetail) R.string.my_log_detail_title else R.string.result_title,
+        )
         view.findViewById<TextView>(R.id.resultDestination).text = args.getString(ARG_DESTINATION).orEmpty()
+        view.findViewById<TextView>(R.id.resultRecordedAt).apply {
+            visibility = if (historyDetail) View.VISIBLE else View.GONE
+            text = getString(
+                R.string.my_log_recorded_at,
+                java.text.SimpleDateFormat("yyyy.MM.dd (E) HH:mm", Locale.KOREA)
+                    .format(java.util.Date(args.getLong(ARG_COMPLETED_AT))),
+            )
+        }
+        view.findViewById<TextView>(R.id.resultSavedLabel).setText(
+            if (historyDetail) R.string.my_log_saved_label else R.string.result_saved,
+        )
         view.findViewById<TextView>(R.id.resultDistance).text = String.format(
             Locale.getDefault(), "%.1f km", args.getDouble(ARG_DISTANCE),
         )
@@ -277,11 +604,46 @@ class TripResultFragment : Fragment(R.layout.fragment_trip_result) {
         view.findViewById<TextView>(R.id.resultAverage).text = getString(
             R.string.result_speed_format, args.getInt(ARG_AVERAGE),
         )
-        view.findViewById<TextView>(R.id.resultEvents).text = getString(
-            if (args.getBoolean(ARG_FOLLOWED_COURSE)) R.string.result_course_events else R.string.result_home_events,
+        view.findViewById<TextView>(R.id.resultEvents).text = if (historyDetail) {
+            getString(R.string.my_log_likes_format, args.getInt(ARG_LIKES_RECEIVED))
+        } else {
+            getString(if (args.getBoolean(ARG_FOLLOWED_COURSE)) R.string.result_course_events else R.string.result_home_events)
+        }
+        val record = DriveHistoryStore.all(requireContext()).firstOrNull { it.id == recordId }
+            ?: DriveRecord(
+                id = recordId,
+                destination = args.getString(ARG_DESTINATION).orEmpty(),
+                distanceKm = args.getDouble(ARG_DISTANCE),
+                durationSeconds = args.getInt(ARG_DURATION),
+                averageSpeedKmh = args.getInt(ARG_AVERAGE),
+                followedFriendCourse = args.getBoolean(ARG_FOLLOWED_COURSE),
+                completedAt = args.getLong(ARG_COMPLETED_AT),
+                likesReceived = args.getInt(ARG_LIKES_RECEIVED),
+                courseId = args.getString(ARG_COURSE_ID),
+            )
+        view.findViewById<com.example.carlog_hd_frontend.ui.map.RouteMapView>(R.id.resultRouteMap).apply {
+            route = DemoCourses.byId(record.courseId)?.route ?: CarlogRoutes.MINE
+            progress = 1f
+            showTrack = true
+            showCar = false
+        }
+        renderLogMedia(view, recordId)
+        renderLogCaption(view, record)
+        view.findViewById<View>(R.id.btnAddLogMedia).setOnClickListener {
+            chooseLogMedia.launch(arrayOf("image/*", "video/*"))
+        }
+        view.findViewById<View>(R.id.btnEditLog).setOnClickListener {
+            showLogEditor(record, recordId)
+        }
+        view.findViewById<View>(R.id.btnPreviewShorts).setOnClickListener {
+            showShortsPreview(record, recordId)
+        }
+        view.findViewById<MaterialButton>(R.id.btnResultHome).setText(
+            if (historyDetail) R.string.my_log_back_to_my else R.string.result_home_button,
         )
         view.findViewById<View>(R.id.btnResultHome).setOnClickListener {
-            (activity as? DriveActions)?.returnHome()
+            if (historyDetail) (activity as? DriveActions)?.returnToMy()
+            else (activity as? DriveActions)?.returnHome()
         }
     }
 
@@ -291,17 +653,142 @@ class TripResultFragment : Fragment(R.layout.fragment_trip_result) {
         private const val ARG_DURATION = "duration"
         private const val ARG_AVERAGE = "average"
         private const val ARG_FOLLOWED_COURSE = "followed_course"
+        private const val ARG_HISTORY_DETAIL = "history_detail"
+        private const val ARG_COMPLETED_AT = "completed_at"
+        private const val ARG_LIKES_RECEIVED = "likes_received"
+        private const val ARG_RECORD_ID = "record_id"
+        private const val ARG_COURSE_ID = "course_id"
 
-        fun newInstance(record: DriveRecord) = TripResultFragment().apply {
+        fun newInstance(record: DriveRecord, historyDetail: Boolean = false) = TripResultFragment().apply {
             arguments = Bundle().apply {
                 putString(ARG_DESTINATION, record.destination)
                 putDouble(ARG_DISTANCE, record.distanceKm)
                 putInt(ARG_DURATION, record.durationSeconds)
                 putInt(ARG_AVERAGE, record.averageSpeedKmh)
                 putBoolean(ARG_FOLLOWED_COURSE, record.followedFriendCourse)
+                putBoolean(ARG_HISTORY_DETAIL, historyDetail)
+                putLong(ARG_COMPLETED_AT, record.completedAt)
+                putInt(ARG_LIKES_RECEIVED, record.likesReceived)
+                putString(ARG_RECORD_ID, record.id)
+                putString(ARG_COURSE_ID, record.courseId)
             }
         }
     }
+
+    private fun renderLogMedia(root: View, recordId: String) {
+        val media = DriveLogContentStore.media(requireContext(), recordId)
+        val list = root.findViewById<LinearLayout>(R.id.resultMediaList)
+        list.removeAllViews()
+        root.findViewById<TextView>(R.id.resultMediaEmpty).apply {
+            visibility = if (media.isEmpty()) View.VISIBLE else View.GONE
+        }
+        media.forEachIndexed { index, uri ->
+            val tile = LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.VERTICAL
+                gravity = android.view.Gravity.CENTER_HORIZONTAL
+                setPadding(0, 0, dp(12), 0)
+                layoutParams = LinearLayout.LayoutParams(dp(220), LinearLayout.LayoutParams.WRAP_CONTENT)
+                isClickable = true
+                isFocusable = true
+                setOnClickListener { openLogMedia(uri) }
+            }
+            val preview = ImageView(requireContext()).apply {
+                scaleType = ImageView.ScaleType.CENTER_CROP
+                setBackgroundResource(R.drawable.bg_stat)
+                layoutParams = LinearLayout.LayoutParams(dp(208), dp(136))
+                val type = requireContext().contentResolver.getType(uri).orEmpty()
+                val bitmap = runCatching {
+                    if (type.startsWith("video/")) {
+                        MediaMetadataRetriever().let { retriever ->
+                            try {
+                                retriever.setDataSource(requireContext(), uri)
+                                retriever.getFrameAtTime(0)
+                            } finally {
+                                retriever.release()
+                            }
+                        }
+                    } else {
+                        requireContext().contentResolver.openInputStream(uri)?.use { android.graphics.BitmapFactory.decodeStream(it) }
+                    }
+                }.getOrNull()
+                if (bitmap != null) setImageBitmap(bitmap)
+                else setImageResource(if (type.startsWith("video/")) R.drawable.ic_nav_drive else R.drawable.ic_nav_course)
+                contentDescription = getString(R.string.my_log_media_item, index + 1)
+            }
+            tile.addView(preview)
+            tile.addView(TextView(requireContext()).apply {
+                text = if (requireContext().contentResolver.getType(uri).orEmpty().startsWith("video/"))
+                    getString(R.string.my_log_video_item, index + 1)
+                else getString(R.string.my_log_photo_item, index + 1)
+                setTextColor(ContextCompat.getColor(context, R.color.cl_muted))
+                textSize = 16f
+                setPadding(0, dp(6), 0, dp(4))
+            })
+            list.addView(tile)
+        }
+    }
+
+    private fun renderLogCaption(root: View, record: DriveRecord) {
+        val recordId = arguments?.getString(ARG_RECORD_ID).orEmpty()
+        val mediaCount = DriveLogContentStore.media(requireContext(), recordId).size
+        val caption = DriveLogContentStore.caption(requireContext(), recordId)
+            ?: autoCaption(record, mediaCount)
+        root.findViewById<TextView>(R.id.resultLogCaption).text = caption
+    }
+
+    private fun autoCaption(record: DriveRecord, mediaCount: Int): String {
+        val resource = if (mediaCount == 0) R.string.my_log_auto_caption_no_media
+        else R.string.my_log_auto_caption_with_media
+        val distance = String.format(Locale.getDefault(), "%.1f", record.distanceKm)
+        return if (mediaCount == 0) {
+            getString(resource, record.destination, distance, record.durationSeconds / 60)
+        } else {
+            getString(resource, record.destination, distance, record.durationSeconds / 60, mediaCount)
+        }
+    }
+
+    private fun showLogEditor(record: DriveRecord, recordId: String) {
+        val editor = EditText(requireContext()).apply {
+            minLines = 4
+            maxLines = 8
+            gravity = android.view.Gravity.TOP
+            setText(DriveLogContentStore.caption(requireContext(), recordId) ?: autoCaption(
+                record, DriveLogContentStore.media(requireContext(), recordId).size,
+            ))
+            setSelection(text.length)
+            setPadding(dp(20), dp(16), dp(20), dp(16))
+        }
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.my_log_edit_title)
+            .setView(editor)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(R.string.my_log_edit_save) { _, _ ->
+                DriveLogContentStore.saveCaption(requireContext(), recordId, editor.text.toString().trim())
+                view?.let { renderLogCaption(it, record) }
+            }
+            .show()
+    }
+
+    private fun showShortsPreview(record: DriveRecord, recordId: String) {
+        val mediaCount = DriveLogContentStore.media(requireContext(), recordId).size
+        val caption = DriveLogContentStore.caption(requireContext(), recordId) ?: autoCaption(record, mediaCount)
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.my_log_preview_shorts_title)
+            .setMessage(getString(R.string.my_log_preview_shorts_message, caption, mediaCount))
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
+    }
+
+    private fun openLogMedia(uri: Uri) {
+        val type = requireContext().contentResolver.getType(uri) ?: "*/*"
+        runCatching {
+            startActivity(Intent(Intent.ACTION_VIEW).setDataAndType(uri, type).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION))
+        }.onFailure {
+            Toast.makeText(requireContext(), R.string.my_log_media_open_failed, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 }
 
 /** Titles are still demo data; the first successful simulation awards a sample title. */
@@ -311,18 +798,19 @@ class TitlesFragment : Fragment(R.layout.fragment_titles) {
         @StringRes val name: Int,
         @StringRes val rule: Int,
         @StringRes val data: Int,
+        val emoji: String,
         val earned: Boolean,
     )
 
     private val titles by lazy {
         val hasCompletedDrive = DriveHistoryStore.all(requireContext()).isNotEmpty()
         listOf(
-            Title(R.string.title_firefly_name, R.string.title_firefly_rule, R.string.title_firefly_data, earned = hasCompletedDrive),
-            Title(R.string.title_cloud_name, R.string.title_cloud_rule, R.string.title_cloud_data, earned = false),
-            Title(R.string.title_cruise_name, R.string.title_cruise_rule, R.string.title_cruise_data, earned = false),
-            Title(R.string.title_rain_name, R.string.title_rain_rule, R.string.title_rain_data, earned = false),
-            Title(R.string.title_night_name, R.string.title_night_rule, R.string.title_night_data, earned = false),
-            Title(R.string.title_follower_name, R.string.title_follower_rule, R.string.title_follower_data, earned = false),
+            Title(R.string.title_firefly_name, R.string.title_firefly_rule, R.string.title_firefly_data, "🚦", earned = hasCompletedDrive),
+            Title(R.string.title_cloud_name, R.string.title_cloud_rule, R.string.title_cloud_data, "☁️", earned = false),
+            Title(R.string.title_cruise_name, R.string.title_cruise_rule, R.string.title_cruise_data, "🛣️", earned = false),
+            Title(R.string.title_rain_name, R.string.title_rain_rule, R.string.title_rain_data, "🌧️", earned = false),
+            Title(R.string.title_night_name, R.string.title_night_rule, R.string.title_night_data, "🌙", earned = false),
+            Title(R.string.title_follower_name, R.string.title_follower_rule, R.string.title_follower_data, "🧭", earned = false),
         )
     }
 
@@ -351,6 +839,7 @@ class TitlesFragment : Fragment(R.layout.fragment_titles) {
     }
 
     private fun bind(card: View, title: Title) {
+        card.findViewById<TextView>(R.id.titleEmoji).text = title.emoji
         card.findViewById<TextView>(R.id.titleName).setText(title.name)
         card.findViewById<TextView>(R.id.titleRule).setText(title.rule)
         card.findViewById<TextView>(R.id.titleData).setText(title.data)

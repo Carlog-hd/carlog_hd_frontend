@@ -31,10 +31,15 @@
 
     <!-- 코스 탭 (ivDiscover, 민지 님 코스를 받은 상태 샘플) -->
     <string name="course_kicker">FOLLOW A FRIEND\'S DRIVE</string>
+    <string name="course_discover_headline">친구가 실제로 달린 코스</string>
+    <string name="course_discover_lead">대표 이미지를 눌러 코스 경로와 경유지를 확인해 보세요.</string>
+    <string name="course_back_to_list">‹ 코스 목록</string>
+    <string name="course_cover_desc">%1$s 대표 풍경</string>
     <string name="course_headline_sample">민지 님의 드라이브 · 북한강 따라 가평까지</string>
     <string name="course_lead_sample">토요일 오후 3:20 출발 · 맑음 · 부드러운 구름 드라이버</string>
     <string name="course_map_desc">친구가 달린 %1$s 코스 지도, 출발지는 가려져 있음</string>
     <string name="course_start_hidden">출발지는 공유자가 숨겼어요</string>
+    <string name="course_start_hidden_short">공개하지 않은 출발지</string>
     <string name="course_total_distance">총거리</string>
     <string name="course_total_distance_sample">167</string>
     <string name="course_actual_time">실제 소요</string>
@@ -54,6 +59,9 @@
     <string name="course_filter_night">야경</string>
     <string name="course_filter_saved">저장한 코스</string>
     <string name="course_save">코스 저장</string>
+    <string name="course_like">♡ 좋아요</string>
+    <string name="course_unlike">♥ 좋아요</string>
+    <string name="course_leg_format">%1$.1f km · 약 %2$d분</string>
     <string name="course_unsave">저장 해제</string>
     <string name="course_saved_toast">코스를 저장했어요. 이 기기에 보관됩니다.</string>
     <string name="course_removed_toast">저장한 코스에서 제거했어요.</string>
@@ -63,6 +71,64 @@
     <string name="course_empty_filter">이 분류에 표시할 코스가 없습니다.</string>
     <string name="course_demo_notice">표시된 코스는 시연용 샘플이에요. 실제 내비 경유지 전달은 NaviHelper 연동 후 사용할 수 있어요.</string>
     <string name="course_note_dynamic">공개된 경유지만 내비게이션 안내에 전달합니다. 출발 위치와 원본 주행 궤적은 공개하지 않아요.</string>
+
+    <!-- 차량 MY 화면 -->
+    <string name="my_headline">나의 CARLOG</string>
+    <string name="my_lead">나의 주행 로그와 이번 달 활동, 휴대폰 연동을 한곳에서 관리해요.</string>
+    <string name="my_month_summary">이번 달 요약</string>
+    <string name="my_month_drives">주행 횟수</string>
+    <string name="my_month_distance">주행 거리</string>
+    <string name="my_month_average_speed">평균 속도</string>
+    <string name="my_month_received_likes">받은 좋아요</string>
+    <string name="my_phone_title">휴대폰 연동</string>
+    <string name="my_phone_connected">나의 휴대폰 · 데모 연동됨</string>
+    <string name="my_phone_description">주행 로그를 내보내거나 백업 파일을 가져와 동기화할 수 있어요.</string>
+    <string name="my_phone_manage">연동 정보</string>
+    <string name="my_phone_details">차량에서는 연결된 휴대폰으로 주행 로그를 전달하고, 휴대폰에서 저장한 CARLOG 백업 파일을 가져올 수 있어요. 현재 화면은 연동 흐름을 확인하는 데모이며 실제 Bluetooth·계정 동기화는 연동 모듈이 필요합니다.</string>
+    <string name="my_privacy_title">원본 위치 기록 비공개</string>
+    <string name="my_privacy_description">친구에게 코스를 공유해도 출발 위치와 원본 주행 궤적은 공개하지 않아요. 공유 범위는 휴대폰에서 직접 선택할 수 있어요.</string>
+    <string name="my_settings_title">기록 설정</string>
+    <string name="my_auto_record">내비 안내 시 자동 기록</string>
+    <string name="my_auto_record_description">켜 두면 안내 시작과 함께 CARLOG 기록을 시작해요.</string>
+    <string name="my_resume_after_stop">정차 후 이어가기 확인</string>
+    <string name="my_resume_after_stop_description">30분 안에 다시 출발하면 이전 기록에 이어갈지 물어봐요.</string>
+    <string name="my_setting_saved">MY 설정을 저장했어요.</string>
+    <string name="my_backup_title">CARLOG 데이터 백업</string>
+    <string name="my_backup_description">주행 로그, 저장·좋아요 코스, MY 설정을 JSON 파일로 옮겨요.</string>
+    <string name="my_backup_export">내보내기</string>
+    <string name="my_backup_import">가져오기</string>
+    <string name="my_backup_open_failed">선택한 파일을 열 수 없습니다.</string>
+    <string name="my_backup_exported">CARLOG 백업 파일을 저장했어요.</string>
+    <string name="my_backup_failed">백업 파일을 만들지 못했어요.</string>
+    <string name="my_backup_imported">로그 %1$d건 · 저장 코스 %2$d개 · 좋아요 코스 %3$d개를 가져왔어요.</string>
+    <string name="my_backup_import_error">가져오지 못했어요: %1$s</string>
+    <string name="my_recent_drives">나의 CARLOG 로그</string>
+    <string name="my_no_drives">아직 저장된 로그가 없어요. 주행을 마치면 여기에 모여요.</string>
+    <string name="my_drive_row_meta">%1$s km · %2$d분</string>
+    <string name="my_open_drive_log">%1$s 주행 로그 상세 열기</string>
+    <string name="my_log_detail_title">주행 로그 상세</string>
+    <string name="my_log_recorded_at">주행 일시 · %1$s</string>
+    <string name="my_log_saved_label">저장된 주행 기록</string>
+    <string name="my_log_likes_format">받은 좋아요 · ♥ %1$d</string>
+    <string name="my_log_back_to_my">MY 로그로 돌아가기</string>
+    <string name="my_log_map_title">나의 주행 경로</string>
+    <string name="my_log_map_description">주행 로그에 저장된 경로 지도</string>
+    <string name="my_log_media_title">사진과 동영상</string>
+    <string name="my_log_media_empty">아직 첨부한 사진이나 동영상이 없어요. 파일을 추가하면 로그 초안에 반영돼요.</string>
+    <string name="my_log_add_media">사진·동영상 올리기</string>
+    <string name="my_log_edit">로그 편집</string>
+    <string name="my_log_auto_title">CARLOG 자동 로그 초안</string>
+    <string name="my_log_auto_caption_no_media">%1$s까지 %2$s km를 %3$d분 동안 주행했어요. 이 기록에 나만의 메모를 남겨 보세요.</string>
+    <string name="my_log_auto_caption_with_media">%1$s까지 %2$s km를 %3$d분 동안 달렸어요. 사진·동영상 %4$d개를 모아 오늘의 드라이브 로그를 만들었어요.</string>
+    <string name="my_log_edit_title">로그 내용 편집</string>
+    <string name="my_log_edit_save">저장</string>
+    <string name="my_log_preview_shorts">숏츠 초안 미리보기</string>
+    <string name="my_log_preview_shorts_title">CARLOG 숏츠 초안</string>
+    <string name="my_log_preview_shorts_message">%1$s\n\n첨부 미디어 %2$d개를 순서대로 담는 초안이에요. 실제 숏츠 영상 파일 생성·내보내기는 영상 편집 연동이 필요합니다.</string>
+    <string name="my_log_media_item">첨부 미디어 %1$d</string>
+    <string name="my_log_video_item">▶ 동영상 %1$d</string>
+    <string name="my_log_photo_item">사진 %1$d</string>
+    <string name="my_log_media_open_failed">이 파일을 열 수 있는 앱을 찾지 못했어요.</string>
 
     <!-- 칭호 탭 (ivTitles) -->
     <string name="titles_kicker">TITLES</string>

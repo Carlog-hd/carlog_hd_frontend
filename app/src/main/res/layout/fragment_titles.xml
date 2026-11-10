@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 칭호 탭 (carlog-demo.html ivTitles() 기준). 카드는 TitlesFragment 에서 3열로 채웁니다. -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:overScrollMode="never"
+    android:scrollbars="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,4 +37,4 @@
             android:layout_marginTop="40dp"
             android:orientation="vertical" />
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

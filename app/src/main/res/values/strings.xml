@@ -6,8 +6,9 @@
     <string name="logo_log">LOG.</string>
     <string name="nav_home">홈</string>
     <string name="nav_drive">주행</string>
-    <string name="nav_course">코스</string>
-    <string name="nav_titles">칭호</string>
+    <string name="nav_course">발견</string>
+    <string name="nav_titles">도감</string>
+    <string name="nav_my">MY</string>
     <string name="drive_navigation_locked">시뮬레이션 주행 중에는 주행 화면만 사용할 수 있어요.</string>
     <string name="rail_foot">PLEOS\nCONNECT</string>
 

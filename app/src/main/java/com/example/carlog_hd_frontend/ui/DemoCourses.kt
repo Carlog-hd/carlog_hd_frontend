@@ -1,6 +1,7 @@
 package com.example.carlog_hd_frontend.ui
 
 import android.content.Context
+import com.example.carlog_hd_frontend.R
 import com.example.carlog_hd_frontend.ui.map.CarlogRoute
 import com.example.carlog_hd_frontend.ui.map.CarlogRoutes
 
@@ -16,8 +17,17 @@ data class DemoCourse(
     val durationMinutes: Int,
     val destination: String,
     val waypoints: List<String>,
+    val legDistancesKm: List<Double>,
+    val legDurationMinutes: List<Int>,
+    val coverDrawable: Int,
     val route: CarlogRoute,
-)
+) {
+    fun legs(): List<CourseLeg> = (waypoints + destination).mapIndexed { index, name ->
+        CourseLeg(name, legDistancesKm[index], legDurationMinutes[index])
+    }
+}
+
+data class CourseLeg(val destination: String, val distanceKm: Double, val durationMinutes: Int)
 
 object DemoCourses {
     const val FILTER_ALL = "all"
@@ -39,6 +49,9 @@ object DemoCourses {
             durationMinutes = 134,
             destination = "가평 자라섬",
             waypoints = listOf("미사리 조정경기장", "두물머리", "청평호반"),
+            legDistancesKm = listOf(48.0, 35.0, 42.0, 42.0),
+            legDurationMinutes = listOf(39, 28, 34, 33),
+            coverDrawable = R.drawable.cover_course_river,
             route = CarlogRoutes.MINJI,
         ),
         DemoCourse(
@@ -53,6 +66,9 @@ object DemoCourses {
             durationMinutes = 112,
             destination = "강릉 안목해변",
             waypoints = listOf("낙산사 입구", "주문진항", "경포호"),
+            legDistancesKm = listOf(25.4, 39.0, 31.0, 37.0),
+            legDurationMinutes = listOf(22, 33, 26, 31),
+            coverDrawable = R.drawable.cover_course_coast,
             route = CarlogRoutes.COAST,
         ),
         DemoCourse(
@@ -67,6 +83,9 @@ object DemoCourses {
             durationMinutes = 48,
             destination = "반포 한강공원",
             waypoints = listOf("서울숲", "성수대교", "반포대교"),
+            legDistancesKm = listOf(4.2, 3.6, 5.1, 5.7),
+            legDurationMinutes = listOf(12, 9, 13, 14),
+            coverDrawable = R.drawable.cover_course_night,
             route = CarlogRoutes.NIGHT,
         ),
     )
@@ -84,6 +103,15 @@ object SavedCourseStore {
         ?.toSet()
         .orEmpty()
 
+    fun merge(context: Context, courseIds: Set<String>): Int {
+        val validIds = courseIds.intersect(DemoCourses.all.map { it.id }.toSet())
+        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+            .edit()
+            .putStringSet(KEY_SAVED_COURSES, ids(context) + validIds)
+            .apply()
+        return validIds.size
+    }
+
     fun contains(context: Context, courseId: String): Boolean = courseId in ids(context)
 
     fun toggle(context: Context, courseId: String): Boolean {
@@ -100,5 +128,46 @@ object SavedCourseStore {
             .putStringSet(KEY_SAVED_COURSES, saved)
             .apply()
         return isNowSaved
+    }
+}
+
+/** Like state is stored locally on this emulator until the social API is connected. */
+object LikedCourseStore {
+    private const val PREFS = "carlog_demo"
+    private const val KEY_LIKED_COURSES = "liked_course_ids"
+
+    fun ids(context: Context): Set<String> = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        .getStringSet(KEY_LIKED_COURSES, emptySet())
+        ?.toSet()
+        .orEmpty()
+
+    fun contains(context: Context, courseId: String): Boolean = courseId in ids(context)
+
+    fun merge(context: Context, courseIds: Set<String>): Int {
+        val validIds = courseIds.intersect(DemoCourses.all.map { it.id }.toSet())
+        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+            .edit()
+            .putStringSet(KEY_LIKED_COURSES, ids(context) + validIds)
+            .apply()
+        return validIds.size
+    }
+
+    fun toggle(context: Context, courseId: String): Boolean {
+        val liked = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+            .getStringSet(KEY_LIKED_COURSES, emptySet())
+            ?.toMutableSet()
+            ?: mutableSetOf()
+        val isNowLiked = if (courseId in liked) {
+            liked.remove(courseId)
+            false
+        } else {
+            liked.add(courseId)
+            true
+        }
+        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+            .edit()
+            .putStringSet(KEY_LIKED_COURSES, liked)
+            .apply()
+        return isNowLiked
     }
 }

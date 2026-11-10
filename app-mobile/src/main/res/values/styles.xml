@@ -65,6 +65,9 @@
     <!-- 통계 값 / 라벨 (.stat b, .stat span) -->
     <style name="Carlog.Text.StatValue">
         <item name="android:textSize">@dimen/cl_text_stat</item>
+        <!-- 한글(예: 1회)과 숫자가 섞여도 칸마다 높이가 같도록: 줄 높이 고정 + 한글 대체 폰트가 줄 높이를 늘리지 않게 -->
+        <item name="android:lineHeight">@dimen/cl_line_height_stat</item>
+        <item name="android:fallbackLineSpacing">false</item>
         <item name="android:fontFamily">sans-serif-black</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:gravity">center</item>
@@ -72,6 +75,8 @@
 
     <style name="Carlog.Text.StatLabel">
         <item name="android:textSize">@dimen/cl_text_small</item>
+        <item name="android:lineHeight">@dimen/cl_line_height_small</item>
+        <item name="android:fallbackLineSpacing">false</item>
         <item name="android:textColor">@color/cl_ink3</item>
         <item name="android:gravity">center</item>
     </style>

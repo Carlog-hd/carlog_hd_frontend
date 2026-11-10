@@ -134,14 +134,21 @@
     </FrameLayout>
 
     <!-- ===== CARLOG 기록 패널 ===== -->
-    <LinearLayout
+    <ScrollView
         android:id="@+id/recordPanel"
         android:layout_width="660dp"
         android:layout_height="match_parent"
         android:layout_marginStart="28dp"
         android:background="@drawable/bg_panel"
-        android:orientation="vertical"
-        android:padding="40dp">
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="40dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -366,5 +373,6 @@
                 android:layout_weight="1"
                 android:text="@string/drive_finish_sim" />
         </LinearLayout>
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

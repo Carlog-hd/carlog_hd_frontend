@@ -31,7 +31,38 @@
             style="@style/Carlog.Text.Lead"
             android:text="@string/course_lead_sample" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/course_filter_label"
+            android:textColor="@color/cl_muted"
+            android:textSize="22sp" />
+
         <LinearLayout
+            android:id="@+id/courseFilters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clipToPadding="false"
+            android:fillViewport="false"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/courseChoices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:id="@+id/courseDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -41,7 +72,7 @@
             <!-- 친구 코스 지도 -->
             <FrameLayout
                 android:layout_width="0dp"
-                android:layout_height="760dp"
+                android:layout_height="620dp"
                 android:layout_weight="1.4">
 
                 <com.example.carlog_hd_frontend.ui.map.RouteMapView
@@ -164,6 +195,7 @@
                             android:text="1" />
 
                         <TextView
+                            android:id="@+id/courseWaypoint1"
                             style="@style/Carlog.Waypoint.Name"
                             android:text="@string/course_wp1_sample" />
                     </LinearLayout>
@@ -175,6 +207,7 @@
                             android:text="2" />
 
                         <TextView
+                            android:id="@+id/courseWaypoint2"
                             style="@style/Carlog.Waypoint.Name"
                             android:text="@string/course_wp2_sample" />
                     </LinearLayout>
@@ -186,6 +219,7 @@
                             android:text="3" />
 
                         <TextView
+                            android:id="@+id/courseWaypoint3"
                             style="@style/Carlog.Waypoint.Name"
                             android:text="@string/course_wp3_sample" />
                     </LinearLayout>
@@ -199,12 +233,14 @@
                             android:textSize="22sp" />
 
                         <TextView
+                            android:id="@+id/courseDestination"
                             style="@style/Carlog.Waypoint.Name"
                             android:text="@string/course_dest_sample" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/courseDemoNotice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="28dp"
@@ -216,14 +252,30 @@
                     android:textColor="@color/cl_muted"
                     android:textSize="24sp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnFollowCourse"
-                    style="@style/Carlog.Button"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="128dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="28dp"
-                    android:text="@string/course_follow"
-                    android:textSize="38sp" />
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSaveCourse"
+                        style="@style/Carlog.Button.GhostSmall"
+                        android:layout_width="0dp"
+                        android:layout_height="112dp"
+                        android:layout_weight="1"
+                        android:text="@string/course_save" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnFollowCourse"
+                        style="@style/Carlog.Button"
+                        android:layout_width="0dp"
+                        android:layout_height="112dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1.6"
+                        android:text="@string/course_follow"
+                        android:textSize="32sp" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

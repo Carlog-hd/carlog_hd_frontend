@@ -16,6 +16,7 @@ import com.example.carlog_hd_frontend.ui.DriveActions
 import com.example.carlog_hd_frontend.ui.DriveFragment
 import com.example.carlog_hd_frontend.ui.DriveHistoryStore
 import com.example.carlog_hd_frontend.ui.DriveRecord
+import com.example.carlog_hd_frontend.ui.DemoCourses
 import com.example.carlog_hd_frontend.ui.HomeFragment
 import com.example.carlog_hd_frontend.ui.TitlesFragment
 import com.example.carlog_hd_frontend.ui.TripResultFragment
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity(), DriveActions {
     private var seconds = 0
     private var isDriving = false
     private var isPaused = false
-    private var followingFriendCourse = false
+    private var selectedCourseId: String? = null
     private val simulationDurationSeconds = 45
     private val tick = object : Runnable {
         override fun run() {
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity(), DriveActions {
 
         Tab.values().forEach { tab ->
             findViewById<View>(tab.navId).setOnClickListener {
-                if (tab == Tab.DRIVE && !isDriving) startDemoDrive(followCourse = false) else select(tab)
+                if (tab == Tab.DRIVE && !isDriving) startDemoDrive(courseId = null) else select(tab)
             }
         }
 
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity(), DriveActions {
             seconds = savedInstanceState?.getInt(KEY_SECONDS, 0) ?: 0
             isDriving = savedInstanceState?.getBoolean(KEY_IS_DRIVING, false) ?: false
             isPaused = savedInstanceState?.getBoolean(KEY_IS_PAUSED, false) ?: false
-            followingFriendCourse = savedInstanceState?.getBoolean(KEY_FOLLOWING_COURSE, false) ?: false
+            selectedCourseId = savedInstanceState.getString(KEY_COURSE_ID)
             if (isDriving) {
                 supportFragmentManager.executePendingTransactions()
                 updateDriveScreen()
@@ -85,7 +86,7 @@ class MainActivity : AppCompatActivity(), DriveActions {
         outState.putInt(KEY_SECONDS, seconds)
         outState.putBoolean(KEY_IS_DRIVING, isDriving)
         outState.putBoolean(KEY_IS_PAUSED, isPaused)
-        outState.putBoolean(KEY_FOLLOWING_COURSE, followingFriendCourse)
+        outState.putString(KEY_COURSE_ID, selectedCourseId)
         super.onSaveInstanceState(outState)
     }
 
@@ -107,9 +108,9 @@ class MainActivity : AppCompatActivity(), DriveActions {
         updateChrome()
     }
 
-    override fun startDemoDrive(followCourse: Boolean) {
+    override fun startDemoDrive(courseId: String?) {
         handler.removeCallbacks(tick)
-        followingFriendCourse = followCourse
+        selectedCourseId = courseId
         seconds = 0
         isDriving = true
         isPaused = false
@@ -136,15 +137,17 @@ class MainActivity : AppCompatActivity(), DriveActions {
     override fun finishDemoDrive() {
         if (!isDriving) return
         handler.removeCallbacks(tick)
-        val totalDistance = if (followingFriendCourse) 167.0 else 60.4
+        val selectedCourse = DemoCourses.byId(selectedCourseId)
+        val totalDistance = selectedCourse?.distanceKm ?: 60.4
+        val totalDurationSeconds = (selectedCourse?.durationMinutes ?: 67) * 60
         val progress = (seconds.toFloat() / simulationDurationSeconds).coerceIn(0f, 1f)
         val record = DriveRecord(
             id = System.currentTimeMillis().toString(),
-            destination = if (followingFriendCourse) getString(R.string.course_dest_sample) else getString(R.string.home_dest_name_sample),
+            destination = selectedCourse?.destination ?: getString(R.string.home_dest_name_sample),
             distanceKm = totalDistance * progress,
-            durationSeconds = (seconds * 90).coerceAtLeast(1),
-            averageSpeedKmh = if (followingFriendCourse) 72 else 54,
-            followedFriendCourse = followingFriendCourse,
+            durationSeconds = (totalDurationSeconds * progress).toInt().coerceAtLeast(1),
+            averageSpeedKmh = selectedCourse?.averageSpeedKmh ?: 54,
+            followedFriendCourse = selectedCourse != null,
             completedAt = System.currentTimeMillis(),
         )
         DriveHistoryStore.save(this, record)
@@ -174,7 +177,7 @@ class MainActivity : AppCompatActivity(), DriveActions {
             elapsedSeconds = seconds,
             durationSeconds = simulationDurationSeconds,
             paused = isPaused,
-            friendCourse = followingFriendCourse,
+            course = DemoCourses.byId(selectedCourseId),
         )
     }
 
@@ -209,6 +212,6 @@ class MainActivity : AppCompatActivity(), DriveActions {
         const val KEY_SECONDS = "seconds"
         const val KEY_IS_DRIVING = "is_driving"
         const val KEY_IS_PAUSED = "is_paused"
-        const val KEY_FOLLOWING_COURSE = "following_course"
+        const val KEY_COURSE_ID = "course_id"
     }
 }

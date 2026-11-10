@@ -33,6 +33,22 @@ object CarlogRoutes {
         waypoints = listOf(0.25f, 0.5f, 0.75f),
     )
 
+    /** Sample coastal route used by the IVI course discovery simulator. */
+    val COAST = CarlogRoute(
+        pathData = "M55,350 C130,330 175,285 225,270 S300,305 355,250 C420,185 465,220 505,165 S585,105 650,58",
+        start = PointF(55f, 350f),
+        end = PointF(650f, 58f),
+        waypoints = listOf(0.28f, 0.55f, 0.78f),
+    )
+
+    /** Sample city night route used by the IVI course discovery simulator. */
+    val NIGHT = CarlogRoute(
+        pathData = "M58,70 C160,95 165,180 250,190 S360,105 405,175 C455,250 520,200 548,275 S610,330 650,355",
+        start = PointF(58f, 70f),
+        end = PointF(650f, 355f),
+        waypoints = listOf(0.22f, 0.5f, 0.76f),
+    )
+
     /** attrs.xml carlogRoute enum 값 순서와 같아야 합니다. */
     fun byIndex(index: Int): CarlogRoute = if (index == 1) MINJI else MINE
 

@@ -33,7 +33,7 @@
     <string name="course_kicker">FOLLOW A FRIEND\'S DRIVE</string>
     <string name="course_headline_sample">민지 님의 드라이브 · 북한강 따라 가평까지</string>
     <string name="course_lead_sample">토요일 오후 3:20 출발 · 맑음 · 부드러운 구름 드라이버</string>
-    <string name="course_map_desc">친구가 달린 북한강 코스 지도, 출발지는 가려져 있음</string>
+    <string name="course_map_desc">친구가 달린 %1$s 코스 지도, 출발지는 가려져 있음</string>
     <string name="course_start_hidden">출발지는 공유자가 숨겼어요</string>
     <string name="course_total_distance">총거리</string>
     <string name="course_total_distance_sample">167</string>
@@ -47,6 +47,22 @@
     <string name="course_dest_sample">가평 자라섬</string>
     <string name="course_note">친구가 실제로 달린 경로에서 주요 경유지를 골라 보내기 때문에, 목적지만 공유할 때와 달리 같은 길을 따라갈 수 있어요.</string>
     <string name="course_follow">이 코스로 안내 시작</string>
+    <string name="course_filter_label">주행 취향으로 코스 찾기</string>
+    <string name="course_filter_all">전체</string>
+    <string name="course_filter_river">강변</string>
+    <string name="course_filter_coast">해안</string>
+    <string name="course_filter_night">야경</string>
+    <string name="course_filter_saved">저장한 코스</string>
+    <string name="course_save">코스 저장</string>
+    <string name="course_unsave">저장 해제</string>
+    <string name="course_saved_toast">코스를 저장했어요. 이 기기에 보관됩니다.</string>
+    <string name="course_removed_toast">저장한 코스에서 제거했어요.</string>
+    <string name="course_saved_label">저장됨</string>
+    <string name="course_choice_format">%1$s · %2$d km</string>
+    <string name="course_route_meta_format">%1$s · %2$d km · 경유지 %3$d곳</string>
+    <string name="course_empty_filter">이 분류에 표시할 코스가 없습니다.</string>
+    <string name="course_demo_notice">표시된 코스는 시연용 샘플이에요. 실제 내비 경유지 전달은 NaviHelper 연동 후 사용할 수 있어요.</string>
+    <string name="course_note_dynamic">공개된 경유지만 내비게이션 안내에 전달합니다. 출발 위치와 원본 주행 궤적은 공개하지 않아요.</string>
 
     <!-- 칭호 탭 (ivTitles) -->
     <string name="titles_kicker">TITLES</string>

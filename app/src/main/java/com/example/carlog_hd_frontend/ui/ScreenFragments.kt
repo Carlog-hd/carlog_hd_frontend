@@ -5,15 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.button.MaterialButton
 import com.example.carlog_hd_frontend.R
 import com.example.carlog_hd_frontend.ui.map.CarlogRoutes
 import java.util.Locale
 
 interface DriveActions {
-    fun startDemoDrive(followCourse: Boolean = false)
+    fun startDemoDrive(courseId: String? = null)
     fun toggleDemoDrive()
     fun finishDemoDrive()
     fun returnHome()
@@ -30,7 +33,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             if (records.isEmpty()) R.string.home_no_title else R.string.title_firefly_name,
         )
         view.findViewById<View>(R.id.btnStartGuidance).setOnClickListener {
-            (activity as? DriveActions)?.startDemoDrive(followCourse = false)
+            (activity as? DriveActions)?.startDemoDrive(courseId = null)
         }
         view.findViewById<View>(R.id.btnOpenCourse).apply {
             isEnabled = true
@@ -51,12 +54,13 @@ class DriveFragment : Fragment(R.layout.fragment_drive) {
         }
     }
 
-    fun renderSession(elapsedSeconds: Int, durationSeconds: Int, paused: Boolean, friendCourse: Boolean) {
+    fun renderSession(elapsedSeconds: Int, durationSeconds: Int, paused: Boolean, course: DemoCourse?) {
         val view = view ?: return
         val progress = (elapsedSeconds.toFloat() / durationSeconds).coerceIn(0f, 1f)
-        val distance = (if (friendCourse) 167.0 else 60.4) * progress
-        val speed = if (paused) 0 else 35 + elapsedSeconds * 7 % 31
-        val route = if (friendCourse) CarlogRoutes.MINJI else CarlogRoutes.MINE
+        val totalDistance = course?.distanceKm ?: 60.4
+        val distance = totalDistance * progress
+        val route = course?.route ?: CarlogRoutes.MINE
+        val durationMinutes = course?.durationMinutes ?: 67
 
         view.findViewById<com.example.carlog_hd_frontend.ui.map.RouteMapView>(R.id.driveMap).apply {
             this.route = route
@@ -64,16 +68,21 @@ class DriveFragment : Fragment(R.layout.fragment_drive) {
             showCar = true
             showTrack = true
         }
-        view.findViewById<TextView>(R.id.etaDest).text = getString(
-            if (friendCourse) R.string.course_dest_sample else R.string.home_dest_name_sample,
+        view.findViewById<TextView>(R.id.etaDest).text = course?.destination ?: getString(R.string.home_dest_name_sample)
+        view.findViewById<TextView>(R.id.etaLeft).text = String.format(
+            Locale.getDefault(), "%.1f km", (totalDistance - distance).coerceAtLeast(0.0),
         )
-        val simulatedSeconds = elapsedSeconds * 90
+        val arrivalMinutes = (14 * 60 + 12 + durationMinutes) % (24 * 60)
+        view.findViewById<TextView>(R.id.etaTime).text = String.format(
+            Locale.getDefault(), "%02d:%02d", arrivalMinutes / 60, arrivalMinutes % 60,
+        )
+        val simulatedSeconds = (durationMinutes * 60 * progress).toInt()
         view.findViewById<TextView>(R.id.driveTime).text = String.format(
             Locale.getDefault(), "%02d:%02d:%02d", simulatedSeconds / 3_600,
             simulatedSeconds / 60 % 60, simulatedSeconds % 60,
         )
         view.findViewById<TextView>(R.id.driveDistance).text = String.format(Locale.getDefault(), "%.1f", distance)
-        view.findViewById<TextView>(R.id.driveAvgSpeed).text = speed.toString()
+        view.findViewById<TextView>(R.id.driveAvgSpeed).text = (course?.averageSpeedKmh ?: 54).toString()
         view.findViewById<TextView>(R.id.nextDistance).text = if (progress < 0.55f) "1.2 km" else "300 m"
         view.findViewById<TextView>(R.id.nextTurn).text = if (progress < 0.55f) {
             getString(R.string.drive_sim_turn_first)
@@ -102,11 +111,156 @@ class DriveFragment : Fragment(R.layout.fragment_drive) {
 
 /** The sample friend course is selectable and can start a separate simulated drive. */
 class CourseFragment : Fragment(R.layout.fragment_course) {
+    private var selectedCourseId = DemoCourses.all.first().id
+    private var selectedFilter = DemoCourses.FILTER_ALL
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        renderFilters(view)
+        renderChoices(view)
+        bindCourse(view, DemoCourses.byId(selectedCourseId) ?: DemoCourses.all.first())
+
+        view.findViewById<View>(R.id.btnSaveCourse).setOnClickListener {
+            val saved = SavedCourseStore.toggle(requireContext(), selectedCourseId)
+            Toast.makeText(
+                requireContext(),
+                if (saved) R.string.course_saved_toast else R.string.course_removed_toast,
+                Toast.LENGTH_SHORT,
+            ).show()
+            bindCourse(view, DemoCourses.byId(selectedCourseId) ?: return@setOnClickListener)
+            renderChoices(view)
+        }
         view.findViewById<View>(R.id.btnFollowCourse).setOnClickListener {
-            (activity as? DriveActions)?.startDemoDrive(followCourse = true)
+            (activity as? DriveActions)?.startDemoDrive(courseId = selectedCourseId)
         }
     }
+
+    private fun renderFilters(root: View) {
+        val container = root.findViewById<LinearLayout>(R.id.courseFilters)
+        container.removeAllViews()
+        listOf(
+            DemoCourses.FILTER_ALL to R.string.course_filter_all,
+            DemoCourses.FILTER_RIVER to R.string.course_filter_river,
+            DemoCourses.FILTER_COAST to R.string.course_filter_coast,
+            DemoCourses.FILTER_NIGHT to R.string.course_filter_night,
+            DemoCourses.FILTER_SAVED to R.string.course_filter_saved,
+        ).forEach { (filter, label) ->
+            val selected = filter == selectedFilter
+            val button = MaterialButton(requireContext()).apply {
+                text = getString(label)
+                isAllCaps = false
+                textSize = 20f
+                cornerRadius = dp(24)
+                insetTop = 0
+                insetBottom = 0
+                minHeight = dp(60)
+                minimumHeight = dp(60)
+                backgroundTintList = android.content.res.ColorStateList.valueOf(
+                    ContextCompat.getColor(context, if (selected) R.color.cl_lime else R.color.cl_ghost),
+                )
+                setTextColor(ContextCompat.getColor(context, if (selected) R.color.cl_on_lime else R.color.cl_on_ghost))
+                setOnClickListener {
+                    selectedFilter = filter
+                    val choices = filteredCourses()
+                    if (choices.isNotEmpty() && choices.none { it.id == selectedCourseId }) {
+                        selectedCourseId = choices.first().id
+                        bindCourse(root, choices.first())
+                    }
+                    renderFilters(root)
+                    renderChoices(root)
+                }
+            }
+            container.addView(button, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                dp(60),
+            ).apply { marginEnd = dp(12) })
+        }
+    }
+
+    private fun renderChoices(root: View) {
+        val container = root.findViewById<LinearLayout>(R.id.courseChoices)
+        container.removeAllViews()
+        val choices = filteredCourses()
+        if (choices.isEmpty()) {
+            root.findViewById<View>(R.id.courseDetails).visibility = View.GONE
+            container.addView(TextView(requireContext()).apply {
+                text = getString(R.string.course_empty_filter)
+                setTextColor(ContextCompat.getColor(context, R.color.cl_muted))
+                textSize = 22f
+            })
+            return
+        }
+        root.findViewById<View>(R.id.courseDetails).visibility = View.VISIBLE
+        choices.forEach { course ->
+            val card = LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.VERTICAL
+                gravity = android.view.Gravity.CENTER_VERTICAL
+                setPadding(dp(24), dp(16), dp(24), dp(16))
+                background = ResourcesCompat.getDrawable(
+                    resources,
+                    if (course.id == selectedCourseId) R.drawable.bg_navcard else R.drawable.bg_panel,
+                    requireContext().theme,
+                )
+                isClickable = true
+                isFocusable = true
+                contentDescription = getString(R.string.course_choice_format, course.name, course.distanceKm.toInt())
+                setOnClickListener {
+                    selectedCourseId = course.id
+                    renderChoices(root)
+                    bindCourse(root, course)
+                }
+            }
+            card.addView(TextView(requireContext()).apply {
+                text = course.name
+                setTextColor(ContextCompat.getColor(context, R.color.cl_fg))
+                textSize = 24f
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+                maxLines = 1
+                ellipsize = android.text.TextUtils.TruncateAt.END
+            })
+            card.addView(TextView(requireContext()).apply {
+                text = getString(R.string.course_route_meta_format, course.author, course.distanceKm.toInt(), course.waypoints.size)
+                setTextColor(ContextCompat.getColor(context, R.color.cl_muted))
+                textSize = 19f
+                maxLines = 1
+            })
+            container.addView(card, LinearLayout.LayoutParams(dp(390), dp(112)).apply { marginEnd = dp(16) })
+        }
+    }
+
+    private fun filteredCourses(): List<DemoCourse> {
+        val savedIds = SavedCourseStore.ids(requireContext())
+        return DemoCourses.all.filter { course ->
+            when (selectedFilter) {
+                DemoCourses.FILTER_ALL -> true
+                DemoCourses.FILTER_SAVED -> course.id in savedIds
+                else -> course.category == selectedFilter
+            }
+        }
+    }
+
+    private fun bindCourse(root: View, course: DemoCourse) {
+        root.findViewById<TextView>(R.id.courseHeadline).text = "${course.author}님의 드라이브 · ${course.name}"
+        root.findViewById<TextView>(R.id.courseLead).text = course.description
+        root.findViewById<com.example.carlog_hd_frontend.ui.map.RouteMapView>(R.id.courseMap).apply {
+            route = course.route
+            progress = 1f
+            showTrack = true
+            hideStart = true
+            contentDescription = getString(R.string.course_map_desc, course.name)
+        }
+        root.findViewById<TextView>(R.id.courseDistance).text = course.distanceKm.toInt().toString()
+        root.findViewById<TextView>(R.id.courseTime).text = course.duration
+        root.findViewById<TextView>(R.id.courseWaypoint1).text = course.waypoints.getOrElse(0) { "-" }
+        root.findViewById<TextView>(R.id.courseWaypoint2).text = course.waypoints.getOrElse(1) { "-" }
+        root.findViewById<TextView>(R.id.courseWaypoint3).text = course.waypoints.getOrElse(2) { "-" }
+        root.findViewById<TextView>(R.id.courseDestination).text = course.destination
+        root.findViewById<TextView>(R.id.courseDemoNotice).setText(R.string.course_note_dynamic)
+        root.findViewById<MaterialButton>(R.id.btnSaveCourse).setText(
+            if (SavedCourseStore.contains(requireContext(), course.id)) R.string.course_unsave else R.string.course_save,
+        )
+    }
+
+    private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 }
 
 /** Result of the last locally persisted demo drive. */

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- M04 공유 편집 화면 전용 색상 / 크기 / 스타일 -->
+<resources>
+    <color name="cl_pick_checked_bg">#FFF6F2</color>
+    <color name="cl_accent_20">#33FF6B3D</color>
+
+    <dimen name="cl_edit_map_height">230dp</dimen>
+    <dimen name="cl_icon_size_hint">14dp</dimen>
+    <dimen name="cl_icon_size_privacy">18dp</dimen>
+    <dimen name="cl_pick_radius">12dp</dimen>
+    <dimen name="cl_pick_stroke">1.5dp</dimen>
+    <dimen name="cl_segment_radius">12dp</dimen>
+    <dimen name="cl_segment_item_radius">10dp</dimen>
+    <dimen name="cl_segment_padding">3dp</dimen>
+    <dimen name="cl_segment_item_gap">1.5dp</dimen>
+    <dimen name="cl_segment_item_padding_v">9dp</dimen>
+
+    <!-- 구간 잘라내기 슬라이더 (.range) -->
+    <style name="Widget.Carlog.Slider" parent="Widget.MaterialComponents.Slider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="thumbColor">@color/cl_accent</item>
+        <item name="trackColorActive">@color/cl_accent</item>
+        <item name="trackColorInactive">@color/cl_line</item>
+        <item name="haloColor">@color/cl_accent_20</item>
+        <item name="labelBehavior">gone</item>
+    </style>
+
+    <!-- 공개할 정보 선택 칩 (.pick button): 체크 아이콘 + 주황 테두리 -->
+    <style name="Widget.Carlog.PickChip" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipMinHeight">36dp</item>
+        <item name="chipCornerRadius">@dimen/cl_pick_radius</item>
+        <item name="chipStrokeWidth">@dimen/cl_pick_stroke</item>
+        <item name="chipStrokeColor">@color/selector_pick_stroke</item>
+        <item name="chipBackgroundColor">@color/selector_pick_bg</item>
+        <item name="chipSurfaceColor">@color/cl_white</item>
+        <item name="android:textColor">@color/selector_pick_text</item>
+        <item name="android:textSize">@dimen/cl_text_chip</item>
+        <item name="checkedIcon">@drawable/ic_check</item>
+        <item name="checkedIconTint">@color/cl_ink</item>
+        <item name="chipIconSize">@dimen/cl_icon_size_hint</item>
+        <item name="ensureMinTouchTargetSize">false</item>
+        <item name="rippleColor">@color/cl_line</item>
+    </style>
+
+    <!-- 공개 범위 (.seg): 회색 바탕 RadioGroup -->
+    <style name="Widget.Carlog.SegmentGroup" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@drawable/bg_segment_track</item>
+        <item name="android:padding">@dimen/cl_segment_padding</item>
+    </style>
+
+    <!-- 공개 범위 항목: RadioButton (선택되면 흰 바탕) -->
+    <style name="Widget.Carlog.SegmentItem" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">@dimen/cl_segment_item_gap</item>
+        <item name="android:layout_marginEnd">@dimen/cl_segment_item_gap</item>
+        <item name="android:button">@null</item>
+        <item name="android:background">@drawable/selector_segment_item</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">@dimen/cl_segment_item_padding_v</item>
+        <item name="android:paddingBottom">@dimen/cl_segment_item_padding_v</item>
+        <item name="android:textColor">@color/selector_segment_text</item>
+        <item name="android:textSize">@dimen/cl_text_action</item>
+    </style>
+
+    <!-- 개인정보 보호 줄의 아이콘 (.ico-round, 청록) -->
+    <style name="Widget.Carlog.PrivacyIcon" parent="">
+        <item name="android:layout_width">@dimen/cl_icon_round_size</item>
+        <item name="android:layout_height">@dimen/cl_icon_round_size</item>
+        <item name="android:background">@drawable/bg_icon_round</item>
+        <item name="android:backgroundTint">@color/cl_chip_teal_bg</item>
+        <item name="android:padding">@dimen/cl_space_8</item>
+        <item name="android:importantForAccessibility">no</item>
+        <item name="tint">@color/cl_teal</item>
+    </style>
+</resources>

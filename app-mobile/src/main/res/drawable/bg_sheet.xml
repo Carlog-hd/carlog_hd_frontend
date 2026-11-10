@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 바텀시트 (.psheet): 위쪽만 둥글게 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/cl_white" />
+    <corners
+        android:topLeftRadius="@dimen/cl_sheet_radius"
+        android:topRightRadius="@dimen/cl_sheet_radius" />
+</shape>

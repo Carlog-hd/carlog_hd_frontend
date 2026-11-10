@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  CARLOG 휴대폰 앱 공통 스타일 (carlog-demo.html 클래스 기준)
+  사용 예) <TextView style="@style/Carlog.Text.SectionTitle" ... />
+          <com.google.android.material.button.MaterialButton style="@style/Widget.Carlog.Button.Accent" ... />
+-->
+<resources>
+
+    <!-- ===== 텍스트 ===== -->
+    <style name="Carlog.Text" parent="">
+        <item name="android:textColor">@color/cl_ink</item>
+        <item name="android:textSize">@dimen/cl_text_body</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <!-- 큰 숫자 (.ch1) -->
+    <style name="Carlog.Text.Display">
+        <item name="android:textSize">@dimen/cl_text_display</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <!-- 화면 제목 (.phead h1) -->
+    <style name="Carlog.Text.PageTitle">
+        <item name="android:textSize">@dimen/cl_text_page_title</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <!-- 로고 (.phead .logo) -->
+    <style name="Carlog.Text.Logo">
+        <item name="android:textSize">@dimen/cl_text_logo</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <!-- 섹션 제목 (.sec h2) -->
+    <style name="Carlog.Text.SectionTitle">
+        <item name="android:textSize">@dimen/cl_text_section</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- 상단바 제목 (.navbar .t) -->
+    <style name="Carlog.Text.NavTitle">
+        <item name="android:textSize">@dimen/cl_text_nav_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!-- 본문 -->
+    <style name="Carlog.Text.Body" />
+
+    <!-- 본문 굵게 (.li .tx b) -->
+    <style name="Carlog.Text.Body.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- 보조 텍스트 (.muted) -->
+    <style name="Carlog.Text.Caption">
+        <item name="android:textSize">@dimen/cl_text_caption</item>
+        <item name="android:textColor">@color/cl_ink3</item>
+    </style>
+
+    <!-- 통계 값 / 라벨 (.stat b, .stat span) -->
+    <style name="Carlog.Text.StatValue">
+        <item name="android:textSize">@dimen/cl_text_stat</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Carlog.Text.StatLabel">
+        <item name="android:textSize">@dimen/cl_text_small</item>
+        <item name="android:textColor">@color/cl_ink3</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- ===== 버튼 (.btn) ===== -->
+    <!-- 기본: 남색 배경 (.btn.pri) -->
+    <style name="Widget.Carlog.Button" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:minHeight">@dimen/cl_button_height</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textSize">@dimen/cl_text_button</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="cornerRadius">@dimen/cl_button_radius</item>
+        <item name="backgroundTint">@color/cl_ink</item>
+        <item name="android:textColor">@color/cl_white</item>
+        <item name="iconTint">@color/cl_white</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">@dimen/cl_space_6</item>
+    </style>
+
+    <!-- 주황 강조 (.btn.acc) -->
+    <style name="Widget.Carlog.Button.Accent">
+        <item name="backgroundTint">@color/cl_accent</item>
+    </style>
+
+    <!-- 회색 보조 (.btn.sub) -->
+    <style name="Widget.Carlog.Button.Sub">
+        <item name="backgroundTint">@color/cl_surface_sub</item>
+        <item name="android:textColor">@color/cl_ink</item>
+        <item name="iconTint">@color/cl_ink</item>
+        <item name="rippleColor">@color/cl_line</item>
+    </style>
+
+    <!-- 작은 버튼 (.btn.sm) -->
+    <style name="Widget.Carlog.Button.Small">
+        <item name="android:minHeight">@dimen/cl_button_small_height</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingStart">@dimen/cl_button_small_padding_h</item>
+        <item name="android:paddingEnd">@dimen/cl_button_small_padding_h</item>
+        <item name="android:textSize">@dimen/cl_text_chip</item>
+        <item name="cornerRadius">@dimen/cl_button_small_radius</item>
+    </style>
+
+    <style name="Widget.Carlog.Button.Small.Accent">
+        <item name="backgroundTint">@color/cl_accent</item>
+    </style>
+
+    <style name="Widget.Carlog.Button.Small.Sub">
+        <item name="backgroundTint">@color/cl_surface_sub</item>
+        <item name="android:textColor">@color/cl_ink</item>
+        <item name="iconTint">@color/cl_ink</item>
+        <item name="rippleColor">@color/cl_line</item>
+    </style>
+
+    <!-- ===== 카드 (.card) ===== -->
+    <style name="Widget.Carlog.Card" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/cl_card</item>
+        <item name="cardCornerRadius">@dimen/cl_card_radius</item>
+        <item name="cardElevation">@dimen/cl_card_elevation</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+    <!-- ===== 태그 필터 칩 (.chip / .chip.on) : ChipGroup 안에서 사용 ===== -->
+    <style name="Widget.Carlog.FilterChip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipMinHeight">@dimen/cl_chip_height</item>
+        <item name="chipCornerRadius">@dimen/cl_pill_radius</item>
+        <item name="chipBackgroundColor">@color/selector_chip_bg</item>
+        <item name="chipStrokeColor">@color/selector_chip_stroke</item>
+        <item name="chipStrokeWidth">@dimen/cl_divider</item>
+        <item name="android:textColor">@color/selector_chip_text</item>
+        <item name="android:textSize">@dimen/cl_text_chip</item>
+        <item name="chipStartPadding">0dp</item>
+        <item name="chipEndPadding">0dp</item>
+        <item name="textStartPadding">@dimen/cl_chip_padding_h</item>
+        <item name="textEndPadding">@dimen/cl_chip_padding_h</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="rippleColor">@color/cl_line</item>
+    </style>
+
+    <!-- ===== 칭호 칩 (.title-chip) : TextView에 적용 ===== -->
+    <style name="Widget.Carlog.TitleChip" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_pill</item>
+        <item name="android:backgroundTint">@color/cl_chip_accent_bg</item>
+        <item name="android:textColor">@color/cl_chip_accent_fg</item>
+        <item name="android:textSize">@dimen/cl_text_badge</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:paddingStart">@dimen/cl_title_chip_padding_h</item>
+        <item name="android:paddingEnd">@dimen/cl_title_chip_padding_h</item>
+        <item name="android:paddingTop">@dimen/cl_title_chip_padding_v</item>
+        <item name="android:paddingBottom">@dimen/cl_title_chip_padding_v</item>
+        <item name="android:drawablePadding">@dimen/cl_space_4</item>
+    </style>
+
+    <style name="Widget.Carlog.TitleChip.Teal">
+        <item name="android:backgroundTint">@color/cl_chip_teal_bg</item>
+        <item name="android:textColor">@color/cl_chip_teal_fg</item>
+    </style>
+
+    <style name="Widget.Carlog.TitleChip.Violet">
+        <item name="android:backgroundTint">@color/cl_chip_violet_bg</item>
+        <item name="android:textColor">@color/cl_chip_violet_fg</item>
+    </style>
+
+    <style name="Widget.Carlog.TitleChip.Blue">
+        <item name="android:backgroundTint">@color/cl_chip_blue_bg</item>
+        <item name="android:textColor">@color/cl_chip_blue_fg</item>
+    </style>
+
+    <!-- ===== 토글 (.toggle) ===== -->
+    <style name="Widget.Carlog.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="thumbTint">@color/cl_white</item>
+        <item name="trackTint">@color/selector_switch_track</item>
+        <item name="useMaterialThemeColors">false</item>
+    </style>
+
+    <!-- ===== 리스트 아이템 (.li) : 가로 LinearLayout에 적용 ===== -->
+    <style name="Widget.Carlog.ListItem" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/cl_list_item_padding_h</item>
+        <item name="android:paddingEnd">@dimen/cl_list_item_padding_h</item>
+        <item name="android:paddingTop">@dimen/cl_list_item_padding_v</item>
+        <item name="android:paddingBottom">@dimen/cl_list_item_padding_v</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <!-- 구분선 (.li border-bottom) -->
+    <style name="Widget.Carlog.Divider" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/cl_divider</item>
+        <item name="android:background">@color/cl_line</item>
+    </style>
+
+    <!-- ===== 아이콘 버튼 (.iconbtn) : ImageButton에 적용 ===== -->
+    <style name="Widget.Carlog.IconButton" parent="">
+        <item name="android:layout_width">@dimen/cl_icon_button_size</item>
+        <item name="android:layout_height">@dimen/cl_icon_button_size</item>
+        <item name="android:background">@drawable/bg_icon_button</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:padding">@dimen/cl_space_8</item>
+        <item name="tint">@color/cl_ink</item>
+    </style>
+
+    <!-- ===== 하단 탭 (.ptab) ===== -->
+    <style name="Widget.Carlog.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@drawable/bg_bottom_nav</item>
+        <item name="elevation">0dp</item>
+        <item name="itemIconTint">@color/selector_nav_icon</item>
+        <item name="itemTextColor">@color/selector_nav_text</item>
+        <item name="itemIconSize">@dimen/cl_icon_size</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemTextAppearanceActive">@style/Carlog.Text.NavLabel.Active</item>
+        <item name="itemTextAppearanceInactive">@style/Carlog.Text.NavLabel</item>
+        <item name="itemRippleColor">@color/cl_surface_sub</item>
+    </style>
+
+    <style name="Carlog.Text.NavLabel" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">@dimen/cl_text_small</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Carlog.Text.NavLabel.Active">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

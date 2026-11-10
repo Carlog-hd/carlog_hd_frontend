@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 하단 탭 메뉴 (데모 .ptab 순서) -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_home" android:icon="@drawable/ic_home" android:title="@string/tab_home" />
+    <item android:id="@+id/nav_discover" android:icon="@drawable/ic_compass" android:title="@string/tab_discover" />
+    <item android:id="@+id/nav_logs" android:icon="@drawable/ic_list" android:title="@string/tab_logs" />
+    <item android:id="@+id/nav_dex" android:icon="@drawable/ic_medal" android:title="@string/tab_dex" />
+    <item android:id="@+id/nav_my" android:icon="@drawable/ic_user" android:title="@string/tab_my" />
+</menu>

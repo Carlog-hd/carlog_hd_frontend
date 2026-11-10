@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">CARLOG</string>
+
+    <!-- 하단 탭 -->
+    <string name="tab_home">홈</string>
+    <string name="tab_discover">발견</string>
+    <string name="tab_logs">기록</string>
+    <string name="tab_dex">도감</string>
+    <string name="tab_my">MY</string>
+
+    <!-- 공통 아이콘 설명 -->
+    <string name="cd_back">뒤로 가기</string>
+    <string name="cd_share">공유</string>
+    <string name="cd_notifications">알림</string>
 </resources>

@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 휴대폰 앱 기본 테마. 브랜드 색상은 공통 리소스(colors.xml) 작업 시 지정한다. -->
-    <style name="Theme.CarlogMobile" parent="Theme.MaterialComponents.Light.NoActionBar" />
+    <!-- 휴대폰 앱 기본 테마 (라이트 전용. 데모 휴대폰 화면에 다크 모드 없음) -->
+    <style name="Theme.CarlogMobile" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/cl_ink</item>
+        <item name="colorPrimaryVariant">@color/cl_ink</item>
+        <item name="colorOnPrimary">@color/cl_white</item>
+        <item name="colorSecondary">@color/cl_accent</item>
+        <item name="colorSecondaryVariant">@color/cl_accent</item>
+        <item name="colorOnSecondary">@color/cl_white</item>
+        <item name="colorSurface">@color/cl_card</item>
+        <item name="colorOnSurface">@color/cl_ink</item>
+        <item name="colorControlActivated">@color/cl_accent</item>
+        <item name="android:colorBackground">@color/cl_bg</item>
+        <item name="android:windowBackground">@color/cl_bg</item>
+        <item name="android:textColorPrimary">@color/cl_ink</item>
+        <item name="android:textColorSecondary">@color/cl_ink3</item>
+
+        <!-- 상태바 / 내비게이션바: 밝은 배경 + 어두운 아이콘 -->
+        <item name="android:statusBarColor">@color/cl_bg</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/cl_white</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+        <!-- 컴포넌트 기본 스타일 -->
+        <item name="materialButtonStyle">@style/Widget.Carlog.Button</item>
+        <item name="materialCardViewStyle">@style/Widget.Carlog.Card</item>
+        <item name="bottomNavigationStyle">@style/Widget.Carlog.BottomNav</item>
+    </style>
 </resources>

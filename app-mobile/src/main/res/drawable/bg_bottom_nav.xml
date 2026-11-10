@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 하단 탭 (.ptab): 흰 배경 + 위쪽 1dp 구분선 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/cl_line" />
+        </shape>
+    </item>
+    <item android:top="@dimen/cl_divider">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/cl_white" />
+        </shape>
+    </item>
+</layer-list>

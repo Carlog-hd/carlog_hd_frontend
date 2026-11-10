@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  코스 카드 (데모 발견 목록): 왼쪽 지도 + 오른쪽 코스 정보
+  지금은 데모 데이터(7번 국도 새벽 바닷길)를 고정으로 표시한다.
+  나중에 RecyclerView 아이템으로 그대로 사용할 수 있도록 별도 파일로 분리.
+-->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/cl_space_10"
+    android:clickable="true"
+    android:focusable="true"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <com.carlog.mobile.ui.common.MapBoxView
+            android:id="@+id/map_box"
+            android:layout_width="@dimen/cl_course_thumb_width"
+            android:layout_height="@dimen/cl_course_thumb_height" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/cl_space_14"
+            android:paddingTop="@dimen/cl_space_12"
+            android:paddingEnd="@dimen/cl_space_14"
+            android:paddingBottom="@dimen/cl_space_12">
+
+            <TextView
+                android:id="@+id/tv_course_name"
+                style="@style/Carlog.Text.Body.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="7번 국도 새벽 바닷길"
+                android:textSize="@dimen/cl_text_course_title" />
+
+            <TextView
+                android:id="@+id/tv_course_meta"
+                style="@style/Carlog.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/cl_space_4"
+                android:text="167km · 실제 2시간 14분 · 정차 1회" />
+
+            <TextView
+                android:id="@+id/tv_title_chip"
+                style="@style/Widget.Carlog.TitleChip.Violet"
+                android:layout_marginTop="@dimen/cl_space_6"
+                android:drawableStart="@drawable/ic_title_moon"
+                android:text="새벽 탐험가" />
+
+            <TextView
+                android:id="@+id/tv_runners"
+                style="@style/Carlog.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/cl_space_6"
+                android:drawableStart="@drawable/ic_user_small"
+                android:drawablePadding="@dimen/cl_space_4"
+                android:drawableTint="@color/cl_ink3"
+                android:gravity="center_vertical"
+                android:text="하늘 외 3명이 달림" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

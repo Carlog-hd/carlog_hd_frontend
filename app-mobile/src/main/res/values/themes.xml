@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 화면 테마는 Compose(CarlogMobileTheme)에서 관리하고, 여기서는 윈도우 기본값만 지정한다. -->
-    <style name="Theme.CarlogMobile" parent="android:Theme.Material.Light.NoActionBar" />
+    <!-- 휴대폰 앱 기본 테마. 브랜드 색상은 공통 리소스(colors.xml) 작업 시 지정한다. -->
+    <style name="Theme.CarlogMobile" parent="Theme.MaterialComponents.Light.NoActionBar" />
 </resources>

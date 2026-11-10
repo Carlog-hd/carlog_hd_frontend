@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  M04 공유 편집 (공유 전 편집): 끝점 숨김, 앞뒤 구간 자르기, 공개 항목·범위
+  기록 상세의 "편집하고 공유하기"를 누르면 열리는 하위 화면 (fragment_template_sub 기반)
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,ContentDescription">
+
+    <!-- 상단바 -->
+    <LinearLayout style="@style/Widget.Carlog.TopBar">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.Carlog.IconButton"
+            android:contentDescription="@string/cd_back"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            style="@style/Carlog.Text.TopBarTitle"
+            android:text="@string/share_edit_title" />
+
+        <!-- 제목 가운데 정렬용 빈 자리 -->
+        <ImageButton
+            style="@style/Widget.Carlog.IconButton"
+            android:importantForAccessibility="no"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/cl_space_8">
+
+            <!-- 공개될 경로 미리보기 지도 + 안내 -->
+            <LinearLayout style="@style/Widget.Carlog.Section">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.carlog.mobile.ui.common.MapBoxView
+                            android:id="@+id/map_box"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/cl_edit_map_height"
+                            app:mapImage="@drawable/img_map_edit_placeholder" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/cl_space_14"
+                            android:paddingTop="@dimen/cl_space_10"
+                            android:paddingEnd="@dimen/cl_space_14"
+                            android:paddingBottom="@dimen/cl_space_10"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="@dimen/cl_icon_size_hint"
+                                android:layout_height="@dimen/cl_icon_size_hint"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_eye"
+                                app:tint="@color/cl_ink3" />
+
+                            <TextView
+                                android:id="@+id/tv_share_hint"
+                                style="@style/Carlog.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/cl_space_6"
+                                android:text="@string/share_edit_hint" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- 개인정보 보호: 출발지 / 도착지 숨기기 -->
+            <LinearLayout style="@style/Widget.Carlog.Section">
+
+                <LinearLayout style="@style/Widget.Carlog.SectionHeader">
+
+                    <TextView
+                        style="@style/Carlog.Text.SectionTitle.Fill"
+                        android:text="@string/share_edit_privacy_title" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout style="@style/Widget.Carlog.ListItem">
+
+                            <ImageView
+                                style="@style/Widget.Carlog.PrivacyIcon"
+                                android:src="@drawable/ic_home" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/cl_space_12"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/Carlog.Text.Body.Bold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/share_edit_hide_start" />
+
+                                <TextView
+                                    android:id="@+id/tv_start_place"
+                                    style="@style/Carlog.Text.Caption"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/cl_space_4"
+                                    android:text="서울 강동구 · 집 근처" />
+                            </LinearLayout>
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/switch_hide_start"
+                                style="@style/Widget.Carlog.Switch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:contentDescription="@string/share_edit_hide_start" />
+                        </LinearLayout>
+
+                        <View style="@style/Widget.Carlog.Divider" />
+
+                        <LinearLayout style="@style/Widget.Carlog.ListItem">
+
+                            <ImageView
+                                style="@style/Widget.Carlog.PrivacyIcon"
+                                android:src="@drawable/ic_flag" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/cl_space_12"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/Carlog.Text.Body.Bold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/share_edit_hide_end" />
+
+                                <TextView
+                                    android:id="@+id/tv_end_place"
+                                    style="@style/Carlog.Text.Caption"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/cl_space_4"
+                                    android:text="강릉 안목해변" />
+                            </LinearLayout>
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/switch_hide_end"
+                                style="@style/Widget.Carlog.Switch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:contentDescription="@string/share_edit_hide_end" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- 코스 구간 잘라내기 -->
+            <LinearLayout style="@style/Widget.Carlog.Section">
+
+                <LinearLayout style="@style/Widget.Carlog.SectionHeader">
+
+                    <TextView
+                        style="@style/Carlog.Text.SectionTitle.Fill"
+                        android:text="@string/share_edit_trim_title" />
+
+                    <TextView
+                        style="@style/Carlog.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/share_edit_trim_sub" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout style="@style/Widget.Carlog.CardContent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/Carlog.Text.Caption"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/share_edit_trim_front" />
+
+                            <TextView
+                                android:id="@+id/tv_trim_front"
+                                style="@style/Carlog.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0km"
+                                android:textColor="@color/cl_ink"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <com.google.android.material.slider.Slider
+                            android:id="@+id/slider_trim_front"
+                            style="@style/Widget.Carlog.Slider"
+                            android:contentDescription="@string/cd_trim_front"
+                            android:value="0"
+                            android:valueFrom="0"
+                            android:valueTo="40" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/cl_space_8"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/Carlog.Text.Caption"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/share_edit_trim_back" />
+
+                            <TextView
+                                android:id="@+id/tv_trim_back"
+                                style="@style/Carlog.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0km"
+                                android:textColor="@color/cl_ink"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <com.google.android.material.slider.Slider
+                            android:id="@+id/slider_trim_back"
+                            style="@style/Widget.Carlog.Slider"
+                            android:contentDescription="@string/cd_trim_back"
+                            android:value="0"
+                            android:valueFrom="0"
+                            android:valueTo="40" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- 공개할 정보 -->
+            <LinearLayout style="@style/Widget.Carlog.Section">
+
+                <LinearLayout style="@style/Widget.Carlog.SectionHeader">
+
+                    <TextView
+                        style="@style/Carlog.Text.SectionTitle.Fill"
+                        android:text="@string/share_edit_items_title" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout style="@style/Widget.Carlog.CardContent">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chip_group_share_items"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:chipSpacingHorizontal="@dimen/cl_space_6"
+                            app:chipSpacingVertical="@dimen/cl_space_6">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chip_item_distance"
+                                style="@style/Widget.Carlog.PickChip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/share_item_distance" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chip_item_time"
+                                style="@style/Widget.Carlog.PickChip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/share_item_time" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chip_item_avg_speed"
+                                style="@style/Widget.Carlog.PickChip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/share_item_avg_speed" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chip_item_stops"
+                                style="@style/Widget.Carlog.PickChip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/share_item_stops" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chip_item_score"
+                                style="@style/Widget.Carlog.PickChip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/share_item_score" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chip_item_titles"
+                                style="@style/Widget.Carlog.PickChip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/share_item_titles" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chip_item_weather"
+                                style="@style/Widget.Carlog.PickChip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/share_item_weather" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chip_item_moments"
+                                style="@style/Widget.Carlog.PickChip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/share_item_moments" />
+                        </com.google.android.material.chip.ChipGroup>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- 공개 범위 -->
+            <LinearLayout style="@style/Widget.Carlog.Section">
+
+                <LinearLayout style="@style/Widget.Carlog.SectionHeader">
+
+                    <TextView
+                        style="@style/Carlog.Text.SectionTitle.Fill"
+                        android:text="@string/share_edit_scope_title" />
+                </LinearLayout>
+
+                <RadioGroup
+                    android:id="@+id/radio_group_scope"
+                    style="@style/Widget.Carlog.SegmentGroup"
+                    android:checkedButton="@id/radio_scope_friends">
+
+                    <RadioButton
+                        android:id="@+id/radio_scope_me"
+                        style="@style/Widget.Carlog.SegmentItem"
+                        android:text="@string/share_scope_me" />
+
+                    <RadioButton
+                        android:id="@+id/radio_scope_friends"
+                        style="@style/Widget.Carlog.SegmentItem"
+                        android:text="@string/share_scope_friends" />
+
+                    <RadioButton
+                        android:id="@+id/radio_scope_link"
+                        style="@style/Widget.Carlog.SegmentItem"
+                        android:text="@string/share_scope_link" />
+
+                    <RadioButton
+                        android:id="@+id/radio_scope_all"
+                        style="@style/Widget.Carlog.SegmentItem"
+                        android:text="@string/share_scope_all" />
+                </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- 하단 고정 버튼: 미리보기 + 공유하기 -->
+    <LinearLayout style="@style/Widget.Carlog.ButtonBar">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_preview"
+            style="@style/Widget.Carlog.Button.Sub"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/cl_space_8"
+            android:layout_weight="2"
+            android:text="@string/share_edit_preview" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_share"
+            style="@style/Widget.Carlog.Button.Accent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/share_edit_share"
+            app:icon="@drawable/ic_share"
+            app:iconSize="@dimen/cl_icon_size_medium" />
+    </LinearLayout>
+</LinearLayout>

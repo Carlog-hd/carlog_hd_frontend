@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RouteMapView">
+        <!-- 표시할 경로 (CarlogRoutes) -->
+        <attr name="carlogRoute" format="enum">
+            <enum name="mine" value="0" />
+            <enum name="minji" value="1" />
+        </attr>
+        <!-- 0~1, 지나온 구간 비율 -->
+        <attr name="carlogProgress" format="float" />
+        <!-- 전체 예정 경로를 회색으로 표시 -->
+        <attr name="carlogShowTrack" format="boolean" />
+        <!-- 현재 위치(차) 마커 표시 -->
+        <attr name="carlogShowCar" format="boolean" />
+        <!-- 출발지 주변 가리기 -->
+        <attr name="carlogHideStart" format="boolean" />
+        <!-- 정차 지점 표시 -->
+        <attr name="carlogShowStop" format="boolean" />
+        <attr name="carlogCornerRadius" format="dimension" />
+    </declare-styleable>
+</resources>

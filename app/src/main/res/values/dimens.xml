@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 칭호 카드 사이 간격 (데모 12px × 2) -->
+    <dimen name="title_grid_gap">24dp</dimen>
+</resources>

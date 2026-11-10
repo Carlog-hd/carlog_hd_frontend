@@ -29,4 +29,22 @@
     <color name="cl_pill_bg">#263A3B</color>
     <color name="cl_pill_fg">#B9E9D7</color>
     <color name="cl_railfoot">#8291A3</color>
+
+    <!-- 상태·강조 -->
+    <color name="cl_rec">#FF6B6B</color>
+    <color name="cl_rec_text">#FF8A8A</color>
+    <color name="cl_gold_pill_bg">#41361F</color>
+    <color name="cl_gold_pill_fg">#F9D68D</color>
+    <color name="cl_collect_bg">#1B2737</color>
+    <color name="cl_collect_edge">#36455A</color>
+    <color name="cl_note_edge">#3A4757</color>
+    <color name="cl_bar_track">#2B3645</color>
+    <color name="cl_navcard">#EE121A27</color>
+
+    <!-- 지도 (mapSVG 다크) -->
+    <color name="cl_map_ground">#111824</color>
+    <color name="cl_map_river">#1C3A4F</color>
+    <color name="cl_map_road">#222B37</color>
+    <color name="cl_map_track">#2C3542</color>
+    <color name="cl_map_mask">#8C5B6573</color>
 </resources>

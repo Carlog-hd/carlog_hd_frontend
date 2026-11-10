@@ -105,4 +105,59 @@
         <item name="android:paddingStart">24dp</item>
         <item name="android:paddingEnd">24dp</item>
     </style>
+    <!-- 화면 공통 제목 -->
+    <style name="Carlog.Text.Headline" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:letterSpacing">-0.05</item>
+        <item name="android:textColor">@color/cl_fg</item>
+        <item name="android:textSize">60sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Carlog.Text.Lead" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:textColor">@color/cl_muted</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <!-- 통계 값 옆 단위 (km, km/h) -->
+    <style name="Carlog.Text.Unit" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:textColor">@color/cl_muted</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <!-- 코스 경유지 행 -->
+    <style name="Carlog.Waypoint" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
+    <style name="Carlog.Waypoint.Badge" parent="">
+        <item name="android:layout_width">56dp</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:background">@drawable/bg_wp_num</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/cl_rail</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Carlog.Waypoint.Name" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:textColor">@color/cl_fg</item>
+        <item name="android:textSize">32sp</item>
+    </style>
 </resources>

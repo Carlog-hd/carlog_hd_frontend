@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 칭호 탭 (carlog-demo.html ivTitles() 기준). 카드는 TitlesFragment 에서 3열로 채웁니다. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="60dp"
+        android:paddingTop="52dp"
+        android:paddingEnd="60dp"
+        android:paddingBottom="56dp">
+
+        <TextView
+            style="@style/Carlog.Text.Kicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/titles_kicker" />
+
+        <TextView
+            style="@style/Carlog.Text.Headline"
+            android:text="@string/titles_headline" />
+
+        <TextView
+            style="@style/Carlog.Text.Lead"
+            android:text="@string/titles_lead" />
+
+        <LinearLayout
+            android:id="@+id/titleGrid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical" />
+    </LinearLayout>
+</ScrollView>

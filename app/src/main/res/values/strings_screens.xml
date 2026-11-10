@@ -1,0 +1,76 @@
+<resources>
+    <!-- 상단 상태 바 · 주행 중 -->
+    <string name="status_recording">CARLOG 자동 기록 중</string>
+    <string name="status_clock_drive_sample">14:42</string>
+    <string name="status_speed_drive_sample">57 km/h</string>
+    <string name="status_gear_drive_sample">D</string>
+
+    <!-- 주행 탭 (ivDrive, 주행 45% 지점 샘플) -->
+    <string name="drive_map_desc">남이섬 선착장까지 주행 중인 경로 지도</string>
+    <string name="drive_next_distance_sample">300m</string>
+    <string name="drive_next_turn_sample">북한강로 방면 우회전</string>
+    <string name="drive_dest_sample">남이섬 선착장</string>
+    <string name="drive_left_label">남은 거리</string>
+    <string name="drive_left_sample">33.2 km</string>
+    <string name="drive_eta_label">· 도착</string>
+    <string name="drive_eta_sample">15:19</string>
+    <string name="drive_panel_title">CARLOG</string>
+    <string name="drive_recording_pill">자동 기록 중</string>
+    <string name="drive_time_label">주행 시간</string>
+    <string name="drive_time_sample">00:30:09</string>
+    <string name="drive_distance_label">주행 거리</string>
+    <string name="drive_distance_sample">27.2</string>
+    <string name="drive_avg_label">평균 속도</string>
+    <string name="drive_avg_sample">54</string>
+    <string name="unit_km">km</string>
+    <string name="unit_kmh">km/h</string>
+    <string name="drive_challenge_label">진행 중인 챌린지</string>
+    <string name="drive_challenge_name">방향지시등 사용 100% 유지</string>
+    <string name="drive_challenge_status_sample">차선 변경 3회 · 모두 사용</string>
+    <string name="drive_note">주행 중에는 화면 조작 없이 기록만 진행돼요. 기록 확인은 도착 후에 할 수 있어요.</string>
+
+    <!-- 코스 탭 (ivDiscover, 민지 님 코스를 받은 상태 샘플) -->
+    <string name="course_kicker">FOLLOW A FRIEND\'S DRIVE</string>
+    <string name="course_headline_sample">민지 님의 드라이브 · 북한강 따라 가평까지</string>
+    <string name="course_lead_sample">토요일 오후 3:20 출발 · 맑음 · 부드러운 구름 드라이버</string>
+    <string name="course_map_desc">친구가 달린 북한강 코스 지도, 출발지는 가려져 있음</string>
+    <string name="course_start_hidden">출발지는 공유자가 숨겼어요</string>
+    <string name="course_total_distance">총거리</string>
+    <string name="course_total_distance_sample">167</string>
+    <string name="course_actual_time">실제 소요</string>
+    <string name="course_actual_time_sample">2시간 14분</string>
+    <string name="course_waypoints_label">내비게이션에 전달할 경유지</string>
+    <string name="course_wp1_sample">미사리 조정경기장</string>
+    <string name="course_wp2_sample">두물머리</string>
+    <string name="course_wp3_sample">청평호반</string>
+    <string name="course_arrival">도착</string>
+    <string name="course_dest_sample">가평 자라섬</string>
+    <string name="course_note">친구가 실제로 달린 경로에서 주요 경유지를 골라 보내기 때문에, 목적지만 공유할 때와 달리 같은 길을 따라갈 수 있어요.</string>
+    <string name="course_follow">이 코스로 안내 시작</string>
+
+    <!-- 칭호 탭 (ivTitles) -->
+    <string name="titles_kicker">TITLES</string>
+    <string name="titles_headline">운전 습관이 칭호가 돼요.</string>
+    <string name="titles_lead">점수 대신, 차량 신호로 판정한 운전 성향을 칭호로 모아요.</string>
+    <string name="titles_earned">획득</string>
+    <string name="titles_locked">미획득</string>
+
+    <string name="title_firefly_name">깜빡깜빡 반딧불이 드라이버</string>
+    <string name="title_firefly_rule">차선 변경 시 방향지시등 100% 사용</string>
+    <string name="title_firefly_data">방향지시등</string>
+    <string name="title_cloud_name">부드러운 구름 드라이버</string>
+    <string name="title_cloud_rule">급제동 없이 주행 완료</string>
+    <string name="title_cloud_data">제동</string>
+    <string name="title_cruise_name">꾸준한 순항 여행자</string>
+    <string name="title_cruise_rule">장거리 구간 정속 주행</string>
+    <string name="title_cruise_data">크루즈 컨트롤</string>
+    <string name="title_rain_name">빗길 산책가</string>
+    <string name="title_rain_rule">와이퍼 작동 중 안전 주행</string>
+    <string name="title_rain_data">와이퍼</string>
+    <string name="title_night_name">밤길 드라이버</string>
+    <string name="title_night_rule">전조등 켜고 30분 이상 주행</string>
+    <string name="title_night_data">전조등</string>
+    <string name="title_follower_name">길을 잇는 사람</string>
+    <string name="title_follower_rule">친구 코스를 따라 완주</string>
+    <string name="title_follower_data">내비게이션</string>
+</resources>

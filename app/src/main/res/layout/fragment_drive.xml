@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 주행 탭 (carlog-demo.html ivDrive() 기준, 주행 중 상태 샘플) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:paddingStart="60dp"
+    android:paddingTop="52dp"
+    android:paddingEnd="60dp"
+    android:paddingBottom="56dp">
+
+    <!-- ===== 지도 ===== -->
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <com.example.carlog_hd_frontend.ui.map.RouteMapView
+            android:id="@+id/driveMap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/drive_map_desc"
+            app:carlogProgress="0.45"
+            app:carlogRoute="mine"
+            app:carlogShowCar="true"
+            app:carlogShowTrack="true" />
+
+        <!-- 다음 안내 -->
+        <LinearLayout
+            android:id="@+id/navCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="36dp"
+            android:background="@drawable/bg_navcard"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="36dp"
+            android:paddingVertical="28dp">
+
+            <ImageView
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_turn_right" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nextDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/drive_next_distance_sample"
+                    android:textColor="@color/cl_fg"
+                    android:textSize="52sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/nextTurn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@string/drive_next_turn_sample"
+                    android:textColor="@color/cl_muted"
+                    android:textSize="28sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 목적지 · 남은 거리 · 도착 시각 -->
+        <LinearLayout
+            android:id="@+id/etaBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="36dp"
+            android:background="@drawable/bg_etabar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="36dp"
+            android:paddingVertical="24dp">
+
+            <TextView
+                android:id="@+id/etaDest"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/drive_dest_sample"
+                android:textColor="@color/cl_fg"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/drive_left_label"
+                android:textColor="@color/cl_muted"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/etaLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/drive_left_sample"
+                android:textColor="@color/cl_fg"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/drive_eta_label"
+                android:textColor="@color/cl_muted"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/etaTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/drive_eta_sample"
+                android:textColor="@color/cl_fg"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- ===== CARLOG 기록 패널 ===== -->
+    <LinearLayout
+        android:id="@+id/recordPanel"
+        android:layout_width="660dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="28dp"
+        android:background="@drawable/bg_panel"
+        android:orientation="vertical"
+        android:padding="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/drive_panel_title"
+                android:textColor="@color/cl_fg"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/recordPill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_pill"
+                android:paddingHorizontal="22dp"
+                android:paddingVertical="12dp"
+                android:text="@string/drive_recording_pill"
+                android:textColor="@color/cl_pill_fg"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/Carlog.Text.Tiny"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/drive_time_label"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/driveTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFeatureSettings="tnum"
+            android:letterSpacing="-0.02"
+            android:text="@string/drive_time_sample"
+            android:textColor="@color/cl_fg"
+            android:textSize="84sp"
+            android:textStyle="bold" />
+
+        <!-- 주행 거리 · 평균 속도 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_stat"
+                android:orientation="vertical"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="24dp">
+
+                <TextView
+                    style="@style/Carlog.Text.StatLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/drive_distance_label" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/driveDistance"
+                        style="@style/Carlog.Text.StatValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/drive_distance_sample" />
+
+                    <TextView
+                        style="@style/Carlog.Text.Unit"
+                        android:text="@string/unit_km" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_stat"
+                android:orientation="vertical"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="24dp">
+
+                <TextView
+                    style="@style/Carlog.Text.StatLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/drive_avg_label" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/driveAvgSpeed"
+                        style="@style/Carlog.Text.StatValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/drive_avg_sample" />
+
+                    <TextView
+                        style="@style/Carlog.Text.Unit"
+                        android:text="@string/unit_kmh" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 진행 중인 챌린지 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/bg_stat"
+            android:orientation="vertical"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="24dp">
+
+            <TextView
+                style="@style/Carlog.Text.StatLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/drive_challenge_label" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/drive_challenge_name"
+                android:textColor="@color/cl_fg"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <!-- 진행 막대: 채움 비율은 layout_weight (0~1) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_bar_track"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <View
+                    android:id="@+id/challengeBar"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_bar_fill" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/challengeStatus"
+                style="@style/Carlog.Text.StatLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/drive_challenge_status_sample" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/bg_note"
+            android:lineSpacingMultiplier="1.4"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="20dp"
+            android:text="@string/drive_note"
+            android:textColor="@color/cl_muted"
+            android:textSize="24sp" />
+    </LinearLayout>
+</LinearLayout>

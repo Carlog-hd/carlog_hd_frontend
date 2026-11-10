@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- M02 발견 화면 문구 -->
+<resources>
+    <string name="discover_title">발견</string>
+    <string name="discover_recommend_label">지금 상황에 맞춘 추천</string>
+
+    <string name="discover_filter_all">전체</string>
+    <string name="discover_filter_coast">해안</string>
+    <string name="discover_filter_mountain">산길</string>
+    <string name="discover_filter_night">야경</string>
+</resources>

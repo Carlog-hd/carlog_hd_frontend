@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 차량 기록 도착 카드 오른쪽 위 주황 빛 (.arrived:after) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <gradient
+        android:endColor="#00FF6B3D"
+        android:gradientRadius="70dp"
+        android:startColor="@color/cl_accent"
+        android:type="radial" />
+</shape>

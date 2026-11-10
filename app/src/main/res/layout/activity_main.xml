@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- CARLOG IVI 홈 화면 (carlog-demo.html .cockpit + ivHome() 기준) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cl_bg"
+    android:orientation="horizontal">
+
+    <!-- ===== 왼쪽 레일 ===== -->
+    <LinearLayout
+        android:id="@+id/rail"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:background="@color/cl_rail"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="44dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="60dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:letterSpacing="-0.08"
+                android:text="@string/logo_car"
+                android:textColor="@color/cl_fg"
+                android:textSize="38sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:letterSpacing="-0.08"
+                android:text="@string/logo_log"
+                android:textColor="@color/cl_lime"
+                android:textSize="38sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navHome"
+            style="@style/Carlog.NavItem">
+
+            <ImageView
+                style="@style/Carlog.NavItem.Icon"
+                android:src="@drawable/ic_nav_home" />
+
+            <TextView
+                style="@style/Carlog.NavItem.Label"
+                android:text="@string/nav_home" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navDrive"
+            style="@style/Carlog.NavItem">
+
+            <ImageView
+                style="@style/Carlog.NavItem.Icon"
+                android:src="@drawable/ic_nav_drive" />
+
+            <TextView
+                style="@style/Carlog.NavItem.Label"
+                android:text="@string/nav_drive" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navCourse"
+            style="@style/Carlog.NavItem">
+
+            <ImageView
+                style="@style/Carlog.NavItem.Icon"
+                android:src="@drawable/ic_nav_course" />
+
+            <TextView
+                style="@style/Carlog.NavItem.Label"
+                android:text="@string/nav_course" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navTitles"
+            style="@style/Carlog.NavItem">
+
+            <ImageView
+                style="@style/Carlog.NavItem.Icon"
+                android:src="@drawable/ic_nav_titles" />
+
+            <TextView
+                style="@style/Carlog.NavItem.Label"
+                android:text="@string/nav_titles" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/rail_foot"
+            android:textColor="@color/cl_railfoot"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/cl_edge" />
+
+    <!-- ===== 작업 영역 ===== -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- 상단 상태 바 -->
+        <LinearLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="124dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="52dp">
+
+            <View
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:background="@drawable/bg_live_dot" />
+
+            <TextView
+                android:id="@+id/liveText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:text="@string/status_idle"
+                android:textColor="@color/cl_aqua"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/statusClock"
+                style="@style/Carlog.Text.Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/status_clock_sample" />
+
+            <TextView
+                android:id="@+id/statusSpeed"
+                style="@style/Carlog.Text.Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:text="@string/status_speed_sample" />
+
+            <TextView
+                android:id="@+id/statusGear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:background="@drawable/bg_gear"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp"
+                android:text="@string/status_gear_sample"
+                android:textColor="@color/cl_lime"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/statusWeather"
+                style="@style/Carlog.Text.Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:text="@string/status_weather_sample" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/cl_edge" />
+
+        <!-- 홈 콘텐츠 -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="60dp"
+                android:paddingTop="52dp"
+                android:paddingEnd="60dp"
+                android:paddingBottom="56dp">
+
+                <TextView
+                    style="@style/Carlog.Text.Kicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_kicker" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:letterSpacing="-0.05"
+                    android:text="@string/home_headline"
+                    android:textColor="@color/cl_fg"
+                    android:textSize="60sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/home_lead"
+                    android:textColor="@color/cl_muted"
+                    android:textSize="28sp" />
+
+                <!-- 2단 그리드 (1.4fr : 1fr) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <!-- 목적지 패널 -->
+                    <LinearLayout
+                        android:id="@+id/destinationPanel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.4"
+                        android:background="@drawable/bg_panel"
+                        android:orientation="vertical"
+                        android:padding="40dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/Carlog.Text.PanelTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/home_destination" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_pill"
+                                android:paddingHorizontal="22dp"
+                                android:paddingVertical="12dp"
+                                android:text="@string/home_nav_pill"
+                                android:textColor="@color/cl_pill_fg"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/routeMap"
+                            android:layout_width="match_parent"
+                            android:layout_height="500dp"
+                            android:layout_marginTop="28dp"
+                            android:contentDescription="@string/home_route_map_desc"
+                            android:background="#111824"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/img_home_route_map"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Carlog.Map" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="28dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="24dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/destName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/home_dest_name_sample"
+                                    android:textColor="@color/cl_fg"
+                                    android:textSize="40sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/destMeta"
+                                    style="@style/Carlog.Text.Tiny"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/home_dest_meta_sample" />
+                            </LinearLayout>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnStartGuidance"
+                                style="@style/Carlog.Button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/home_start_guidance" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- 오른쪽 열 -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!-- 나의 드라이버 -->
+                        <LinearLayout
+                            android:id="@+id/myDriverPanel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_panel"
+                            android:orientation="vertical"
+                            android:padding="40dp">
+
+                            <TextView
+                                style="@style/Carlog.Text.PanelTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="28dp"
+                                android:text="@string/home_my_driver" />
+
+                            <TextView
+                                android:id="@+id/myDriverTitle"
+                                style="@style/Carlog.Text.Tiny"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/home_no_title" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="24dp"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_stat"
+                                    android:orientation="vertical"
+                                    android:paddingHorizontal="32dp"
+                                    android:paddingVertical="24dp">
+
+                                    <TextView
+                                        style="@style/Carlog.Text.StatLabel"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/home_saved_drives" />
+
+                                    <TextView
+                                        android:id="@+id/statSavedDrives"
+                                        style="@style/Carlog.Text.StatValue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/home_saved_drives_sample" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_stat"
+                                    android:orientation="vertical"
+                                    android:paddingHorizontal="32dp"
+                                    android:paddingVertical="24dp">
+
+                                    <TextView
+                                        style="@style/Carlog.Text.StatLabel"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/home_title_collection" />
+
+                                    <TextView
+                                        android:id="@+id/statTitleCollection"
+                                        style="@style/Carlog.Text.StatValue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/home_title_collection_sample" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- 휴대전화에서 받은 코스 -->
+                        <LinearLayout
+                            android:id="@+id/receivedCoursePanel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="28dp"
+                            android:background="@drawable/bg_panel"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="40dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="24dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/home_received_course"
+                                    android:textColor="@color/cl_fg"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/receivedCourseText"
+                                    style="@style/Carlog.Text.Tiny"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/home_received_course_empty" />
+                            </LinearLayout>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnOpenCourse"
+                                style="@style/Carlog.Button.GhostSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:alpha="0.4"
+                                android:enabled="false"
+                                android:text="@string/home_open" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

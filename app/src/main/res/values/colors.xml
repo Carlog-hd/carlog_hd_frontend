@@ -7,4 +7,26 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- CARLOG IVI palette (carlog-demo.html :root) -->
+    <color name="cl_bg">#070B12</color>
+    <color name="cl_rail">#0B1019</color>
+    <color name="cl_panel">#121A27</color>
+    <color name="cl_panel2">#192333</color>
+    <color name="cl_stat">#1E2A3A</color>
+    <color name="cl_edge">#2B3749</color>
+    <color name="cl_fg">#F2F6FC</color>
+    <color name="cl_muted">#97A6B9</color>
+    <color name="cl_nav_idle">#9AA9BB</color>
+    <color name="cl_nav_active_bg">#263325</color>
+    <color name="cl_lime">#D7FA76</color>
+    <color name="cl_on_lime">#182009</color>
+    <color name="cl_aqua">#73D5D1</color>
+    <color name="cl_gold">#F5C76B</color>
+    <color name="cl_gear_bg">#303E27</color>
+    <color name="cl_ghost">#293747</color>
+    <color name="cl_on_ghost">#EEF3FA</color>
+    <color name="cl_pill_bg">#263A3B</color>
+    <color name="cl_pill_fg">#B9E9D7</color>
+    <color name="cl_railfoot">#8291A3</color>
 </resources>

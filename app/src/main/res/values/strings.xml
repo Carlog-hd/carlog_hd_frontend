@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">carlog_hd_frontend</string>
+
+    <!-- 레일 -->
+    <string name="logo_car">CAR</string>
+    <string name="logo_log">LOG.</string>
+    <string name="nav_home">홈</string>
+    <string name="nav_drive">주행</string>
+    <string name="nav_course">코스</string>
+    <string name="nav_titles">칭호</string>
+    <string name="rail_foot">PLEOS\nCONNECT</string>
+
+    <!-- 상단 상태 바 -->
+    <string name="status_idle">CARLOG 대기 중</string>
+    <string name="status_clock_sample">14:12</string>
+    <string name="status_speed_sample">0 km/h</string>
+    <string name="status_gear_sample">P</string>
+    <string name="status_weather_sample">외기 17°C · 맑음</string>
+
+    <!-- 홈 -->
+    <string name="home_kicker">GOOD AFTERNOON, DRIVER</string>
+    <string name="home_headline">내비만 켜면, 드라이브가 기록돼요.</string>
+    <string name="home_lead">길 안내를 시작하면 CARLOG가 따로 조작하지 않아도 경로와 주행 정보를 남겨요.</string>
+    <string name="home_destination">목적지</string>
+    <string name="home_nav_pill">PLEOS 내비게이션</string>
+    <string name="home_route_map_desc">서울 마포구에서 남이섬 선착장까지 예정 경로 지도</string>
+    <string name="home_dest_name_sample">남이섬 선착장</string>
+    <string name="home_dest_meta_sample">서울 마포구 출발 · 60.4 km · 약 1시간 7분</string>
+    <string name="home_start_guidance">안내 시작</string>
+    <string name="home_my_driver">나의 드라이버</string>
+    <string name="home_no_title">아직 받은 칭호가 없어요. 첫 드라이브를 시작해 보세요.</string>
+    <string name="home_saved_drives">저장한 드라이브</string>
+    <string name="home_title_collection">칭호 컬렉션</string>
+    <string name="home_saved_drives_sample">0</string>
+    <string name="home_title_collection_sample">0 / 6</string>
+    <string name="home_received_course">휴대전화에서 받은 코스</string>
+    <string name="home_received_course_empty">친구 피드에서 코스를 보내면 여기에 표시돼요</string>
+    <string name="home_open">열기</string>
 </resources>

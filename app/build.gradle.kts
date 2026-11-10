@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.carlog_hd_frontend"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.carlog_hd_frontend"

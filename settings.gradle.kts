@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "carlog_hd_frontend"
 include(":app")
+include(":app-mobile")
  

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 공통 커스텀 View 속성 (ui/common) -->
+<resources>
+    <!-- 통계 칸: 값 + 라벨 (예: 167km / 거리) -->
+    <declare-styleable name="StatView">
+        <attr name="statValue" format="string" />
+        <attr name="statLabel" format="string" />
+    </declare-styleable>
+
+    <!-- 지도 박스: 지도 이미지 + 왼쪽 위 장소 라벨 -->
+    <declare-styleable name="MapBoxView">
+        <attr name="mapImage" format="reference" />
+        <attr name="mapTagText" format="string" />
+    </declare-styleable>
+</resources>

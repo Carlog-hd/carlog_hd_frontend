@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- MapBoxView 내부 구성 (직접 사용하지 말고 MapBoxView를 사용) -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:layout_height="180dp"
+    tools:parentTag="android.widget.FrameLayout">
+
+    <ImageView
+        android:id="@+id/iv_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/cd_map"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/img_map_placeholder" />
+
+    <TextView
+        android:id="@+id/tv_map_tag"
+        style="@style/Widget.Carlog.MapTag"
+        tools:text="7번 국도 새벽 바닷길" />
+</merge>

@@ -168,21 +168,25 @@
         <item name="android:paddingTop">@dimen/cl_title_chip_padding_v</item>
         <item name="android:paddingBottom">@dimen/cl_title_chip_padding_v</item>
         <item name="android:drawablePadding">@dimen/cl_space_4</item>
+        <item name="android:drawableTint">@color/cl_chip_accent_fg</item>
     </style>
 
     <style name="Widget.Carlog.TitleChip.Teal">
         <item name="android:backgroundTint">@color/cl_chip_teal_bg</item>
         <item name="android:textColor">@color/cl_chip_teal_fg</item>
+        <item name="android:drawableTint">@color/cl_chip_teal_fg</item>
     </style>
 
     <style name="Widget.Carlog.TitleChip.Violet">
         <item name="android:backgroundTint">@color/cl_chip_violet_bg</item>
         <item name="android:textColor">@color/cl_chip_violet_fg</item>
+        <item name="android:drawableTint">@color/cl_chip_violet_fg</item>
     </style>
 
     <style name="Widget.Carlog.TitleChip.Blue">
         <item name="android:backgroundTint">@color/cl_chip_blue_bg</item>
         <item name="android:textColor">@color/cl_chip_blue_fg</item>
+        <item name="android:drawableTint">@color/cl_chip_blue_fg</item>
     </style>
 
     <!-- ===== 토글 (.toggle) ===== -->
@@ -329,6 +333,93 @@
         <item name="android:paddingTop">@dimen/cl_space_12</item>
         <item name="android:paddingBottom">@dimen/cl_space_20</item>
         <item name="android:background">@color/cl_bg</item>
+    </style>
+
+    <!-- ===== 피드 카드 하단 버튼 (.actions button) : 좋아요 / 댓글 / 저장 / 내 차로 ===== -->
+    <style name="Widget.Carlog.FeedAction" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingTop">@dimen/cl_space_10</item>
+        <item name="android:paddingBottom">@dimen/cl_space_10</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:textSize">@dimen/cl_text_action</item>
+        <item name="android:textColor">@color/cl_ink2</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="cornerRadius">0dp</item>
+        <item name="iconSize">@dimen/cl_icon_size_action</item>
+        <item name="iconTint">@color/cl_ink2</item>
+        <item name="iconPadding">@dimen/cl_space_4</item>
+        <item name="iconGravity">textStart</item>
+        <item name="rippleColor">@color/cl_surface_sub</item>
+    </style>
+
+    <!-- ===== 지도 위 장소 라벨 (.maptag) : MapBoxView 안에서 사용 ===== -->
+    <style name="Widget.Carlog.MapTag" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/cl_space_10</item>
+        <item name="android:background">@drawable/bg_map_tag</item>
+        <item name="android:drawableStart">@drawable/ic_pin_small</item>
+        <item name="android:paddingStart">@dimen/cl_space_8</item>
+        <item name="android:paddingEnd">@dimen/cl_space_8</item>
+        <item name="android:paddingTop">@dimen/cl_space_4</item>
+        <item name="android:paddingBottom">@dimen/cl_space_4</item>
+        <item name="android:drawablePadding">@dimen/cl_space_4</item>
+        <item name="android:drawableTint">@color/cl_ink</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/cl_ink</item>
+        <item name="android:textSize">@dimen/cl_text_badge</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <!-- ===== 피드 버튼 줄 (.actions) : FeedAction 버튼 여러 개를 담는 가로 줄 ===== -->
+    <style name="Widget.Carlog.FeedActions" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <!-- ===== 프로필 원 (.av) : TextView에 적용, 색은 backgroundTint로 지정 ===== -->
+    <style name="Widget.Carlog.Avatar" parent="">
+        <item name="android:layout_width">@dimen/cl_avatar_size</item>
+        <item name="android:layout_height">@dimen/cl_avatar_size</item>
+        <item name="android:background">@drawable/bg_avatar</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/cl_white</item>
+        <item name="android:textSize">@dimen/cl_text_chip</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <!-- ===== 통계 (.stats / .stat) ===== -->
+    <!-- 통계 칸 여러 개를 담는 가로 줄 -->
+    <style name="Widget.Carlog.StatsRow" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:baselineAligned">false</item>
+        <item name="android:paddingStart">@dimen/cl_space_4</item>
+        <item name="android:paddingEnd">@dimen/cl_space_4</item>
+        <item name="android:paddingTop">@dimen/cl_space_10</item>
+        <item name="android:paddingBottom">@dimen/cl_space_4</item>
+    </style>
+
+    <!-- StatsRow 안의 통계 칸 1개 (StatView): 칸 너비를 똑같이 나눔 -->
+    <style name="Widget.Carlog.Stat" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
     </style>
 
 </resources>

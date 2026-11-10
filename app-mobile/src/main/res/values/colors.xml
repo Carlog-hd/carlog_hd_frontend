@@ -22,6 +22,11 @@
     <color name="cl_toggle_off">#D3D8E0</color>
     <color name="cl_toast_bg">#F00E1A2B</color>    <!-- ink 94% -->
 
+    <!-- 어두운 카드 (홈 차량 기록 도착 카드 .arrived) -->
+    <color name="cl_dark_card_start">#1A2740</color>
+    <color name="cl_dark_card_end">#0E1A2B</color>
+    <color name="cl_on_dark_muted">#AFC0DA</color>  <!-- 어두운 배경 위 보조 텍스트 -->
+
     <!-- 칭호 칩 (.title-chip) -->
     <color name="cl_chip_accent_bg">#FFF1EB</color>
     <color name="cl_chip_accent_fg">#D9481C</color>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  [템플릿] 하위 화면 (기록 상세 / 공유 편집 / 미리보기 / 친구 로그 / 차량 전송 등)
+  새 화면을 만들 때 이 파일을 복사해서 시작하세요. (이 파일 자체는 화면에 쓰이지 않음)
+  구성: 상단바(뒤로가기 + 제목) → 스크롤 내용 → 하단 고정 버튼
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="UnusedResources,HardcodedText">
+
+    <!-- 상단바 (.navbar) -->
+    <LinearLayout style="@style/Widget.Carlog.TopBar">
+
+        <ImageButton
+            style="@style/Widget.Carlog.IconButton"
+            android:contentDescription="@string/cd_back"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            style="@style/Carlog.Text.TopBarTitle"
+            android:text="화면 제목" />
+
+        <!-- 오른쪽 버튼이 없으면 visibility="invisible"로 두어 제목 가운데 정렬 유지 -->
+        <ImageButton
+            style="@style/Widget.Carlog.IconButton"
+            android:contentDescription="@string/cd_share"
+            android:src="@drawable/ic_share" />
+
+    </LinearLayout>
+
+    <!-- 스크롤 내용 -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/cl_space_8">
+
+            <LinearLayout style="@style/Widget.Carlog.Section">
+
+                <LinearLayout style="@style/Widget.Carlog.SectionHeader">
+
+                    <TextView
+                        style="@style/Carlog.Text.SectionTitle.Fill"
+                        android:text="섹션 제목" />
+
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout style="@style/Widget.Carlog.CardContent">
+
+                        <TextView
+                            style="@style/Carlog.Text.Body"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="내용" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- 하단 고정 버튼 (.btnbar) -->
+    <LinearLayout style="@style/Widget.Carlog.ButtonBar">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Carlog.Button.Sub"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/cl_space_8"
+            android:layout_weight="1"
+            android:text="취소" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Carlog.Button.Accent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="확인" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- M01 홈·알림 -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/cl_space_20">
+
+        <!-- 화면 제목 -->
+        <LinearLayout style="@style/Widget.Carlog.PageHeader">
+
+            <TextView
+                style="@style/Carlog.Text.PageTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tab_home" />
+
+        </LinearLayout>
+
+        <!-- TODO: M01 홈·알림 화면 구성 -->
+        <LinearLayout style="@style/Widget.Carlog.Section">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout style="@style/Widget.Carlog.CardContent">
+
+                    <TextView
+                        style="@style/Carlog.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="M01 홈·알림 화면 작업 예정" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

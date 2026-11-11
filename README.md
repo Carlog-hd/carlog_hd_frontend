@@ -68,18 +68,24 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
   </tr>
 </table>
 
-### Android Studio 에뮬레이터 캡처
+### 에뮬레이터 실행 캡처
 
-<details>
-  <summary>에뮬레이터에서 앱을 실행한 전체 화면 보기</summary>
-  <br>
-  <p><strong>홈 화면</strong></p>
-  <img src="docs/screenshots/android-studio-home-screen.png" alt="Android Studio에서 실행한 CARLOG 홈 화면" width="800">
-  <p><strong>코스 화면</strong></p>
-  <img src="docs/screenshots/android-studio-course-screen.png" alt="Android Studio에서 실행한 CARLOG 코스 화면" width="800">
-  <p><strong>지도 로딩 중인 에뮬레이터 상태</strong></p>
-  <img src="docs/screenshots/pleos-emulator-map-loading.png" alt="Pleos Connect 에뮬레이터가 지도 정보를 불러오는 화면" width="800">
-</details>
+<table>
+  <tr>
+    <th>Android Studio의 홈 화면</th>
+    <th>Android Studio의 코스 화면</th>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/android-studio-home-screen.png" alt="Android Studio에서 실행한 CARLOG 홈 화면" width="800"></td>
+    <td><img src="docs/screenshots/android-studio-course-screen.png" alt="Android Studio에서 실행한 CARLOG 코스 화면" width="800"></td>
+  </tr>
+  <tr>
+    <th colspan="2">Pleos Connect 에뮬레이터 지도 로딩 화면</th>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><img src="docs/screenshots/pleos-emulator-map-loading.png" alt="Pleos Connect 에뮬레이터가 지도 정보를 불러오는 화면" width="800"></td>
+  </tr>
+</table>
 
 ## 기술 구성
 

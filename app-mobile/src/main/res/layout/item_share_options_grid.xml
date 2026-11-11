@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 좁은 화면에서는 공유 수단을 2열로 배치해 라벨이 잘리지 않게 한다. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_share_options"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/cl_space_16"
+    android:layout_marginBottom="@dimen/cl_space_16"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/btn_share_feed"
+            style="@style/Widget.Carlog.PreviewOption"
+            android:contentDescription="@string/preview_option_feed">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                style="@style/Widget.Carlog.PreviewOptionIcon"
+                android:backgroundTint="@color/cl_accent"
+                app:srcCompat="@drawable/ic_send"
+                app:tint="@color/cl_white" />
+
+            <TextView
+                style="@style/Carlog.Text.PreviewOptionLabel"
+                android:text="@string/preview_option_feed" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/btn_share_link"
+            style="@style/Widget.Carlog.PreviewOption"
+            android:contentDescription="@string/preview_option_link">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                style="@style/Widget.Carlog.PreviewOptionIcon"
+                android:backgroundTint="@color/cl_chip_blue_bg"
+                app:srcCompat="@drawable/ic_link"
+                app:tint="@color/cl_blue" />
+
+            <TextView
+                style="@style/Carlog.Text.PreviewOptionLabel"
+                android:text="@string/preview_option_link" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/btn_share_message"
+            style="@style/Widget.Carlog.PreviewOption"
+            android:contentDescription="@string/preview_option_message">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                style="@style/Widget.Carlog.PreviewOptionIcon"
+                android:backgroundTint="@color/cl_chip_teal_bg"
+                app:srcCompat="@drawable/ic_chat"
+                app:tint="@color/cl_teal" />
+
+            <TextView
+                style="@style/Carlog.Text.PreviewOptionLabel"
+                android:text="@string/preview_option_message" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/btn_share_image"
+            style="@style/Widget.Carlog.PreviewOption"
+            android:contentDescription="@string/preview_option_image">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                style="@style/Widget.Carlog.PreviewOptionIcon"
+                android:backgroundTint="@color/cl_chip_violet_bg"
+                app:srcCompat="@drawable/ic_image"
+                app:tint="@color/cl_violet" />
+
+            <TextView
+                style="@style/Carlog.Text.PreviewOptionLabel"
+                android:text="@string/preview_option_image" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

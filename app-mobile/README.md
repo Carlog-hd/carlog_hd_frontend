@@ -47,7 +47,7 @@ app-mobile/src/main/
 │       ├── home/                # 홈
 │       ├── discover/            # 발견
 │       ├── logs/                # 내 기록, 기록 상세
-│       ├── share/               # 공유 편집
+│       ├── share/               # 공유 편집, 미리보기, 공유 수단
 │       ├── dex/                 # 도감
 │       └── my/                  # MY
 └── res/
@@ -75,7 +75,8 @@ app-mobile/src/main/
 | M03 | 내 기록 | `ui/logs/LogsFragment` | `fragment_logs.xml` |
 | M03 | 기록 상세 | `ui/logs/LogDetailFragment` | `fragment_log_detail.xml` |
 | M04 | 공유 편집 | `ui/share/ShareEditFragment` | `fragment_share_edit.xml` |
-| M05 | 미리보기·공유 | - | - |
+| M05 | 피드 미리보기 | `ui/share/SharePreviewFragment` | `fragment_share_preview.xml` |
+| M05 | 공유 수단 | `ui/share/ShareOptionsFragment` | `fragment_share_options.xml` |
 | M06 | 친구 로그 | - | - |
 | M07 | 차량 전송 | - | - |
 | M08 | 도감 | `ui/dex/DexFragment` | `fragment_dex.xml` |
@@ -83,6 +84,14 @@ app-mobile/src/main/
 
 - 하단 탭(홈 / 발견 / 기록 / 도감 / MY) 전환만 연결되어 있습니다.
 - 하위 화면(기록 상세, 공유 편집 등)은 Android Studio 레이아웃 미리보기로 확인할 수 있습니다.
+
+### M05 미리보기·공유 목업
+- 두 XML을 Android Studio의 **Design / Split**에서 열면 바텀시트 형태로 확인할 수 있습니다.
+- `SharePreviewFragment`, `ShareOptionsFragment`는 기존 화면처럼 레이아웃만 표시하는 Fragment입니다. M04 버튼, 실제 바텀시트 표시·닫기·드래그는 연결하지 않았습니다.
+- 기본 예시는 **친구 공개 / 출발지·도착지 숨김**입니다. 지도는 비공개 구간의 회색 경로를 제외한 자리 표시 이미지이며 실제 위치 정보나 편집 상태를 처리하지 않습니다.
+- 너비 360dp 이상에서는 통계·공유 수단이 4열이며, 좁은 화면에서는 2열로 표시됩니다. 시트 높이는 화면의 최대 86%이고 내용이 길면 스크롤됩니다.
+- 피드 게시, 링크 복사, 메시지 공유, 이미지 저장 및 반응 버튼은 디자인만 구현되어 있습니다.
+- M05 전용 문구·스타일은 `strings_preview.xml`, `styles_preview.xml`에 있습니다. 기존 공통 리소스는 수정하지 않았습니다.
 
 ## Conventions
 

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 일반 너비에서는 데모와 같은 4열 공유 수단. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_share_options"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/cl_space_16"
+    android:layout_marginBottom="@dimen/cl_space_16"
+    android:baselineAligned="false"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/btn_share_feed"
+        style="@style/Widget.Carlog.PreviewOption"
+        android:contentDescription="@string/preview_option_feed">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/Widget.Carlog.PreviewOptionIcon"
+            android:backgroundTint="@color/cl_accent"
+            app:srcCompat="@drawable/ic_send"
+            app:tint="@color/cl_white" />
+
+        <TextView
+            style="@style/Carlog.Text.PreviewOptionLabel"
+            android:text="@string/preview_option_feed" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_share_link"
+        style="@style/Widget.Carlog.PreviewOption"
+        android:contentDescription="@string/preview_option_link">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/Widget.Carlog.PreviewOptionIcon"
+            android:backgroundTint="@color/cl_chip_blue_bg"
+            app:srcCompat="@drawable/ic_link"
+            app:tint="@color/cl_blue" />
+
+        <TextView
+            style="@style/Carlog.Text.PreviewOptionLabel"
+            android:text="@string/preview_option_link" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_share_message"
+        style="@style/Widget.Carlog.PreviewOption"
+        android:contentDescription="@string/preview_option_message">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/Widget.Carlog.PreviewOptionIcon"
+            android:backgroundTint="@color/cl_chip_teal_bg"
+            app:srcCompat="@drawable/ic_chat"
+            app:tint="@color/cl_teal" />
+
+        <TextView
+            style="@style/Carlog.Text.PreviewOptionLabel"
+            android:text="@string/preview_option_message" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_share_image"
+        style="@style/Widget.Carlog.PreviewOption"
+        android:contentDescription="@string/preview_option_image">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/Widget.Carlog.PreviewOptionIcon"
+            android:backgroundTint="@color/cl_chip_violet_bg"
+            app:srcCompat="@drawable/ic_image"
+            app:tint="@color/cl_violet" />
+
+        <TextView
+            style="@style/Carlog.Text.PreviewOptionLabel"
+            android:text="@string/preview_option_image" />
+    </LinearLayout>
+</LinearLayout>

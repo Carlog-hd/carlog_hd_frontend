@@ -51,6 +51,22 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 - 사진·동영상을 로그에 연결하고, 자동 작성된 로그 문구를 편집합니다.
 - 주행 기록·저장 코스·좋아요 코스·MY 설정을 JSON 파일로 가져오거나 내보냅니다.
 
+## 실행 화면
+
+### 휴대폰 앱
+
+차량에서 기록된 드라이브 로그를 휴대폰에서 확인하고, 공개 범위를 정해 공유하는 화면입니다. (Android 에뮬레이터, 1080×2400)
+
+| M01 홈 | M02 발견 | M03 내 기록 | M03 기록 상세 |
+| :---: | :---: | :---: | :---: |
+| <img src="mobile/app/docs/screenshots/m01-home.png" width="200" alt="M01 홈"> | <img src="mobile/app/docs/screenshots/m02-discover.png" width="200" alt="M02 발견"> | <img src="mobile/app/docs/screenshots/m03-logs.png" width="200" alt="M03 내 기록"> | <img src="mobile/app/docs/screenshots/m03-log-detail.png" width="200" alt="M03 기록 상세"> |
+
+| M04 공유 편집 | M05 피드 미리보기 | M05 공유 수단 |
+| :---: | :---: | :---: |
+| <img src="mobile/app/docs/screenshots/m04-share-edit.png" width="200" alt="M04 공유 편집"> | <img src="mobile/app/docs/screenshots/m05-preview.png" width="200" alt="M05 피드 미리보기"> | <img src="mobile/app/docs/screenshots/m05-options.png" width="200" alt="M05 공유 수단"> |
+
+> 휴대폰 앱은 디자인 목업 단계로, 데이터 연동 없이 데모 데이터를 표시합니다. 도감·MY 화면은 작업 예정입니다. 자세한 내용은 [`mobile/README.md`](mobile/README.md)를 참고하세요.
+
 ## 기술 구성
 
 | 구분 | 사용 기술 |

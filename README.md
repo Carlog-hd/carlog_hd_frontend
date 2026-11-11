@@ -51,6 +51,36 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 - 사진·동영상을 로그에 연결하고, 자동 작성된 로그 문구를 편집합니다.
 - 주행 기록·저장 코스·좋아요 코스·MY 설정을 JSON 파일로 가져오거나 내보냅니다.
 
+## 실행 화면
+
+아래 캡처는 Pleos Connect 에뮬레이터에서 CARLOG를 실행한 화면입니다. 창 크기와 일부 UI는 개발 시점에 따라 다를 수 있습니다.
+
+### 홈과 코스 상세
+
+<table>
+  <tr>
+    <th>홈 대시보드</th>
+    <th>코스 상세와 경유지</th>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/home-dashboard.png" alt="CARLOG 홈 대시보드" width="480"></td>
+    <td><img src="docs/screenshots/course-detail.png" alt="CARLOG 코스 상세 화면" width="480"></td>
+  </tr>
+</table>
+
+### Android Studio 에뮬레이터 캡처
+
+<details>
+  <summary>에뮬레이터에서 앱을 실행한 전체 화면 보기</summary>
+  <br>
+  <p><strong>홈 화면</strong></p>
+  <img src="docs/screenshots/android-studio-home-screen.png" alt="Android Studio에서 실행한 CARLOG 홈 화면" width="800">
+  <p><strong>코스 화면</strong></p>
+  <img src="docs/screenshots/android-studio-course-screen.png" alt="Android Studio에서 실행한 CARLOG 코스 화면" width="800">
+  <p><strong>지도 로딩 중인 에뮬레이터 상태</strong></p>
+  <img src="docs/screenshots/pleos-emulator-map-loading.png" alt="Pleos Connect 에뮬레이터가 지도 정보를 불러오는 화면" width="800">
+</details>
+
 ## 기술 구성
 
 | 구분 | 사용 기술 |

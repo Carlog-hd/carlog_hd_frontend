@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# 기획서 (팀원 연락처·비밀유지 문구 포함, 공개 저장소에 올리지 않음)
+/기획서.pdf

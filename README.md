@@ -66,6 +66,7 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 ```text
 carlog_hd_frontend/
 ├── ivi/               # 차량 인포테인먼트(IVI) 앱 Android 프로젝트
+├── mobile/            # 휴대폰 앱 Android 프로젝트 (mobile/README.md 참고)
 ├── apk/               # 공모전 제출용 release APK
 └── carlog-demo.html   # 차량 IVI·휴대전화 화면 인터랙티브 데모
 ```
@@ -99,6 +100,8 @@ IVI 앱 소스는 `ivi/app/src/main/java/com/example/carlog_hd_frontend/` 아래
 1. 저장소를 clone하고 Android Studio에서 `ivi` 폴더를 엽니다.
 2. JDK 17과 Android SDK Platform 34를 설정합니다.
 3. Gradle 동기화가 끝나면 에뮬레이터를 선택하고 `app` 구성을 실행합니다.
+
+> 휴대폰 앱은 별도 Gradle 프로젝트입니다. `mobile` 폴더를 열어 실행하며, 자세한 방법은 [`mobile/README.md`](mobile/README.md)를 참고하세요.
 
 ### 명령줄 빌드
 

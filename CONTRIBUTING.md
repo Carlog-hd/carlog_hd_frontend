@@ -64,8 +64,8 @@ docs/common/convention/git-rules
 
 | part | 설명 |
 |---|---|
-| `ivi` | 차량용 Android/Kotlin 앱 (`app/`) |
-| `mobile` | 사용자 휴대폰 Android/Kotlin 앱 (`app-mobile/`) |
+| `ivi` | 차량용 Android/Kotlin 앱 (`ivi/`) |
+| `mobile` | 사용자 휴대폰 Android/Kotlin 앱 (`mobile/`) |
 | `web` | 모바일 웹 |
 | `be` | 백엔드 API 및 서버 |
 | `ai` | AI 기능 및 콘텐츠 생성 |

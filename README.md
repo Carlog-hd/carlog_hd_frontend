@@ -61,7 +61,18 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 | 빌드 | Gradle Wrapper |
 | `compileSdk` / `targetSdk` / `minSdk` | 34 / 33 / 28 |
 
+### 저장소 구성
+
+```text
+carlog_hd_frontend/
+├── ivi/               # 차량 인포테인먼트(IVI) 앱 Android 프로젝트
+├── apk/               # 공모전 제출용 release APK
+└── carlog-demo.html   # 차량 IVI·휴대전화 화면 인터랙티브 데모
+```
+
 ### 코드 구성
+
+IVI 앱 소스는 `ivi/app/src/main/java/com/example/carlog_hd_frontend/` 아래에 있습니다.
 
 - `MainActivity.kt` — 탭 전환과 데모 주행 세션 관리
 - `ui/ScreenFragments.kt` — 홈·주행·발견·도감·MY·주행 로그 화면
@@ -74,6 +85,8 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 
 ## 실행 방법
 
+> 빌드 없이 설치하려면 [`apk/CarLog_CARLOG_release.apk`](apk/CarLog_CARLOG_release.apk)를 사용하세요.
+
 ### 개발 환경
 
 - JDK 17
@@ -83,7 +96,7 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 
 ### Android Studio에서 실행
 
-1. 저장소를 clone하고 Android Studio에서 프로젝트 폴더를 엽니다.
+1. 저장소를 clone하고 Android Studio에서 `ivi` 폴더를 엽니다.
 2. JDK 17과 Android SDK Platform 34를 설정합니다.
 3. Gradle 동기화가 끝나면 에뮬레이터를 선택하고 `app` 구성을 실행합니다.
 
@@ -93,16 +106,18 @@ Windows PowerShell:
 
 ```powershell
 $env:JAVA_HOME = "<JDK 17 경로>"
+cd ivi
 .\gradlew.bat assembleDebug
 ```
 
 macOS/Linux:
 
 ```bash
+cd ivi
 ./gradlew assembleDebug
 ```
 
-생성되는 APK:
+생성되는 APK (`ivi` 폴더 기준):
 
 ```text
 app/build/outputs/apk/debug/app-debug.apk

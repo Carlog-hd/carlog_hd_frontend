@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CARLOG 인터랙티브 데모</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap');
+:root{--bg:#070b12;--panel:#121a27;--panel2:#192333;--edge:#2b3749;--fg:#f2f6fc;--muted:#97a6b9;--lime:#d7fa76;--aqua:#73d5d1;--gold:#f5c76b;
+--p-bg:#f5f6f8;--p-card:#fff;--p-fg:#12161c;--p-muted:#5b6573;--p-acc:#0b7a70;--p-acc-soft:#e2f3f1;--p-line:#e5e8ec}
+*{box-sizing:border-box}
+body{margin:0;background:#04060a;color:var(--fg);font-family:'DM Sans','Noto Sans KR',sans-serif}
+button,input{font:inherit}
+button{cursor:pointer}
+.frame{max-width:1640px;margin:24px auto;padding:0 18px}
+.pagehead{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.eyebrow{font-size:12px;letter-spacing:.18em;color:var(--aqua);font-weight:800}
+.pagehead h1{margin:6px 0 0;font-size:26px;letter-spacing:-.04em}
+.tip{font-size:13px;color:var(--muted);max-width:620px}
+.stage{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
+/* ---------- IVI ---------- */
+.cockpit{flex:1 1 860px;min-width:0;border:9px solid #202836;border-radius:30px;height:760px;display:flex;overflow:hidden;background:var(--bg);box-shadow:0 30px 90px #000a}
+.rail{width:100px;border-right:1px solid var(--edge);padding:22px 10px;display:flex;flex-direction:column;align-items:center;gap:8px;background:#0b1019;flex:none}
+.logo{font-size:19px;line-height:1.05;letter-spacing:-.08em;font-weight:900;text-align:center;margin:4px 0 30px}
+.logo em{font-style:normal;color:var(--lime)}
+.navbtn{border:0;background:transparent;color:#9aa9bb;width:78px;min-height:74px;border-radius:17px;display:flex;flex-direction:column;gap:7px;align-items:center;justify-content:center;font-size:13px}
+.navbtn svg{width:24px;height:24px}
+.navbtn.active{color:var(--lime);background:#263325}
+.navbtn.locked{opacity:.4}
+.railfoot{margin-top:auto;font-size:11px;color:#8291a3;text-align:center}
+.workspace{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{height:62px;border-bottom:1px solid var(--edge);display:flex;align-items:center;gap:16px;padding:0 26px;flex:none}
+.live{font-size:12px;color:var(--aqua);display:flex;gap:7px;align-items:center;font-weight:700}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--aqua);display:inline-block}
+.live.rec{color:#ff8a8a}.live.rec i{background:#ff6b6b;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.25}}
+.status{margin-left:auto;display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted)}
+.gear{border-radius:8px;padding:5px 10px;font-weight:800;color:var(--lime);background:#303e27}
+.screen{flex:1;min-height:0;padding:26px 30px 28px;overflow:auto;position:relative}
+.kicker{font-size:11px;letter-spacing:.14em;color:var(--aqua);font-weight:800}
+.headline{font-size:30px;line-height:1.3;letter-spacing:-.05em;margin:6px 0 6px}
+.lead{color:var(--muted);font-size:14px;margin:0 0 20px}
+.grid{display:grid;gap:14px}
+.two{grid-template-columns:1.4fr 1fr}
+.panel{background:var(--panel);border:1px solid var(--edge);border-radius:22px;padding:20px;min-width:0}
+.ptitle{font-size:16px;font-weight:800;margin:0 0 14px}
+.muted{color:var(--muted)}.tiny{font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat{background:#1e2a3a;border-radius:15px;padding:12px 16px}
+.stat small{color:var(--muted);font-size:12px;display:block}
+.stat strong{font-size:24px;letter-spacing:-.03em}
+.stat strong span{font-size:14px;color:var(--muted);font-weight:500}
+.btn{border:0;border-radius:14px;background:var(--lime);color:#182009;padding:13px 18px;font-weight:800;white-space:nowrap}
+.btn.ghost{background:#293747;color:#eef3fa}
+.btn.big{height:64px;font-size:19px;width:100%}
+.btn.sm{padding:9px 12px;font-size:12px;border-radius:11px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.flex{display:flex;align-items:center;gap:12px}.between{justify-content:space-between}
+.pill{display:inline-block;border-radius:100px;background:#263a3b;color:#b9e9d7;padding:6px 11px;font-size:11px;font-weight:700}
+.pill.gold{background:#41361f;color:#f9d68d}
+.mapbox{background:#111824;border-radius:20px;overflow:hidden;position:relative}
+.mapbox svg{display:block;width:100%;height:100%}
+.navcard{position:absolute;left:18px;top:18px;background:#121a27ee;border:1px solid var(--edge);border-radius:18px;padding:14px 18px;display:flex;gap:14px;align-items:center}
+.navcard b{font-size:26px;display:block}.navcard span{white-space:nowrap}
+.etabar{position:absolute;left:18px;right:18px;bottom:18px;background:#121a27ee;border:1px solid var(--edge);border-radius:16px;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;font-size:15px}
+.recw{display:flex;flex-direction:column;gap:14px;height:100%}
+.bigtime{font-size:42px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.bar{height:8px;background:#2b3645;border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--gold);width:0}
+.note{font-size:12px;color:var(--muted);line-height:1.6;border:1px solid #3a4757;border-radius:12px;padding:10px 12px}
+.titlecard{background:#2a2416;border:1px solid #4a3d22;border-radius:18px;padding:16px 18px;display:flex;gap:14px;align-items:center}
+.titlecard .ico{width:52px;height:52px;border-radius:15px;background:var(--gold);display:grid;place-items:center;flex:none}
+.wp{display:flex;gap:12px;align-items:center;font-size:16px;padding:8px 0}
+.wp span{width:28px;height:28px;border-radius:50%;background:var(--aqua);color:#0b1019;font-weight:800;display:grid;place-items:center;font-size:13px;flex:none}
+.wp span.end{background:var(--gold);font-size:11px}
+.feedrow{display:flex;gap:14px;align-items:center;background:#162131;border:1px solid var(--edge);border-radius:16px;padding:12px;margin-bottom:10px}
+.feedrow .mini{width:150px;height:84px;border-radius:12px;overflow:hidden;flex:none}
+.collection{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.collect{border:1px solid #36455a;background:#1b2737;border-radius:16px;padding:16px;min-height:120px;display:flex;flex-direction:column;gap:6px}
+.collect b{font-size:15px}
+.collect.locked{opacity:.38}
+.overlay{position:absolute;inset:0;background:#03070dcc;display:flex;align-items:center;justify-content:center;z-index:5}
+.dialog{background:#192436;border:1px solid #506076;border-radius:26px;padding:32px;width:min(560px,92%)}
+.dialog h2{margin:6px 0 6px;font-size:26px;line-height:1.35}
+/* demo controls */
+.controls{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--muted)}
+.controls b{color:var(--fg)}
+/* ---------- Phone ---------- */
+.phonewrap{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:10px}
+.phonelabel{font-size:12px;letter-spacing:.14em;color:var(--aqua);font-weight:800}
+.phone{width:390px;height:760px;border:10px solid #1d232c;border-radius:44px;background:var(--p-bg);color:var(--p-fg);overflow:hidden;display:flex;flex-direction:column;position:relative;font-family:'Noto Sans KR',sans-serif}
+.pbody{flex:1;min-height:0;overflow:auto;padding:18px 18px 18px}
+.ptabs{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--p-line);background:#fff;flex:none}
+.ptabs button{border:0;background:none;height:58px;font-size:14px;color:var(--p-muted);font-weight:500}
+.ptabs button.active{color:var(--p-acc);font-weight:800}
+.phead{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.phead h3{margin:0;font-size:20px}
+.back{width:40px;height:40px;border:0;background:none;display:grid;place-items:center;margin-left:-10px;border-radius:12px}
+.pcard{background:var(--p-card);border-radius:18px;overflow:hidden;box-shadow:0 1px 2px #12161c10;margin-bottom:12px}
+.pcard .in{padding:14px 16px}
+.pstats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.pstat{background:#fff;border-radius:14px;padding:12px 14px}
+.pstat small{display:block;font-size:12px;color:var(--p-muted)}
+.pstat b{font-size:19px}
+.pbtn{border:0;width:100%;height:54px;border-radius:15px;background:var(--p-acc);color:#fff;font-weight:800;font-size:16px}
+.pbtn.line{background:#fff;color:var(--p-fg);border:1px solid #c9d1da}
+.pbadge{display:inline-block;background:#fff4e3;color:#6e470c;font-size:12px;padding:4px 8px;border-radius:8px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips span{background:#f1f3f5;font-size:12px;padding:4px 8px;border-radius:8px}
+.row{display:flex;justify-content:space-between;align-items:center;min-height:46px;font-size:15px;border-bottom:1px solid var(--p-line)}
+.row:last-child{border-bottom:0}
+.row input[type=checkbox]{width:22px;height:22px;accent-color:var(--p-acc)}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;font-size:14px}
+.checks label{display:flex;gap:8px;align-items:center;min-height:30px}
+.checks input{width:18px;height:18px;accent-color:var(--p-acc)}
+.scope{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.scope label{height:42px;border-radius:12px;background:#f1f3f5;display:flex;align-items:center;justify-content:center;gap:6px;font-size:14px}
+.scope label.on{background:var(--p-acc-soft);color:#08594f;font-weight:800}
+.scope input{accent-color:var(--p-acc)}
+.range{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--p-muted);padding:8px 0}
+.range input{width:100%;accent-color:var(--p-acc)}
+.empty{text-align:center;color:var(--p-muted);font-size:14px;line-height:1.7;padding:60px 16px}
+.notif{position:absolute;left:12px;right:12px;top:12px;background:#fff;border-radius:18px;box-shadow:0 10px 30px #0003;padding:14px 16px;z-index:4;display:none;cursor:pointer}
+.notif.show{display:block;animation:drop .35s}
+@keyframes drop{from{transform:translateY(-20px);opacity:0}}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#dcf8ae;color:#243020;border-radius:12px;padding:13px 20px;box-shadow:0 14px 50px #0008;font-weight:800;z-index:20;display:none;text-align:center}
+.footer{font-size:12px;color:var(--muted);margin:16px 3px 30px}
+@media(max-width:900px){.two{grid-template-columns:1fr}.cockpit{height:auto;min-height:720px}.rail{width:72px}.navbtn{width:56px;font-size:11px}.screen{padding:20px 16px}}
+@media(max-width:440px){.phone{width:100%;}.phonewrap{width:100%}}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="pagehead">
+    <div><div class="eyebrow">CARLOG · INTERACTIVE DEMO</div><h1>차량 IVI + 휴대전화 연동 데모</h1></div>
+    <div class="tip">시나리오 1: 차량 홈에서 <b>내비 안내 시작</b> → 자동 기록 → 휴게소 정차·이어가기 → 도착 후 휴대전화로 내보내기 → 편집·공유.<br>시나리오 2: 휴대전화 <b>친구 피드</b>에서 코스를 열고 <b>내 차로 코스 보내기</b> → 차량에서 따라가기.</div>
+  </div>
+  <div class="stage">
+    <div style="flex:1 1 860px;min-width:0">
+      <div class="cockpit">
+        <aside class="rail">
+          <div class="logo">CAR<br><em>LOG.</em></div>
+          <button class="navbtn" data-act="tab" data-tab="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>홈</button>
+          <button class="navbtn" data-act="tab" data-tab="drive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>주행</button>
+          <button class="navbtn" data-act="tab" data-tab="discover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg>코스</button>
+          <button class="navbtn" data-act="tab" data-tab="titles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>칭호</button>
+          <div class="railfoot">PLEOS<br>CONNECT</div>
+        </aside>
+        <div class="workspace">
+          <header class="topbar">
+            <span class="live" id="live"><i></i><span id="liveText">CARLOG 대기 중</span></span>
+            <div class="status"><span id="clock">14:12</span><span id="kmh">0 km/h</span><span class="gear" id="gear">P</span><span>외기 17°C · 맑음</span></div>
+          </header>
+          <main class="screen" id="ivi"></main>
+        </div>
+      </div>
+      <div class="controls"><b>시연 도구</b>
+        <button class="btn sm ghost" data-act="speed" data-v="1">주행 속도 1x</button>
+        <button class="btn sm ghost" data-act="speed" data-v="3">3x</button>
+        <button class="btn sm ghost" data-act="skip">바로 도착</button>
+        <button class="btn sm ghost" data-act="reset">처음부터</button>
+        <span>시연용 가상 주행 데이터 · SDK 미연동</span>
+      </div>
+    </div>
+    <div class="phonewrap">
+      <div class="phonelabel">휴대전화 · CARLOG 앱</div>
+      <div class="phone">
+        <div class="notif" id="notif" data-act="openNotif"></div>
+        <div class="pbody" id="phone"></div>
+        <nav class="ptabs">
+          <button data-act="ptab" data-tab="mine" id="pt-mine">내 기록</button>
+          <button data-act="ptab" data-tab="feed" id="pt-feed">친구 피드</button>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="footer">CARLOG 팀 검토용 HTML 데모 · 지도·차량 신호·친구 데이터는 모두 시연용 가상 데이터이며 Pleos SDK와 서버는 연동되어 있지 않습니다.</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+/* ---------- 데이터 ---------- */
+const RIVER='M-20 300 C 120 270, 220 330, 330 290 S 520 200, 720 230';
+const ROUTES={
+  mine:{id:'mine',title:'토요일 오후 남이섬 드라이브',from:'서울 마포구',to:'남이섬 선착장',km:60.4,driveMin:67,
+    path:'M60 360 C 140 330, 170 290, 230 250 S 330 220, 390 180 C 440 150, 470 170, 520 130 S 600 80, 640 60',
+    start:[60,360],end:[640,60],stopAt:0.866,stopName:'가평휴게소',stopMin:18,wps:[]},
+  minji:{id:'minji',title:'북한강 따라 가평까지',from:'(숨김)',to:'가평 자라섬',km:167,driveMin:126,
+    path:'M70 370 C 140 340, 170 300, 220 270 S 300 220, 340 200 S 430 160, 470 130 S 560 70, 640 50',
+    start:[70,370],end:[640,50],stopAt:null,wps:[[0.25,'미사리 조정경기장'],[0.5,'두물머리'],[0.75,'청평호반']]}
+};
+const TITLES=[
+  {id:'firefly',name:'깜빡깜빡 반딧불이 드라이버',rule:'차선 변경 시 방향지시등 100% 사용',data:'방향지시등'},
+  {id:'cloud',name:'부드러운 구름 드라이버',rule:'급제동 없이 주행 완료',data:'제동'},
+  {id:'cruise',name:'꾸준한 순항 여행자',rule:'장거리 구간 정속 주행',data:'크루즈 컨트롤'},
+  {id:'rain',name:'빗길 산책가',rule:'와이퍼 작동 중 안전 주행',data:'와이퍼'},
+  {id:'night',name:'밤길 드라이버',rule:'전조등 켜고 30분 이상 주행',data:'전조등'},
+  {id:'follower',name:'길을 잇는 사람',rule:'친구 코스를 따라 완주',data:'내비게이션'}
+];
+const FRIENDS=[
+  {id:'f1',who:'민지 님',when:'어제',route:'minji',title:'북한강 따라 가평까지',km:167,time:'2시간 14분',avg:74,stops:1,limit:98,depart:'토요일 오후 3:20 출발 · 맑음',badge:'부드러운 구름 드라이버'},
+  {id:'f2',who:'준호 님',when:'2일 전',route:null,title:'남산 야경 순환 코스',km:24,time:'52분',avg:28,stops:0,limit:99,depart:'금요일 오후 9:40 출발 · 맑음',badge:'밤길 드라이버'},
+  {id:'f3',who:'서연 님',when:'3일 전',route:null,title:'강릉 해안도로 아침 드라이브',km:88,time:'1시간 41분',avg:52,stops:1,limit:97,depart:'목요일 오전 6:30 출발 · 흐림',badge:'꾸준한 순항 여행자'}
+];
+/* ---------- 상태 ---------- */
+let S;
+function init(){
+  S={tab:'home',trip:null,modal:null,result:null,pending:null,logs:[],earned:new Set(),
+     ptab:'mine',pview:'list',plog:null,pfriend:null,shared:[],mult:1,clock:14*60+12};
+  stopTimer();render();
+}
+let timer=null;
+function stopTimer(){if(timer){clearInterval(timer);timer=null}}
+function fmtMin(m){m=Math.round(m);const h=Math.floor(m/60),mm=m%60;return h?`${h}시간 ${mm}분`:`${mm}분`}
+function fmtClock(t){t=Math.round(t)%1440;return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')}
+function hms(min){const s=Math.round(min*60),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return [h,m,x].map(v=>String(v).padStart(2,'0')).join(':')}
+const toast=t=>{const x=$('toast');x.textContent=t;x.style.display='block';clearTimeout(x._t);x._t=setTimeout(()=>x.style.display='none',2600)};
+
+/* ---------- 지도 ---------- */
+function mapSVG(r,o={}){
+  const p=o.progress??1, trimS=o.trimS??0, trimE=o.trimE??100;
+  const light=!!o.light, vb='0 0 700 420';
+  const ground=light?'#e9eef2':'#111824', road=light?'#ffffff':'#222b37', river=light?'#c9ddea':'#1c3a4f', acc=light?'#0b7a70':'#73d5d1';
+  let s=`<svg viewBox="${vb}" preserveAspectRatio="${o.fit?'xMidYMid meet':'xMidYMid slice'}" role="img" aria-label="${r.title} 경로 지도"><rect width="700" height="420" fill="${ground}"/>`;
+  s+=`<path d="${RIVER}" fill="none" stroke="${river}" stroke-width="32"/>`;
+  s+=`<path d="M0 120 L700 170" stroke="${road}" stroke-width="8"/><path d="M200 0 L240 420" stroke="${road}" stroke-width="8"/><path d="M480 0 L450 420" stroke="${road}" stroke-width="7"/>`;
+  if(o.full){s+=`<path d="${r.path}" fill="none" stroke="${light?'#cfd8df':'#2c3542'}" stroke-width="14" stroke-linecap="round"/>`}
+  s+=`<path class="rt" d="${r.path}" pathLength="100" fill="none" stroke="${acc}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${o.trim?`0 ${trimS} ${Math.max(0,trimE-trimS)} 100`:`${p*100} 100`}"/>`;
+  (r.wps||[]).forEach((w,i)=>{s+=`<circle class="wpd" data-t="${w[0]}" r="15" fill="${acc}"/><text class="wpt" data-t="${w[0]}" text-anchor="middle" font-size="15" font-weight="800" fill="${light?'#fff':'#0b1019'}">${i+1}</text>`});
+  if(r.stopAt&&o.showStop!==false){s+=`<circle class="wpd" data-t="${r.stopAt}" r="9" fill="${light?'#d98b1e':'#f5c76b'}"/>`}
+  if(!o.hideStart) s+=`<circle cx="${r.start[0]}" cy="${r.start[1]}" r="9" fill="${light?'#12161c':'#f2f6fc'}"/>`;
+  if(!o.hideEnd||o.car) s+=`<circle cx="${r.end[0]}" cy="${r.end[1]}" r="10" fill="${light?'#d98b1e':'#f5c76b'}"/>`;
+  if(o.hideStart) s+=`<circle cx="${r.start[0]}" cy="${r.start[1]}" r="58" fill="#5b6573" opacity=".55"/>`;
+  if(o.hideEnd) s+=`<circle cx="${r.end[0]}" cy="${r.end[1]}" r="58" fill="#5b6573" opacity=".55"/>`;
+  if(o.car) s+=`<g class="car"><circle r="22" fill="${acc}" opacity=".22"/><circle r="10" fill="#f2f6fc" stroke="${acc}" stroke-width="4"/></g>`;
+  return s+'</svg>';
+}
+function placeOnRoute(root){
+  root.querySelectorAll('svg').forEach(svg=>{
+    const rt=svg.querySelector('.rt'); if(!rt) return; const L=rt.getTotalLength();
+    svg.querySelectorAll('[data-t]').forEach(el=>{const pt=rt.getPointAtLength(L*+el.dataset.t);
+      if(el.tagName==='text'){el.setAttribute('x',pt.x);el.setAttribute('y',pt.y+5)}else{el.setAttribute('cx',pt.x);el.setAttribute('cy',pt.y)}});
+    const car=svg.querySelector('.car'); if(car&&S.trip){const pt=rt.getPointAtLength(L*S.trip.p);car.setAttribute('transform',`translate(${pt.x} ${pt.y})`)}
+  });
+}
+
+/* ---------- 주행 시뮬레이션 ---------- */
+function startTrip(routeId,follow){
+  const r=ROUTES[routeId];
+  S.trip={route:r,follow:!!follow,p:0,state:'driving',min:0,stopDone:false,lanes:0,brakes:0,stops:0,stopMin:0,speed:0,startClock:S.clock,segments:1};
+  S.result=null;S.tab='drive';S.modal=null;toast('내비 안내 시작 · CARLOG 자동 기록을 시작했어요');
+  stopTimer();timer=setInterval(tick,100);render();
+}
+function tick(){
+  const t=S.trip; if(!t||t.state!=='driving') return;
+  const dp=0.0028*S.mult; t.p=Math.min(1,t.p+dp);
+  const dmin=t.route.driveMin*dp; t.min+=dmin; S.clock+=dmin;
+  t.speed=Math.round(t.route.km/t.route.driveMin*60+Math.sin(t.p*40)*9);
+  if(Math.random()<0.02*S.mult) t.lanes++;
+  if(t.route.stopAt&&!t.stopDone&&t.p>=t.route.stopAt){t.state='stopped';t.speed=0;t.stopDone=true;toast(`${t.route.stopName}에 정차했어요 · 기록은 일시 정지`)}
+  if(t.p>=1){finishTrip();return}
+  updateLive();
+}
+function updateLive(){
+  const t=S.trip;
+  $('kmh').textContent=(t&&t.state==='driving'?t.speed:0)+' km/h';
+  $('gear').textContent=t&&t.state==='driving'?'D':'P';
+  $('clock').textContent=fmtClock(S.clock);
+  const live=$('live');
+  if(t&&t.state!=='done'){live.classList.add('rec');$('liveText').textContent=t.state==='stopped'?'정차 중 · 기록 일시 정지':'CARLOG 자동 기록 중'}
+  else{live.classList.remove('rec');$('liveText').textContent='CARLOG 대기 중'}
+  if(S.tab==='drive'&&t){
+    const svg=document.querySelector('#ivi .mapbox svg'); if(svg){svg.querySelector('.rt').setAttribute('stroke-dasharray',`${t.p*100} 100`);placeOnRoute(document.querySelector('#ivi .mapbox'))}
+    const set=(id,v)=>{const e=$(id);if(e)e.innerHTML=v};
+    set('d-time',hms(t.min));set('d-km',(t.route.km*t.p).toFixed(1)+'<span> km</span>');
+    set('d-avg',(t.min?Math.round(t.route.km*t.p/(t.min/60)):0)+'<span> km/h</span>');
+    set('d-lanes',`차선 변경 ${t.lanes}회 · 모두 사용`);
+    set('d-left',(t.route.km*(1-t.p)).toFixed(1)+' km');
+    set('d-eta',fmtClock(S.clock+t.route.driveMin*(1-t.p)));
+    const b=$('d-bar'); if(b) b.style.width=(t.lanes?100:0)+'%';
+    if(t.state==='stopped'&&!$('stopPanel')) render();
+  }
+}
+function resumeAsk(){S.clock+=S.trip.route.stopMin;S.trip.stopMin=S.trip.route.stopMin;S.trip.stops=1;S.modal='resume';render()}
+function resume(keep){
+  const t=S.trip;S.modal=null;
+  if(!keep){ /* 이전 기록 종료, 새 로그 시작 */
+    saveLog(Object.assign({},t,{partial:true,p:t.p}));
+    t.segments=1;t.min=0;t.lanes=0;t.stops=0;t.stopMin=0;t.splitAt=t.p;toast('이전 기록을 저장하고 새 로그를 시작했어요');
+  }else toast('정차 전후 경로를 하나의 로그로 이어서 기록해요');
+  t.state='driving';render();
+}
+function finishTrip(){
+  const t=S.trip; stopTimer(); t.p=1;t.state='done';
+  const r=t.route, startP=t.splitAt||0, km=+(r.km*(1-startP)).toFixed(1);
+  const total=t.min+t.stopMin;
+  let title=r.id==='mine'?'firefly':'follower';
+  if(t.follow&&!S.earned.has('cloud')) title='cloud';
+  const isNew=!S.earned.has(title); S.earned.add(title);
+  S.result={route:r,km,driveMin:t.min,totalMin:total,avg:Math.round(km/(t.min/60)),stops:t.stops,stopMin:t.stopMin,lanes:t.lanes,title,isNew,follow:t.follow,clock:t.startClock};
+  S.tab='result';updateLive();render();
+}
+function saveLog(src){
+  const r=src.route, km=src.partial?+(r.km*src.p).toFixed(1):src.km;
+  const log={id:'L'+Date.now()+Math.random(),route:r,title:src.partial?`${r.title} (정차 전)`:(src.follow?`${r.title} 따라 달리기`:r.title),
+    km,driveMin:src.partial?src.min:src.driveMin,totalMin:src.partial?src.min:src.totalMin,avg:src.partial?Math.round(km/(src.min/60)):src.avg,
+    stops:src.stops||0,stopMin:src.stopMin||0,lanes:src.lanes,titleId:src.title||null,clock:src.clock??S.clock,trimEnd:src.partial?Math.round(src.p*100):100,
+    hideStart:true,hideEnd:true,fields:{route:true,dist:true,stop:true,weather:true,title:true,avg:false},scope:'friends',trimS:0,trimE:src.partial?Math.round(src.p*100):100,shared:false};
+  S.logs.unshift(log);return log;
+}
+function exportLog(){
+  const log=saveLog(S.result);S.result.exported=true;
+  toast('휴대전화의 CARLOG 앱으로 내보냈어요');
+  const n=$('notif');n.innerHTML=`<div style="font-size:12px;color:var(--p-muted)">CARLOG · 방금</div><b style="font-size:15px">드라이브 기록이 도착했어요</b><div style="font-size:13px;color:var(--p-muted)">${log.title} · ${log.km} km</div>`;
+  n.dataset.log=log.id;n.classList.add('show');clearTimeout(n._t);n._t=setTimeout(()=>n.classList.remove('show'),6000);
+  S.ptab='mine';S.pview='list';S.tab='home';render();
+}
+
+/* ---------- IVI 렌더 ---------- */
+function ivHome(){
+  const last=S.logs[0];
+  return `<span class="kicker">GOOD AFTERNOON, DRIVER</span><h2 class="headline">내비만 켜면, 드라이브가 기록돼요.</h2>
+  <p class="lead">길 안내를 시작하면 CARLOG가 따로 조작하지 않아도 경로와 주행 정보를 남겨요.</p>
+  <div class="grid two"><div class="panel"><div class="flex between"><h3 class="ptitle">목적지</h3><span class="pill">PLEOS 내비게이션</span></div>
+    <div class="mapbox" style="height:250px">${mapSVG(ROUTES.mine,{progress:0,full:true,showStop:false})}</div>
+    <div class="flex between" style="margin-top:14px"><div><b style="font-size:20px">남이섬 선착장</b><div class="muted tiny">서울 마포구 출발 · 60.4 km · 약 1시간 7분</div></div>
+    <button class="btn" data-act="start" ${S.trip&&S.trip.state!=='done'?'disabled':''}>안내 시작</button></div></div>
+    <div class="grid"><div class="panel"><h3 class="ptitle">나의 드라이버</h3>
+      ${S.earned.size?`<div class="flex"><div class="titlecard" style="padding:10px 12px;border-radius:14px"><div class="ico" style="width:40px;height:40px">${starSVG(22)}</div><b>${TITLES.find(x=>x.id===[...S.earned].pop()).name}</b></div></div>`:`<div class="muted tiny">아직 받은 칭호가 없어요. 첫 드라이브를 시작해 보세요.</div>`}
+      <div class="stats" style="margin-top:12px"><div class="stat"><small>저장한 드라이브</small><strong>${S.logs.length}</strong></div><div class="stat"><small>칭호 컬렉션</small><strong>${S.earned.size} / ${TITLES.length}</strong></div></div></div>
+      <div class="panel"><div class="flex between"><div><b>휴대전화에서 받은 코스</b><div class="muted tiny">${S.pending?S.pending.title:'친구 피드에서 코스를 보내면 여기에 표시돼요'}</div></div>
+      <button class="btn sm ghost" data-act="tab" data-tab="discover" ${S.pending?'':'disabled'}>열기</button></div></div>
+      ${last?`<div class="panel"><b>최근 기록</b><div class="muted tiny">${last.title} · ${last.km} km · ${fmtMin(last.totalMin)}</div></div>`:''}
+    </div></div>`;
+}
+function ivDrive(){
+  const t=S.trip;
+  if(!t||t.state==='done') return `<span class="kicker">DRIVE</span><h2 class="headline">진행 중인 주행이 없어요.</h2><p class="lead">홈에서 길 안내를 시작하면 자동으로 기록돼요.</p><button class="btn" data-act="tab" data-tab="home">홈으로</button>`;
+  const r=t.route, nextWp=(r.wps||[]).find(w=>w[0]>t.p);
+  return `<div class="grid two" style="height:100%;grid-template-columns:1fr 330px">
+  <div class="mapbox" style="min-height:600px">${mapSVG(r,{progress:t.p,full:true,car:true,fit:true})}
+    <div class="navcard"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#f2f6fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20V11a4 4 0 0 1 4-4h8"/><path d="M14 3l4 4-4 4"/></svg><div><b>${nextWp?'다음 경유지':'300m'}</b><span class="muted">${nextWp?nextWp[1]:'북한강로 방면 우회전'}</span></div></div>
+    <div class="etabar"><b>${r.to}</b><span class="muted">남은 거리 <b style="color:var(--fg)" id="d-left"></b> · 도착 <b style="color:var(--fg)" id="d-eta"></b></span></div>
+  </div>
+  <div class="panel recw"><div class="flex between"><b style="font-size:18px">CARLOG</b><span class="pill">${t.follow?'따라가기 · 자동 기록':'자동 기록 중'}</span></div>
+    <div><div class="muted tiny">주행 시간</div><div class="bigtime" id="d-time">00:00:00</div></div>
+    <div class="stats"><div class="stat"><small>주행 거리</small><strong id="d-km"></strong></div><div class="stat"><small>평균 속도</small><strong id="d-avg"></strong></div></div>
+    <div class="stat" style="display:flex;flex-direction:column;gap:8px"><small>진행 중인 챌린지</small><b>방향지시등 사용 100% 유지</b><div class="bar"><i id="d-bar"></i></div><small id="d-lanes"></small></div>
+    ${t.state==='stopped'?`<div id="stopPanel" class="stat" style="background:#2a2416"><small>정차 중</small><b>${r.stopName} · 휴식</b><div class="muted tiny" style="margin:6px 0 10px">하차 후 다시 출발할 때 이어가기를 물어봐요</div><button class="btn" style="width:100%" data-act="depart">${r.stopMin}분 뒤 재출발</button></div>`
+      :`<div class="note" style="margin-top:auto">주행 중에는 화면 조작 없이 기록만 진행돼요. 기록 확인은 도착 후에 할 수 있어요.</div>`}
+  </div></div>`;
+}
+function starSVG(s){return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="#2a2416" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>`}
+function ivResult(){
+  const R=S.result; if(!R) return ivHome(); const T=TITLES.find(x=>x.id===R.title);
+  return `<span class="kicker">ARRIVED · ${R.route.to}</span><h2 class="headline">드라이브가 완료되었습니다</h2>
+  <p class="lead">${R.follow?'친구 코스 따라가기':R.route.from+' → '+R.route.to} · ${fmtClock(R.clock)} 출발 · 맑음</p>
+  <div class="grid two"><div class="mapbox" style="height:420px">${mapSVG(R.route,{progress:1,full:false,fit:true})}</div>
+  <div class="grid" style="align-content:start">
+    <div class="stats"><div class="stat"><small>총 거리</small><strong>${R.km}<span> km</span></strong></div><div class="stat"><small>소요 시간</small><strong style="font-size:21px">${fmtMin(R.totalMin)}</strong></div>
+    <div class="stat"><small>평균 속도</small><strong>${R.avg}<span> km/h</span></strong></div><div class="stat"><small>중간 정차</small><strong>${R.stops}<span>회${R.stopMin?' · '+R.stopMin+'분':''}</span></strong></div></div>
+    <div class="titlecard"><div class="ico">${starSVG(28)}</div><div><div class="tiny" style="color:var(--gold);font-weight:700">${R.isNew?'새 칭호 획득':'칭호 유지'}</div><b style="font-size:19px">${T.name}</b><div class="tiny muted">${T.rule} · ${T.data} 데이터</div></div></div>
+    <div class="stat flex between"><span>급제동 0회 챌린지</span><b style="color:var(--lime)">달성</b></div>
+    <div class="panel" style="padding:16px">${R.exported?`<b>휴대전화로 내보냈어요</b><div class="muted tiny">휴대전화에서 확인·편집·공유할 수 있어요.</div>`:`<b style="font-size:17px">CARLOG를 휴대전화로 내보낼까요?</b>
+      <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:12px"><button class="btn" data-act="export">내보내기</button><button class="btn ghost" data-act="later">나중에</button></div>`}</div>
+  </div></div>`;
+}
+function ivDiscover(){
+  const p=S.pending;
+  if(p){const r=ROUTES[p.route];
+    return `<span class="kicker">FOLLOW A FRIEND'S DRIVE</span><h2 class="headline">${p.who}의 드라이브 · ${p.title}</h2><p class="lead">${p.depart} · ${p.badge}</p>
+    <div class="grid two"><div class="mapbox" style="height:470px">${mapSVG(r,{progress:1,hideStart:true,fit:true})}<div class="navcard" style="padding:8px 14px"><span class="muted tiny">출발지는 공유자가 숨겼어요</span></div></div>
+    <div class="grid" style="align-content:start"><div class="stats"><div class="stat"><small>총거리</small><strong>${p.km}<span> km</span></strong></div><div class="stat"><small>실제 소요</small><strong style="font-size:21px">${p.time}</strong></div></div>
+    <div class="panel"><div class="muted tiny" style="margin-bottom:6px">내비게이션에 전달할 경유지</div>
+      ${r.wps.map((w,i)=>`<div class="wp"><span>${i+1}</span>${w[1]}</div>`).join('')}<div class="wp"><span class="end">도착</span>${r.to}</div></div>
+    <div class="note">친구가 실제로 달린 경로에서 주요 경유지를 골라 보내기 때문에, 목적지만 공유할 때와 달리 같은 길을 따라갈 수 있어요.</div>
+    <button class="btn big" data-act="follow" ${S.trip&&S.trip.state!=='done'?'disabled':''}>이 코스로 안내 시작</button></div></div>`;
+  }
+  return `<span class="kicker">COURSES</span><h2 class="headline">받은 코스가 없어요.</h2><p class="lead">휴대전화의 친구 피드에서 마음에 드는 코스를 열고 <b>내 차로 코스 보내기</b>를 눌러 보세요.</p>`;
+}
+function ivTitles(){
+  return `<span class="kicker">TITLES</span><h2 class="headline">운전 습관이 칭호가 돼요.</h2><p class="lead">점수 대신, 차량 신호로 판정한 운전 성향을 칭호로 모아요.</p>
+  <div class="collection">${TITLES.map(t=>`<div class="collect ${S.earned.has(t.id)?'':'locked'}"><div class="flex between"><span class="pill ${S.earned.has(t.id)?'gold':''}">${S.earned.has(t.id)?'획득':'미획득'}</span><span class="tiny muted">${t.data}</span></div><b>${t.name}</b><span class="tiny muted">${t.rule}</span></div>`).join('')}</div>`;
+}
+function renderIVI(){
+  const tab=S.tab, driving=S.trip&&S.trip.state!=='done';
+  document.querySelectorAll('.navbtn').forEach(b=>{const on=b.dataset.tab===tab||(tab==='result'&&b.dataset.tab==='drive');b.classList.toggle('active',on);
+    b.classList.toggle('locked',driving&&S.trip.state==='driving'&&(b.dataset.tab==='discover'||b.dataset.tab==='titles'))});
+  let h=tab==='home'?ivHome():tab==='drive'?ivDrive():tab==='result'?ivResult():tab==='discover'?ivDiscover():ivTitles();
+  if(S.modal==='resume'){const t=S.trip;
+    h+=`<div class="overlay"><div class="dialog"><div class="kicker">CARLOG</div><h2>${t.route.stopMin}분 전에 진행하던 드라이브가 있습니다</h2><p class="muted" style="font-size:19px;margin:0 0 18px">이전 주행을 이어갈까요?</p>
+    <div class="stat" style="margin-bottom:18px"><small>이전 기록 · ${fmtClock(t.startClock)} 출발</small><b>${t.route.from} → ${t.route.stopName}</b><div class="muted tiny">${(t.route.km*t.p).toFixed(1)} km · ${fmtMin(t.min)} 주행 · 정차 ${t.route.stopMin}분</div></div>
+    <div class="grid" style="grid-template-columns:1fr 1fr"><button class="btn big" data-act="resume" data-v="1">예, 이어서 기록</button><button class="btn big ghost" data-act="resume" data-v="0">아니요, 새로 시작</button></div>
+    <p class="muted tiny" style="text-align:center;margin:14px 0 0">재출발 직전, 차가 멈춘 상태에서만 표시돼요</p></div></div>`}
+  $('ivi').innerHTML=h; placeOnRoute($('ivi')); if(tab==='drive') updateLive();
+}
+
+/* ---------- 휴대전화 렌더 ---------- */
+function backBtn(to){return `<button class="back" data-act="pview" data-v="${to}" aria-label="뒤로"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#12161c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>`}
+function phList(){
+  if(!S.logs.length) return `<div class="phead"><h3>내 드라이브</h3></div><div class="empty">아직 받은 기록이 없어요.<br>차량에서 드라이브를 마치고<br><b>휴대전화로 내보내기</b>를 누르면 여기에 표시돼요.</div>`;
+  return `<div class="phead"><h3>내 드라이브</h3></div>`+S.logs.map(l=>`<div class="pcard" data-act="openLog" data-id="${l.id}" style="cursor:pointer"><div style="height:120px">${mapSVG(l.route,{light:true,trim:true,trimS:l.trimS,trimE:l.trimE})}</div>
+    <div class="in"><b>${l.title}</b><div style="font-size:13px;color:var(--p-muted)">${l.km} km · ${fmtMin(l.totalMin)} ${l.shared?'· 공유됨':''}</div></div></div>`).join('');
+}
+function phLog(){
+  const l=S.logs.find(x=>x.id===S.plog); if(!l) return phList(); const T=l.titleId&&TITLES.find(x=>x.id===l.titleId);
+  return `<div class="phead">${backBtn('list')}<h3>내 드라이브</h3></div>
+  <div class="pcard"><div style="height:180px">${mapSVG(l.route,{light:true,trim:true,trimS:0,trimE:l.trimEnd})}</div><div class="in"><b style="font-size:18px">${l.title}</b><div style="font-size:13px;color:var(--p-muted)">11월 8일(토) ${fmtClock(l.clock)} 출발 · 맑음</div></div></div>
+  <div class="pstats"><div class="pstat"><small>총 거리</small><b>${l.km} km</b></div><div class="pstat"><small>소요 시간</small><b>${fmtMin(l.totalMin)}</b></div><div class="pstat"><small>평균 속도</small><b>${l.avg} km/h</b></div><div class="pstat"><small>중간 정차</small><b>${l.stops}회${l.stopMin?' · '+l.stopMin+'분':''}</b></div></div>
+  ${T?`<div class="pcard"><div class="in" style="background:#fff4e3"><div style="font-size:12px;color:#8a5a10;font-weight:700">이번 드라이브 칭호</div><b>${T.name}</b><div style="font-size:12px;color:#6e470c">${T.rule}</div></div></div>`:''}
+  <button class="pbtn" data-act="pview" data-v="edit">편집하고 공유하기</button>`;
+}
+function phEdit(){
+  const l=S.logs.find(x=>x.id===S.plog); if(!l) return phList(); const F=l.fields;
+  const ck=(k,n)=>`<label><input type="checkbox" data-act="field" data-k="${k}" ${F[k]?'checked':''}>${n}</label>`;
+  return `<div class="phead">${backBtn('log')}<h3>공유 전 편집</h3></div>
+  <div class="pcard" style="position:relative"><div style="height:160px">${mapSVG(l.route,{light:true,trim:true,trimS:l.trimS,trimE:l.trimE,hideStart:l.hideStart,hideEnd:l.hideEnd})}</div>
+  <div style="position:absolute;left:10px;bottom:8px;background:#fff;border-radius:8px;padding:3px 8px;font-size:11px;color:var(--p-muted)">회색 영역과 잘라낸 구간은 공유되지 않아요</div></div>
+  <div class="pcard"><div class="in" style="padding:4px 16px">
+    <label class="row">출발지 주변 숨기기<input type="checkbox" data-act="hide" data-k="hideStart" ${l.hideStart?'checked':''}></label>
+    <label class="row">도착지 주변 숨기기<input type="checkbox" data-act="hide" data-k="hideEnd" ${l.hideEnd?'checked':''}></label>
+    <div class="range"><span>구간 잘라내기 · 앞 ${l.trimS}% / 뒤 ${100-l.trimE}%</span><input type="range" min="0" max="40" value="${l.trimS}" data-act="trim" data-k="trimS" aria-label="앞 구간 잘라내기"><input type="range" min="60" max="100" value="${l.trimE}" data-act="trim" data-k="trimE" aria-label="뒤 구간 잘라내기"></div>
+  </div></div>
+  <div class="pcard"><div class="in"><div style="font-size:13px;color:var(--p-muted);font-weight:700;margin-bottom:6px">공개할 정보</div><div class="checks">${ck('route','주행 경로')}${ck('dist','거리·소요시간')}${ck('stop','정차 정보')}${ck('weather','시간대·날씨')}${ck('title','칭호')}${ck('avg','평균속도')}</div></div></div>
+  <div class="pcard"><div class="in"><div style="font-size:13px;color:var(--p-muted);font-weight:700;margin-bottom:8px">공개 범위</div><div class="scope">
+    ${[['friends','친구'],['link','링크'],['me','나만']].map(([v,n])=>`<label class="${l.scope===v?'on':''}"><input type="radio" name="scope" data-act="scope" data-v="${v}" ${l.scope===v?'checked':''}>${n}</label>`).join('')}</div></div></div>
+  <button class="pbtn" data-act="share">${l.scope==='me'?'나만 보기로 저장':'친구에게 공유하기'}</button>`;
+}
+function phFeed(){
+  const mine=S.shared.map(l=>`<div class="pcard"><div style="height:96px">${mapSVG(l.route,{light:true,trim:true,trimS:l.trimS,trimE:l.trimE,hideStart:l.hideStart,hideEnd:l.hideEnd})}</div><div class="in"><div style="font-size:12px;color:var(--p-muted);display:flex;justify-content:space-between"><span>나</span><span>방금 · ${l.scope==='link'?'링크 공유':'친구 공개'}</span></div><b>${l.title}</b>
+    <div class="chips" style="margin-top:6px">${l.fields.dist?`<span>${l.km} km</span><span>${fmtMin(l.totalMin)}</span>`:''}${l.fields.title&&l.titleId?`<span class="pbadge">${TITLES.find(x=>x.id===l.titleId).name}</span>`:''}</div></div></div>`).join('');
+  return `<div class="phead"><h3>친구 드라이브</h3></div><div style="font-size:13px;color:var(--p-muted);margin:-6px 0 12px">친구들이 실제로 달린 코스예요</div>`+mine+
+  FRIENDS.map(f=>`<div class="pcard" data-act="openFriend" data-id="${f.id}" style="cursor:pointer"><div style="height:96px">${mapSVG(f.route?ROUTES[f.route]:ROUTES.mine,{light:true,hideStart:true,showStop:false})}</div>
+   <div class="in"><div style="font-size:12px;color:var(--p-muted);display:flex;justify-content:space-between"><span>${f.who}</span><span>${f.when}</span></div><b>${f.title}</b>
+   <div class="chips" style="margin-top:6px"><span>${f.km} km</span><span>${f.time}</span><span class="pbadge">${f.badge}</span></div></div></div>`).join('');
+}
+function phFriend(){
+  const f=FRIENDS.find(x=>x.id===S.pfriend); const r=f.route?ROUTES[f.route]:ROUTES.mine;
+  return `<div class="phead">${backBtn('list')}<span style="font-size:15px;color:var(--p-muted)">${f.who}의 드라이브</span></div>
+  <b style="font-size:21px">${f.title}</b><div style="font-size:13px;color:var(--p-muted);margin-bottom:10px">${f.depart}</div>
+  <div class="pcard"><div style="height:170px">${mapSVG(r,{light:true,hideStart:true,showStop:false})}</div></div>
+  <div class="pstats"><div class="pstat"><small>총거리</small><b>${f.km} km</b></div><div class="pstat"><small>실제 소요시간</small><b>${f.time}</b></div><div class="pstat"><small>평균속도</small><b>${f.avg} km/h</b></div><div class="pstat"><small>중간 정차</small><b>${f.stops}회</b></div></div>
+  <div class="pcard"><div class="in" style="display:flex;justify-content:space-between;align-items:center"><div><small style="font-size:12px;color:var(--p-muted)">제한속도 준수율</small><div style="font-size:19px;font-weight:800">${f.limit}%</div></div><span class="pbadge">${f.badge}</span></div></div>
+  <div style="display:grid;grid-template-columns:1fr 2fr;gap:8px"><button class="pbtn line" data-act="saveCourse">코스 저장</button><button class="pbtn" data-act="sendCar" data-id="${f.id}">내 차로 코스 보내기</button></div>`;
+}
+function renderPhone(){
+  $('pt-mine').classList.toggle('active',S.ptab==='mine');$('pt-feed').classList.toggle('active',S.ptab==='feed');
+  let h; if(S.ptab==='feed') h=S.pview==='friend'?phFriend():phFeed();
+  else h=S.pview==='log'?phLog():S.pview==='edit'?phEdit():phList();
+  $('phone').innerHTML=h; placeOnRoute($('phone'));
+}
+function render(){renderIVI();renderPhone();updateLive()}
+
+/* ---------- 이벤트 ---------- */
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-act]'); if(!el) return; const a=el.dataset.act;
+  const curLog=()=>S.logs.find(x=>x.id===S.plog);
+  switch(a){
+    case 'tab':{const tb=el.dataset.tab; if(S.trip&&S.trip.state==='driving'&&(tb==='discover'||tb==='titles')) return toast('주행 중에는 운전에 집중할 수 있도록 이 화면을 열 수 없어요');
+      if(tb==='drive'&&S.result&&(!S.trip||S.trip.state==='done')){S.tab='result'}else S.tab=tb; renderIVI();break}
+    case 'start': startTrip('mine',false);break;
+    case 'depart': resumeAsk();break;
+    case 'resume': resume(el.dataset.v==='1');break;
+    case 'export': exportLog();break;
+    case 'later': {saveLog(S.result);S.result.exported=true;S.tab='home';toast('차량에 기록을 저장했어요');render();break}
+    case 'follow': {if(!S.pending) return; startTrip(S.pending.route,true);break}
+    case 'speed': S.mult=+el.dataset.v;toast(`주행 속도 ${S.mult}x`);break;
+    case 'skip': {if(!S.trip||S.trip.state==='done') return toast('진행 중인 주행이 없어요');const t=S.trip;
+      if(t.route.stopAt&&!t.stopDone){t.p=t.route.stopAt;t.min=t.route.driveMin*t.p;t.stopDone=true;t.state='stopped';render();toast('휴게소 정차 지점으로 이동했어요');}
+      else{const rest=t.route.driveMin*(1-t.p);t.min+=rest;S.clock+=rest;finishTrip()}break}
+    case 'reset': {const n=$('notif');n.classList.remove('show');init();toast('데모를 처음 상태로 되돌렸어요');break}
+    case 'ptab': S.ptab=el.dataset.tab;S.pview='list';renderPhone();break;
+    case 'pview': S.pview=el.dataset.v;renderPhone();break;
+    case 'openNotif': {$('notif').classList.remove('show');S.ptab='mine';S.plog=el.dataset.log;S.pview='log';renderPhone();break}
+    case 'openLog': S.plog=el.dataset.id;S.pview='log';renderPhone();break;
+    case 'openFriend': S.pfriend=el.dataset.id;S.pview='friend';renderPhone();break;
+    case 'share': {const l=curLog(); if(l.scope==='me'){toast('나만 보기로 저장했어요');S.pview='log';renderPhone();break}
+      if(!l.shared){l.shared=true;S.shared.unshift(l)} toast(l.scope==='link'?'공유 링크를 만들었어요':'친구 피드에 공유했어요');S.ptab='feed';S.pview='list';renderPhone();break}
+    case 'saveCourse': toast('코스를 저장했어요');break;
+    case 'sendCar': {const f=FRIENDS.find(x=>x.id===el.dataset.id); if(!f.route) return toast('데모에서는 민지 님 코스만 차량으로 보낼 수 있어요');
+      S.pending=f; toast('차량으로 코스를 보냈어요 · 차량 코스 화면에서 확인하세요'); if(!S.trip||S.trip.state==='done') S.tab='discover'; render();break}
+  }
+});
+document.addEventListener('change',e=>{
+  const el=e.target, a=el.dataset.act; if(!a) return; const l=S.logs.find(x=>x.id===S.plog); if(!l) return;
+  if(a==='hide') l[el.dataset.k]=el.checked;
+  if(a==='field') l.fields[el.dataset.k]=el.checked;
+  if(a==='scope') l.scope=el.dataset.v;
+  if(a==='trim') l[el.dataset.k]=+el.value;
+  renderPhone();
+});
+document.addEventListener('input',e=>{const el=e.target; if(el.dataset.act!=='trim') return; const l=S.logs.find(x=>x.id===S.plog); if(!l) return;
+  l[el.dataset.k]=+el.value; const svg=$('phone').querySelector('.rt'); if(svg) svg.setAttribute('stroke-dasharray',`0 ${l.trimS} ${l.trimE-l.trimS} 100`);
+  const lab=el.parentElement.querySelector('span'); if(lab) lab.textContent=`구간 잘라내기 · 앞 ${l.trimS}% / 뒤 ${100-l.trimE}%`});
+init();
+</script>
+</body>
+</html>

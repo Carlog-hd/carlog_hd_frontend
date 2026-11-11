@@ -22,24 +22,26 @@
 - Android SDK Platform 34
 
 ### 실행
-1. 저장소를 클론하고 Android Studio에서 프로젝트 루트(`carlog_hd_frontend`)를 엽니다.
+1. 저장소를 클론하고 Android Studio에서 **`mobile` 폴더**를 엽니다.
+   - 차량(IVI) 앱은 별도 프로젝트인 `ivi` 폴더에 있습니다.
 2. **Settings → Build, Execution, Deployment → Build Tools → Gradle → Gradle JDK**를 17로 설정합니다.
-3. Gradle Sync가 끝나면 실행 설정에서 **`app-mobile`**을 선택하고 휴대폰 에뮬레이터에서 실행합니다.
-   - `app`은 차량(IVI) 앱입니다.
+3. Gradle Sync가 끝나면 실행 설정에서 **`app`**을 선택하고 휴대폰 에뮬레이터에서 실행합니다.
 
 ### 빌드 명령
 ```bash
+cd mobile
+
 # 디버그 APK 빌드
-./gradlew :app-mobile:assembleDebug
+./gradlew :app:assembleDebug
 
 # Lint 검사
-./gradlew :app-mobile:lintDebug
+./gradlew :app:lintDebug
 ```
 
 ## Project Structure
 
 ```text
-app-mobile/src/main/
+mobile/app/src/main/
 ├── java/com/carlog/mobile/
 │   ├── MainActivity.kt          # 하단 탭 + 화면 전환
 │   └── ui/

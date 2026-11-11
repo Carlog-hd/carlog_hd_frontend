@@ -13,7 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "carlog_hd_frontend"
+rootProject.name = "carlog_mobile"
 include(":app")
-include(":app-mobile")
  

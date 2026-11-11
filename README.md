@@ -51,6 +51,49 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 - 사진·동영상을 로그에 연결하고, 자동 작성된 로그 문구를 편집합니다.
 - 주행 기록·저장 코스·좋아요 코스·MY 설정을 JSON 파일로 가져오거나 내보냅니다.
 
+## 실행 화면
+
+아래 화면은 Pleos Connect 에뮬레이터에서 실행한 차량용 CARLOG 프로토타입입니다.
+
+<table>
+  <tr>
+    <td width="50%">
+      <strong>홈 대시보드</strong><br>
+      <img src="docs/screenshots/home-dashboard.png" alt="CARLOG 홈 대시보드" width="100%">
+      <p>목적지 안내를 시작하고 최근 주행 수와 칭호, 휴대폰에서 받은 코스 진입점을 확인합니다.</p>
+    </td>
+    <td width="50%">
+      <strong>주행 화면</strong><br>
+      <img src="docs/screenshots/drive-session.png" alt="CARLOG 주행 화면" width="100%">
+      <p>다음 회전 안내와 남은 거리·도착 예정 시각, 주행 시간·거리를 보여주며 일시 정지 또는 도착 처리를 할 수 있습니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>발견 · 코스 상세</strong><br>
+      <img src="docs/screenshots/course-detail.png" alt="CARLOG 코스 상세 화면" width="100%">
+      <p>추천 코스의 지도와 공개 경유지를 확인하고, 경유지 사이 거리·시간을 살펴 저장·좋아요·안내 시작을 할 수 있습니다.</p>
+    </td>
+    <td>
+      <strong>도감 · 칭호</strong><br>
+      <img src="docs/screenshots/titles-dex.png" alt="CARLOG 도감 칭호 화면" width="100%">
+      <p>차량 이벤트와 주행 경험에 연결된 칭호를 모아 보고, 획득 여부를 확인합니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>MY · 이번 달 요약</strong><br>
+      <img src="docs/screenshots/my-month-summary.png" alt="CARLOG MY 이번 달 요약 화면" width="100%">
+      <p>이번 달 주행 횟수·거리·평균 속도·받은 좋아요 수와 휴대폰 연동 및 기록 설정을 확인합니다.</p>
+    </td>
+    <td>
+      <strong>MY · 나의 로그</strong><br>
+      <img src="docs/screenshots/my-log-list.png" alt="CARLOG MY 주행 로그 목록" width="100%">
+      <p>저장된 주행을 거리·시간과 좋아요 수로 훑어보고, 항목을 선택해 개별 로그 상세를 엽니다.</p>
+    </td>
+  </tr>
+</table>
+
 ## 기술 구성
 
 | 구분 | 사용 기술 |

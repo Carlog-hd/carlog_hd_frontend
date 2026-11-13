@@ -38,22 +38,96 @@ interface DriveActions {
 class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val records = DriveHistoryStore.all(requireContext())
+        val latest = records.firstOrNull()
         view.findViewById<TextView>(R.id.statSavedDrives).text = records.size.toString()
         view.findViewById<TextView>(R.id.statTitleCollection).text = if (records.isEmpty()) "0 / 6" else "1 / 6"
         view.findViewById<TextView>(R.id.myDriverTitle).setText(
             if (records.isEmpty()) R.string.home_no_title else R.string.title_firefly_name,
         )
-        view.findViewById<View>(R.id.btnStartGuidance).setOnClickListener {
-            (activity as? DriveActions)?.startDemoDrive(courseId = null)
+        if (latest != null) {
+            view.findViewById<TextView>(R.id.recentBadge).text =
+                java.text.SimpleDateFormat("M월의 드라이브", Locale.KOREAN).format(java.util.Date(latest.completedAt))
+            view.findViewById<TextView>(R.id.recentTitle).text = "${latest.destination}까지의 드라이브"
+            view.findViewById<TextView>(R.id.recentMeta).text = getString(
+                R.string.home_recent_meta, latest.destination, latest.distanceKm, latest.durationSeconds / 60,
+            )
+            view.findViewById<TextView>(R.id.recentTitlePill).setText(R.string.title_firefly_name)
         }
-        view.findViewById<View>(R.id.btnOpenCourse).apply {
-            isEnabled = true
-            alpha = 1f
-            setOnClickListener { (activity as? DriveActions)?.showCourses() }
+        view.findViewById<MaterialButton>(R.id.btnRecentDrive).apply {
+            if (latest == null) setText(R.string.record_new_drive)
+            setOnClickListener {
+                if (latest == null) (activity as? DriveActions)?.startDemoDrive()
+                else (activity as? DriveActions)?.showDriveLog(latest)
+            }
+        }
+        view.findViewById<View>(R.id.btnStartGuidance).setOnClickListener {
+            (activity as? DriveActions)?.startDemoDrive()
+        }
+        view.findViewById<View>(R.id.btnOpenCourse).setOnClickListener {
+            (activity as? DriveActions)?.showCourses()
         }
     }
 }
 
+/** Parked-state record list; live driving remains in DriveFragment. */
+class RecordFragment : Fragment(R.layout.fragment_record) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val records = DriveHistoryStore.all(requireContext())
+        view.findViewById<TextView>(R.id.recordCount).text = getString(R.string.record_count, records.size)
+        view.findViewById<View>(R.id.btnStartNewDrive).setOnClickListener {
+            (activity as? DriveActions)?.startDemoDrive()
+        }
+        val list = view.findViewById<LinearLayout>(R.id.recordList)
+        if (records.isEmpty()) {
+            list.addView(TextView(requireContext()).apply {
+                setText(R.string.record_empty)
+                setTextColor(ContextCompat.getColor(context, R.color.cl_muted))
+                textSize = 24f
+                setPadding(0, dp(20), 0, dp(20))
+            })
+            return
+        }
+        records.take(8).forEach { record ->
+            list.addView(LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = android.view.Gravity.CENTER_VERTICAL
+                setPadding(dp(24), dp(22), dp(24), dp(22))
+                setBackgroundResource(R.drawable.bg_stat)
+                isClickable = true
+                isFocusable = true
+                contentDescription = getString(R.string.my_open_drive_log, record.destination)
+                setOnClickListener { (activity as? DriveActions)?.showDriveLog(record) }
+                addView(LinearLayout(context).apply {
+                    orientation = LinearLayout.VERTICAL
+                    addView(TextView(context).apply {
+                        text = record.destination
+                        setTextColor(ContextCompat.getColor(context, R.color.cl_fg))
+                        textSize = 28f
+                        setTypeface(typeface, android.graphics.Typeface.BOLD)
+                    })
+                    addView(TextView(context).apply {
+                        text = getString(
+                            R.string.my_drive_row_meta,
+                            String.format(Locale.getDefault(), "%.1f", record.distanceKm),
+                            record.durationSeconds / 60,
+                        )
+                        setTextColor(ContextCompat.getColor(context, R.color.cl_muted))
+                        textSize = 21f
+                    })
+                }, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+                addView(TextView(context).apply {
+                    text = "보기 →"
+                    setTextColor(ContextCompat.getColor(context, R.color.cl_lime))
+                    textSize = 23f
+                })
+            }, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,
+            ).apply { bottomMargin = dp(14) })
+        }
+    }
+
+    private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
+}
 /** Car-display MY screen modeled after the vehicle settings panel in the HTML demo. */
 class MyFragment : Fragment(R.layout.fragment_my) {
     private val exportBackup = registerForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
@@ -127,6 +201,9 @@ class MyFragment : Fragment(R.layout.fragment_my) {
             date.get(java.util.Calendar.YEAR) == now.get(java.util.Calendar.YEAR) &&
                 date.get(java.util.Calendar.MONTH) == now.get(java.util.Calendar.MONTH)
         }
+        root.findViewById<TextView>(R.id.myProfileTitle).setText(
+            if (records.isEmpty()) R.string.my_profile_title_empty else R.string.title_firefly_name,
+        )
         root.findViewById<TextView>(R.id.myDriveCount).text = monthly.size.toString()
         root.findViewById<TextView>(R.id.myTotalDistance).text = String.format(
             Locale.getDefault(), "%.1f km", monthly.sumOf { it.distanceKm },
@@ -383,7 +460,7 @@ class CourseFragment : Fragment(R.layout.fragment_course) {
             })
             return
         }
-        choices.chunked(2).forEach { pair ->
+        choices.chunked(3).forEach { pair ->
             val row = LinearLayout(requireContext()).apply { orientation = LinearLayout.HORIZONTAL }
             pair.forEach { course ->
                 val isSelected = course.id == selectedCourseId
@@ -438,7 +515,9 @@ class CourseFragment : Fragment(R.layout.fragment_course) {
                     marginEnd = dp(14)
                 })
             }
-            if (pair.size == 1) row.addView(View(requireContext()), LinearLayout.LayoutParams(0, 1, 1f))
+            repeat(3 - pair.size) {
+                row.addView(View(requireContext()), LinearLayout.LayoutParams(0, 1, 1f))
+            }
             container.addView(row, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
                 bottomMargin = dp(14)
             })

@@ -31,8 +31,8 @@
 
     <!-- 코스 탭 (ivDiscover, 민지 님 코스를 받은 상태 샘플) -->
     <string name="course_kicker">FOLLOW A FRIEND\'S DRIVE</string>
-    <string name="course_discover_headline">친구가 실제로 달린 코스</string>
-    <string name="course_discover_lead">대표 이미지를 눌러 코스 경로와 경유지를 확인해 보세요.</string>
+    <string name="course_discover_headline">다른 사람의 길을 발견해요.</string>
+    <string name="course_discover_lead">피드를 보고 마음에 드는 드라이브를 내비게이션에 불러올 수 있어요.</string>
     <string name="course_back_to_list">‹ 코스 목록</string>
     <string name="course_cover_desc">%1$s 대표 풍경</string>
     <string name="course_headline_sample">민지 님의 드라이브 · 북한강 따라 가평까지</string>
@@ -73,8 +73,10 @@
     <string name="course_note_dynamic">공개된 경유지만 내비게이션 안내에 전달합니다. 출발 위치와 원본 주행 궤적은 공개하지 않아요.</string>
 
     <!-- 차량 MY 화면 -->
-    <string name="my_headline">나의 CARLOG</string>
-    <string name="my_lead">나의 주행 로그와 이번 달 활동, 휴대폰 연동을 한곳에서 관리해요.</string>
+    <string name="my_headline">내 차와 함께 쌓아온 이야기.</string>
+    <string name="my_lead">나의 기록과 저장한 코스, 공유 설정을 관리해요.</string>
+    <string name="my_profile_name">데모 드라이버</string>
+    <string name="my_profile_title_empty">첫 드라이브를 완료하면 칭호가 표시돼요</string>
     <string name="my_month_summary">이번 달 요약</string>
     <string name="my_month_drives">주행 횟수</string>
     <string name="my_month_distance">주행 거리</string>
@@ -131,9 +133,9 @@
     <string name="my_log_media_open_failed">이 파일을 열 수 있는 앱을 찾지 못했어요.</string>
 
     <!-- 칭호 탭 (ivTitles) -->
-    <string name="titles_kicker">TITLES</string>
-    <string name="titles_headline">운전 습관이 칭호가 돼요.</string>
-    <string name="titles_lead">점수 대신, 차량 신호로 판정한 운전 성향을 칭호로 모아요.</string>
+    <string name="titles_kicker">COLLECT YOUR JOURNEY</string>
+    <string name="titles_headline">달릴수록 모이는 나만의 도감.</string>
+    <string name="titles_lead">주행을 마치며 얻은 칭호와 새로운 여행의 기록을 모아요.</string>
     <string name="titles_earned">획득</string>
     <string name="titles_locked">미획득</string>
 

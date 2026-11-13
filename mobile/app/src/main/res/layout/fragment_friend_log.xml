@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- M06 친구 로그 상세. 데모 f1 고정 예시이며 저장·댓글 게시·차량 전송 동작은 미연결. -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.course.FriendLogFragment"
+    tools:theme="@style/Theme.CarlogMobile">
+    <LinearLayout
+        style="@style/Widget.Carlog.TopBar">
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_friend_back"
+            style="@style/Widget.Carlog.IconButton"
+            android:contentDescription="@string/cd_back"
+            app:srcCompat="@drawable/ic_back" />
+
+        <TextView
+            style="@style/Carlog.Text.TopBarTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/friend_title" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_friend_bookmark"
+            style="@style/Widget.Carlog.IconButton"
+            android:contentDescription="@string/friend_save"
+            app:srcCompat="@drawable/ic_bookmark" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_friend"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cl_course_map_height">
+                <com.carlog.mobile.ui.common.MapBoxView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/cl_course_map_height"
+                    app:mapImage="@drawable/img_map_course_placeholder"
+                    android:contentDescription="@string/course_map_description" />
+
+                <TextView
+                    style="@style/Widget.Carlog.MapTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:drawableStartCompat="@drawable/ic_lock_small"
+                    android:text="@string/course_hidden_start" />
+            </FrameLayout>
+
+            <LinearLayout
+                style="@style/Widget.Carlog.Section"
+                android:layout_marginTop="@dimen/cl_course_card_overlap">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        style="@style/Widget.Carlog.CardContent">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <TextView
+                                style="@style/Widget.Carlog.Avatar"
+                                android:layout_width="@dimen/cl_avatar_size"
+                                android:layout_height="@dimen/cl_avatar_size"
+                                android:backgroundTint="@color/cl_violet"
+                                android:importantForAccessibility="no"
+                                android:text="@string/friend_avatar" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:layout_marginStart="@dimen/cl_space_10">
+                                <TextView
+                                    style="@style/Carlog.Text.Body.Bold"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/cl_text_card_title"
+                                    android:text="@string/course_name" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.Caption"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/cl_space_4"
+                                    android:text="@string/friend_meta" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <include
+                            layout="@layout/item_friend_stats" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/cl_space_10"
+                            app:chipSpacingHorizontal="@dimen/cl_space_6"
+                            app:chipSpacingVertical="@dimen/cl_space_6">
+                            <TextView
+                                style="@style/Widget.Carlog.TitleChip.Violet"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:drawableStartCompat="@drawable/ic_title_moon"
+                                android:text="@string/friend_dawn" />
+
+                            <TextView
+                                style="@style/Widget.Carlog.TitleChip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:drawableStartCompat="@drawable/ic_title_flag"
+                                android:text="@string/friend_keeper" />
+
+                            <TextView
+                                style="@style/Widget.Carlog.TitleChip.Teal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/friend_limit" />
+                        </com.google.android.material.chip.ChipGroup>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/Widget.Carlog.Section">
+                <LinearLayout
+                    style="@style/Widget.Carlog.SectionHeader">
+                    <TextView
+                        style="@style/Carlog.Text.SectionTitle.Fill"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:accessibilityHeading="true"
+                        android:text="@string/friend_speed_title" />
+
+                    <TextView
+                        style="@style/Carlog.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/friend_speed_hint" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        style="@style/Widget.Carlog.CardContent">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/cl_course_spark_height"
+                            android:src="@drawable/img_speed_friend"
+                            android:scaleType="fitXY"
+                            android:contentDescription="@string/friend_speed_description" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/Widget.Carlog.Section">
+                <LinearLayout
+                    style="@style/Widget.Carlog.SectionHeader">
+                    <TextView
+                        style="@style/Carlog.Text.SectionTitle.Fill"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:accessibilityHeading="true"
+                        android:text="@string/friend_waypoints_title" />
+
+                    <TextView
+                        style="@style/Carlog.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/friend_waypoints_hint" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        style="@style/Widget.Carlog.CardContent">
+                        <include
+                            layout="@layout/item_course_waypoints" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/Widget.Carlog.Section">
+                <LinearLayout
+                    style="@style/Widget.Carlog.SectionHeader">
+                    <TextView
+                        style="@style/Carlog.Text.SectionTitle.Fill"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:accessibilityHeading="true"
+                        android:text="@string/friend_runs_title" />
+
+                    <TextView
+                        style="@style/Carlog.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/friend_runs_count" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            style="@style/Widget.Carlog.ListItem">
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/cl_icon_round_size"
+                                android:layout_height="@dimen/cl_icon_round_size"
+                                android:importantForAccessibility="no"
+                                app:srcCompat="@drawable/ic_car"
+                                style="@style/Widget.Carlog.CourseIcon"
+                                android:backgroundTint="@color/cl_chip_blue_bg"
+                                app:tint="@color/cl_blue" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:layout_marginStart="@dimen/cl_space_12">
+                                <TextView
+                                    style="@style/Carlog.Text.Body.Bold"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/friend_run_0" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.Caption"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/cl_space_4"
+                                    android:text="@string/friend_run_time_0" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View
+                            style="@style/Widget.Carlog.Divider" />
+
+                        <LinearLayout
+                            style="@style/Widget.Carlog.ListItem">
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/cl_icon_round_size"
+                                android:layout_height="@dimen/cl_icon_round_size"
+                                android:importantForAccessibility="no"
+                                app:srcCompat="@drawable/ic_car"
+                                style="@style/Widget.Carlog.CourseIcon"
+                                android:backgroundTint="@color/cl_chip_accent_bg"
+                                app:tint="@color/cl_accent" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:layout_marginStart="@dimen/cl_space_12">
+                                <TextView
+                                    style="@style/Carlog.Text.Body.Bold"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/friend_run_1" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.Caption"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/cl_space_4"
+                                    android:text="@string/friend_run_time_1" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View
+                            style="@style/Widget.Carlog.Divider" />
+
+                        <LinearLayout
+                            style="@style/Widget.Carlog.ListItem">
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/cl_icon_round_size"
+                                android:layout_height="@dimen/cl_icon_round_size"
+                                android:importantForAccessibility="no"
+                                app:srcCompat="@drawable/ic_car"
+                                style="@style/Widget.Carlog.CourseIcon"
+                                android:backgroundTint="@color/cl_surface_sub"
+                                app:tint="@color/cl_ink3" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:layout_marginStart="@dimen/cl_space_12">
+                                <TextView
+                                    style="@style/Carlog.Text.Body.Bold"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/friend_run_2" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.Caption"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/cl_space_4"
+                                    android:text="@string/friend_run_time_2" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/Widget.Carlog.Section">
+                <LinearLayout
+                    style="@style/Widget.Carlog.SectionHeader">
+                    <TextView
+                        style="@style/Carlog.Text.SectionTitle.Fill"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:accessibilityHeading="true"
+                        android:text="@string/friend_comments_title" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        style="@style/Widget.Carlog.CardContent">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/cl_space_10"
+                            android:paddingBottom="@dimen/cl_space_10">
+                            <TextView
+                                style="@style/Widget.Carlog.Avatar"
+                                android:layout_width="@dimen/cl_course_comment_avatar"
+                                android:layout_height="@dimen/cl_course_comment_avatar"
+                                android:backgroundTint="@color/cl_blue"
+                                android:importantForAccessibility="no"
+                                android:text="@string/friend_comment_avatar_0" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:layout_marginStart="@dimen/cl_space_10">
+                                <TextView
+                                    style="@style/Carlog.Text.Body.Bold"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/friend_comment_author_0" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.Body"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/cl_text_chip"
+                                    android:layout_marginTop="@dimen/cl_space_4"
+                                    android:text="@string/friend_comment_body_0" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/cl_space_10"
+                            android:paddingBottom="@dimen/cl_space_10">
+                            <TextView
+                                style="@style/Widget.Carlog.Avatar"
+                                android:layout_width="@dimen/cl_course_comment_avatar"
+                                android:layout_height="@dimen/cl_course_comment_avatar"
+                                android:backgroundTint="@color/cl_teal"
+                                android:importantForAccessibility="no"
+                                android:text="@string/friend_comment_avatar_1" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:layout_marginStart="@dimen/cl_space_10">
+                                <TextView
+                                    style="@style/Carlog.Text.Body.Bold"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/friend_comment_author_1" />
+
+                                <TextView
+                                    style="@style/Carlog.Text.Body"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/cl_text_chip"
+                                    android:layout_marginTop="@dimen/cl_space_4"
+                                    android:text="@string/friend_comment_body_1" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="@dimen/cl_space_6">
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/input_friend_comment"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:minHeight="@dimen/cl_course_input_height"
+                                android:maxLines="3"
+                                android:inputType="textCapSentences|textMultiLine"
+                                android:imeOptions="actionDone"
+                                android:background="@drawable/bg_course_comment"
+                                android:padding="@dimen/cl_space_12"
+                                android:textSize="@dimen/cl_text_chip"
+                                android:hint="@string/friend_comment_hint"
+                                android:importantForAutofill="no" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_friend_post"
+                                style="@style/Widget.Carlog.Button.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/cl_space_8"
+                                android:text="@string/friend_post" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <include
+        layout="@layout/view_friend_actions" />
+</LinearLayout>

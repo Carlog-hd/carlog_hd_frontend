@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="course_name">7번 국도 새벽 바닷길</string>
+
+    <string name="course_hidden_start">출발지는 공유자가 숨겼어요</string>
+
+    <string name="course_map_description">출발지 주변을 숨긴 해안 코스 지도 예시. 장호항과 죽변 등대를 지나 울진 후포항에 도착합니다.</string>
+
+    <string name="course_waypoint_0">삼척 해변</string>
+
+    <string name="course_waypoint_1">장호항</string>
+
+    <string name="course_waypoint_2">죽변 등대</string>
+
+    <string name="course_waypoint_3">울진 후포항</string>
+
+    <string name="course_destination">목적지</string>
+
+    <string name="course_connected">내 차 · 연결됨</string>
+
+    <string name="course_marker_0">S</string>
+
+    <string name="course_marker_1">1</string>
+
+    <string name="course_marker_2">2</string>
+
+    <string name="course_marker_3">E</string>
+
+    <string name="friend_distance_value">167km</string>
+
+    <string name="friend_distance_label">총거리</string>
+
+    <string name="friend_time_value">2h 14m</string>
+
+    <string name="friend_time_label">실제 소요</string>
+
+    <string name="friend_avg_value">74</string>
+
+    <string name="friend_avg_label">평균 km/h</string>
+
+    <string name="friend_stops_value">1회</string>
+
+    <string name="friend_stops_label">중간 정차</string>
+
+    <string name="friend_avatar">하</string>
+
+    <string name="friend_meta">새벽 5:40 출발 · 맑음 9°C</string>
+
+    <string name="friend_dawn">새벽 탐험가</string>
+
+    <string name="friend_keeper">제한속도 지킴이</string>
+
+    <string name="friend_limit">제한속도 준수율 98%</string>
+
+    <string name="friend_speed_description">평균 시속 74km의 속도 변화 예시. 중간에 정차 구간이 있습니다.</string>
+
+    <string name="friend_run_0">오후 · 비</string>
+
+    <string name="friend_run_time_0">실제 소요 2시간 31분</string>
+
+    <string name="friend_run_1">저녁 · 맑음</string>
+
+    <string name="friend_run_time_1">실제 소요 2시간 05분</string>
+
+    <string name="friend_run_2">오전 · 흐림</string>
+
+    <string name="friend_run_time_2">실제 소요 2시간 20분</string>
+
+    <string name="friend_comment_avatar_0">바</string>
+
+    <string name="friend_comment_author_0">바다</string>
+
+    <string name="friend_comment_body_0">해 뜰 때 지나가는 구간 진짜 예뻐 보인다</string>
+
+    <string name="friend_comment_avatar_1">도</string>
+
+    <string name="friend_comment_author_1">도윤</string>
+
+    <string name="friend_comment_body_1">휴게소 1번만 들러도 되는 거리네! 저장했어</string>
+
+    <string name="friend_comment_hint">댓글 달기…</string>
+
+    <string name="friend_post">게시</string>
+
+    <string name="friend_speed_title">속도 변화</string>
+
+    <string name="friend_speed_hint">비교적 일정한 코스</string>
+
+    <string name="friend_waypoints_title">경유지</string>
+
+    <string name="friend_waypoints_hint">내비로 보낼 수 있어요</string>
+
+    <string name="friend_runs_title">같은 코스, 다른 CARLOG</string>
+
+    <string name="friend_runs_count">3개</string>
+
+    <string name="friend_comments_title">댓글</string>
+
+    <string name="friend_save">코스 저장</string>
+
+    <string name="friend_save_action">저장</string>
+
+    <string name="friend_send">내 차 내비로 보내기</string>
+
+    <string name="friend_title">하늘님의 CARLOG</string>
+</resources>

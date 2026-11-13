@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Carlog.DexCard"
+    android:id="@+id/card_dex_coast"
+    android:clickable="true"
+    android:focusable="true"
+    android:contentDescription="@string/dex_coast_accessibility"
+    app:strokeColor="@color/cl_accent"
+    app:strokeWidth="@dimen/cl_dex_new_stroke">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/cl_space_6"
+        android:paddingEnd="@dimen/cl_space_6"
+        android:paddingTop="@dimen/cl_space_14"
+        android:paddingBottom="@dimen/cl_space_12">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/cl_dex_medal_size"
+            android:layout_height="@dimen/cl_dex_medal_size"
+            android:importantForAccessibility="no"
+            app:srcCompat="@drawable/ic_title_wave"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_medal_coast"
+            android:padding="@dimen/cl_dex_medal_padding"
+            app:tint="@color/cl_white" />
+
+        <TextView
+            style="@style/Carlog.Text.Body.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minLines="2"
+            android:breakStrategy="balanced"
+            android:textSize="@dimen/cl_text_action"
+            android:layout_marginTop="@dimen/cl_space_8"
+            android:textColor="@color/cl_ink"
+            android:importantForAccessibility="no"
+            android:text="@string/dex_coast_title" />
+
+        <TextView
+            style="@style/Carlog.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/cl_text_small"
+            android:layout_marginTop="@dimen/cl_space_4"
+            android:importantForAccessibility="no"
+            android:text="@string/dex_state_new" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="my_avatar">나</string>
+
+    <string name="my_driver">드라이버 민트</string>
+
+    <string name="my_title_badge">부드러운 브레이커</string>
+
+    <string name="my_sync">마지막 동기화 방금 전</string>
+
+    <string name="my_connection_on">ON</string>
+
+    <string name="my_privacy_0">출발·도착지 자동 숨김</string>
+
+    <string name="my_privacy_hint_0">공유할 때 항상 기본으로 가려요</string>
+
+    <string name="my_privacy_1">집·직장 주변 500m 마스킹</string>
+
+    <string name="my_privacy_hint_1">등록한 장소 근처 경로를 가려요</string>
+
+    <string name="my_privacy_2">원본 위치 기록</string>
+
+    <string name="my_privacy_hint_2">기본 비공개 · 나만 볼 수 있어요</string>
+
+    <string name="my_private">비공개</string>
+
+    <string name="my_vehicle_title">연결된 차량</string>
+
+    <string name="my_privacy_title">개인정보 기본값</string>
+</resources>

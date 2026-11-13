@@ -72,6 +72,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 /** Parked-state record list; live driving remains in DriveFragment. */
 class RecordFragment : Fragment(R.layout.fragment_record) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val logTab = view.findViewById<MaterialButton>(R.id.btnRecordLog)
+        val studioTab = view.findViewById<MaterialButton>(R.id.btnRecordStudio)
+        fun showStudio(show: Boolean) {
+            view.findViewById<View>(R.id.recordLogPanel).visibility = if (show) View.GONE else View.VISIBLE
+            view.findViewById<View>(R.id.recordStudioPanel).visibility = if (show) View.VISIBLE else View.GONE
+            listOf(logTab to !show, studioTab to show).forEach { (button, selected) ->
+                button.backgroundTintList = android.content.res.ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), if (selected) R.color.cl_lime else R.color.cl_ghost),
+                )
+                button.setTextColor(ContextCompat.getColor(requireContext(), if (selected) R.color.cl_on_lime else R.color.cl_on_ghost))
+            }
+        }
+        logTab.setOnClickListener { showStudio(false) }
+        studioTab.setOnClickListener { showStudio(true) }
+        showStudio(false)
         val records = DriveHistoryStore.all(requireContext())
         view.findViewById<TextView>(R.id.recordCount).text = getString(R.string.record_count, records.size)
         view.findViewById<View>(R.id.btnStartNewDrive).setOnClickListener {
@@ -80,9 +95,20 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
         val latest = records.firstOrNull()
         val previous = view.findViewById<MaterialButton>(R.id.btnPrevScene)
         val next = view.findViewById<MaterialButton>(R.id.btnNextScene)
+        val openStudioLog = view.findViewById<MaterialButton>(R.id.btnOpenStudioLog)
         previous.isEnabled = latest != null
         next.isEnabled = latest != null
+        openStudioLog.isEnabled = latest != null
         if (latest != null) {
+            view.findViewById<TextView>(R.id.studioJournal).text =
+                DriveLogContentStore.caption(requireContext(), latest.id)
+                    ?: getString(
+                        R.string.record_studio_journal_sample,
+                        latest.destination,
+                        latest.distanceKm,
+                        latest.durationSeconds / 60,
+                    )
+            openStudioLog.setOnClickListener { (activity as? DriveActions)?.showDriveLog(latest) }
             val scenes = listOf(
                 getString(R.string.record_studio_scene_departure, latest.destination),
                 getString(R.string.record_studio_scene_distance, latest.distanceKm),
@@ -395,6 +421,11 @@ class DriveFragment : Fragment(R.layout.fragment_drive) {
 
 /** The sample friend course is selectable and can start a separate simulated drive. */
 class CourseFragment : Fragment(R.layout.fragment_course) {
+    private companion object {
+        const val FILTER_FOLLOWING = "following"
+        const val FILTER_COURSES = "courses"
+        const val FILTER_GUEST = "guest"
+    }
     private var selectedCourseId = DemoCourses.all.first().id
     private var selectedFilter = DemoCourses.FILTER_ALL
 
@@ -402,6 +433,27 @@ class CourseFragment : Fragment(R.layout.fragment_course) {
         renderFilters(view)
         renderChoices(view)
         bindCourse(view, DemoCourses.byId(selectedCourseId) ?: DemoCourses.all.first())
+        val guestPrefs = requireContext().getSharedPreferences("carlog_guest_demo", android.content.Context.MODE_PRIVATE)
+        fun renderGuestEntry() {
+            val place = guestPrefs.getString("place", "").orEmpty()
+            val message = guestPrefs.getString("message", "").orEmpty()
+            view.findViewById<TextView>(R.id.guestAdded).apply {
+                visibility = if (place.isNotBlank() && message.isNotBlank()) View.VISIBLE else View.GONE
+                text = getString(R.string.course_guest_added, place, message)
+            }
+        }
+        renderGuestEntry()
+        view.findViewById<View>(R.id.btnAddGuest).setOnClickListener {
+            val place = view.findViewById<EditText>(R.id.guestPlace).text.toString().trim()
+            val message = view.findViewById<EditText>(R.id.guestMessage).text.toString().trim()
+            if (place.isEmpty() || message.isEmpty()) {
+                Toast.makeText(requireContext(), R.string.course_guest_required, Toast.LENGTH_SHORT).show()
+            } else {
+                guestPrefs.edit().putString("place", place).putString("message", message).apply()
+                view.findViewById<EditText>(R.id.guestMessage).text.clear()
+                renderGuestEntry()
+            }
+        }
 
         view.findViewById<View>(R.id.btnSaveCourse).setOnClickListener {
             val saved = SavedCourseStore.toggle(requireContext(), selectedCourseId)
@@ -432,10 +484,10 @@ class CourseFragment : Fragment(R.layout.fragment_course) {
         val container = root.findViewById<LinearLayout>(R.id.courseFilters)
         container.removeAllViews()
         listOf(
-            DemoCourses.FILTER_ALL to R.string.course_filter_all,
-            DemoCourses.FILTER_RIVER to R.string.course_filter_river,
-            DemoCourses.FILTER_COAST to R.string.course_filter_coast,
-            DemoCourses.FILTER_NIGHT to R.string.course_filter_night,
+            DemoCourses.FILTER_ALL to R.string.course_filter_popular,
+            FILTER_FOLLOWING to R.string.course_filter_following,
+            FILTER_COURSES to R.string.course_filter_courses,
+            FILTER_GUEST to R.string.course_filter_guest,
             DemoCourses.FILTER_SAVED to R.string.course_filter_saved,
         ).forEach { (filter, label) ->
             val selected = filter == selectedFilter
@@ -473,6 +525,11 @@ class CourseFragment : Fragment(R.layout.fragment_course) {
     private fun renderChoices(root: View) {
         val container = root.findViewById<LinearLayout>(R.id.courseChoices)
         container.removeAllViews()
+        val guestSelected = selectedFilter == FILTER_GUEST
+        container.visibility = if (guestSelected) View.GONE else View.VISIBLE
+        root.findViewById<View>(R.id.courseGuest).visibility = if (guestSelected) View.VISIBLE else View.GONE
+        root.findViewById<View>(R.id.courseListNotice).visibility = if (guestSelected) View.GONE else View.VISIBLE
+        if (guestSelected) return
         val choices = filteredCourses()
         if (choices.isEmpty()) {
             container.addView(TextView(requireContext()).apply {
@@ -550,7 +607,7 @@ class CourseFragment : Fragment(R.layout.fragment_course) {
         val savedIds = SavedCourseStore.ids(requireContext())
         return DemoCourses.all.filter { course ->
             when (selectedFilter) {
-                DemoCourses.FILTER_ALL -> true
+                DemoCourses.FILTER_ALL, FILTER_FOLLOWING, FILTER_COURSES -> true
                 DemoCourses.FILTER_SAVED -> course.id in savedIds
                 else -> course.category == selectedFilter
             }
@@ -917,6 +974,11 @@ class TitlesFragment : Fragment(R.layout.fragment_titles) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val grid = view.findViewById<LinearLayout>(R.id.titleGrid)
+        view.findViewById<TextView>(R.id.titlesCollectionCount).text =
+            getString(R.string.titles_collection_count, titles.count { it.earned }, titles.size)
+        view.findViewById<TextView>(R.id.titlesChallengeStatus).setText(
+            if (titles.any { it.earned }) R.string.titles_challenge_first else R.string.titles_challenge_waiting,
+        )
         val inflater = LayoutInflater.from(view.context)
         val gap = resources.getDimensionPixelSize(R.dimen.title_grid_gap)
 

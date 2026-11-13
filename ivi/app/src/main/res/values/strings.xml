@@ -71,6 +71,9 @@
     <string name="record_scene_prev">← 이전</string>
     <string name="record_scene_next">다음 →</string>
     <string name="record_studio_hint">사진 추가와 영상 편집은 정차 후 연결된 휴대폰에서 이어집니다. 현재 차량 앱에서는 로그 미리보기를 제공합니다.</string>
+    <string name="record_studio_journal_title">차가 쓴 오늘의 일기</string>
+    <string name="record_studio_journal_sample">%1$s까지 %2$.1f km를 %3$d분 동안 달렸어요. 오늘의 드라이브를 다시 만나 보세요.</string>
+    <string name="record_studio_open_log">기록 상세 · 편집하기 →</string>
 
     <!-- Simulation demo -->
     <string name="drive_pause">정차 / 일시정지</string>

@@ -58,6 +58,21 @@
     <string name="course_filter_coast">해안</string>
     <string name="course_filter_night">야경</string>
     <string name="course_filter_saved">저장한 코스</string>
+    <string name="course_filter_popular">인기 CARLOG</string>
+    <string name="course_filter_following">친구의 기록</string>
+    <string name="course_filter_courses">추천 코스</string>
+    <string name="course_filter_guest">길 위의 방명록</string>
+    <string name="course_public_notice">데모 피드에는 공개 경유지만 표시합니다. 원본 주행 속도와 운전 행동은 코스에 포함되지 않아요.</string>
+    <string name="course_guest_title">📍 길 위의 방명록</string>
+    <string name="course_guest_sample_one">속초 해안도로 전망대 · 루나\n“여기서 보는 노을이 정말 예뻐요.”</string>
+    <string name="course_guest_sample_two">미시령 옛길 정상 · 우중산책\n“비 오는 날 안개가 영화 같아요. 천천히 달리세요.”</string>
+    <string name="course_guest_write_title">방명록 남기기</string>
+    <string name="course_guest_demo_notice">정차한 상태에서 이 기기의 데모 방명록에 메시지를 남길 수 있어요. 다른 사용자에게 전송되지는 않습니다.</string>
+    <string name="course_guest_place_hint">장소 이름</string>
+    <string name="course_guest_message_hint">이 길을 지나는 사람에게 한마디…</string>
+    <string name="course_guest_add">방명록 남기기</string>
+    <string name="course_guest_added">%1$s · 나\n“%2$s”</string>
+    <string name="course_guest_required">장소와 메시지를 입력해 주세요.</string>
     <string name="course_save">코스 저장</string>
     <string name="course_like">♡ 좋아요</string>
     <string name="course_unlike">♥ 좋아요</string>
@@ -138,6 +153,15 @@
     <string name="titles_lead">주행을 마치며 얻은 칭호와 새로운 여행의 기록을 모아요.</string>
     <string name="titles_earned">획득</string>
     <string name="titles_locked">미획득</string>
+    <string name="titles_collection_heading">드라이버 칭호 컬렉션</string>
+    <string name="titles_collection_count">%1$d / %2$d</string>
+    <string name="titles_theme_heading">포인트 &amp; 테마</string>
+    <string name="titles_theme_preview">🎞️ 레트로 필름 테마</string>
+    <string name="titles_theme_note">테마 획득과 포인트 사용은 휴대폰 서비스 연결 후 이용할 수 있어요.</string>
+    <string name="titles_challenge_heading">시즌 챌린지</string>
+    <string name="titles_challenge_first">첫 드라이브 완료</string>
+    <string name="titles_challenge_waiting">첫 드라이브를 기다리고 있어요</string>
+    <string name="titles_challenge_note">현재는 이 에뮬레이터의 주행 기록으로 첫 도전을 확인합니다.</string>
 
     <string name="title_firefly_name">깜빡깜빡 반딧불이 드라이버</string>
     <string name="title_firefly_rule">차선 변경 시 방향지시등 100% 사용</string>

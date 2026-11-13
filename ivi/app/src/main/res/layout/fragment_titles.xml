@@ -31,10 +31,56 @@
             android:text="@string/titles_lead" />
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView style="@style/Carlog.Text.PanelTitle"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="@string/titles_collection_heading" />
+            <TextView android:id="@+id/titlesCollectionCount"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:background="@drawable/bg_pill" android:paddingHorizontal="18dp"
+                android:paddingVertical="10dp" android:textColor="@color/cl_pill_fg"
+                android:textSize="22sp" />
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/titleGrid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="16dp"
             android:orientation="vertical" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="24dp" android:orientation="horizontal">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:background="@drawable/bg_panel"
+                android:orientation="vertical" android:padding="28dp">
+                <TextView style="@style/Carlog.Text.PanelTitle"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="@string/titles_theme_heading" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp" android:text="@string/titles_theme_preview"
+                    android:textColor="@color/cl_fg" android:textSize="24sp" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" android:text="@string/titles_theme_note"
+                    android:textColor="@color/cl_muted" android:textSize="20sp" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_marginStart="20dp" android:layout_weight="1"
+                android:background="@drawable/bg_panel" android:orientation="vertical"
+                android:padding="28dp">
+                <TextView style="@style/Carlog.Text.PanelTitle"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="@string/titles_challenge_heading" />
+                <TextView android:id="@+id/titlesChallengeStatus"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp" android:textColor="@color/cl_fg"
+                    android:textSize="24sp" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" android:text="@string/titles_challenge_note"
+                    android:textColor="@color/cl_muted" android:textSize="20sp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

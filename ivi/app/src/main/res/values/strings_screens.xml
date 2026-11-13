@@ -30,7 +30,7 @@
     <string name="drive_note">주행 중에는 화면 조작 없이 기록만 진행돼요. 기록 확인은 도착 후에 할 수 있어요.</string>
 
     <!-- 코스 탭 (ivDiscover, 민지 님 코스를 받은 상태 샘플) -->
-    <string name="course_kicker">FOLLOW A FRIEND\'S DRIVE</string>
+    <string name="course_kicker">DISCOVER THE ROAD</string>
     <string name="course_discover_headline">다른 사람의 길을 발견해요.</string>
     <string name="course_discover_lead">피드를 보고 마음에 드는 드라이브를 내비게이션에 불러올 수 있어요.</string>
     <string name="course_back_to_list">‹ 코스 목록</string>

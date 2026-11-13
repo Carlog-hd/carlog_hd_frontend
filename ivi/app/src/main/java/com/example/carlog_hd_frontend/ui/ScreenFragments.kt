@@ -83,6 +83,7 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
                 )
                 button.setTextColor(ContextCompat.getColor(requireContext(), if (selected) R.color.cl_on_lime else R.color.cl_on_ghost))
             }
+            view.findViewById<NestedScrollView>(R.id.recordScroll).smoothScrollTo(0, 0)
         }
         logTab.setOnClickListener { showStudio(false) }
         studioTab.setOnClickListener { showStudio(true) }
@@ -100,6 +101,30 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
         next.isEnabled = latest != null
         openStudioLog.isEnabled = latest != null
         if (latest != null) {
+            view.findViewById<View>(R.id.recordLatestSummary).visibility = View.VISIBLE
+            view.findViewById<TextView>(R.id.recordLatestDestination).text = latest.destination
+            view.findViewById<TextView>(R.id.recordLatestDistance).text =
+                getString(R.string.record_latest_distance, latest.distanceKm)
+            view.findViewById<TextView>(R.id.recordLatestDuration).text =
+                getString(R.string.record_latest_duration, latest.durationSeconds / 60)
+            val momentList = view.findViewById<LinearLayout>(R.id.recordMomentList)
+            listOf(
+                getString(R.string.record_moment_depart),
+                getString(R.string.record_moment_distance, latest.distanceKm),
+                getString(R.string.record_moment_arrive, latest.destination),
+            ).forEach { moment ->
+                momentList.addView(TextView(requireContext()).apply {
+                    text = moment
+                    setTextColor(ContextCompat.getColor(context, R.color.cl_fg))
+                    textSize = 22f
+                    setPadding(dp(20), dp(14), dp(20), dp(14))
+                    setBackgroundResource(R.drawable.bg_stat)
+                }, LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                ).apply { bottomMargin = dp(10) })
+            }
+            view.findViewById<View>(R.id.btnSummaryStudio).setOnClickListener { showStudio(true) }
             view.findViewById<TextView>(R.id.studioJournal).text =
                 DriveLogContentStore.caption(requireContext(), latest.id)
                     ?: getString(

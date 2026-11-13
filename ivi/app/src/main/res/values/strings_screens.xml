@@ -89,6 +89,7 @@
 
     <!-- 차량 MY 화면 -->
     <string name="my_headline">내 차와 함께 쌓아온 이야기.</string>
+    <string name="my_kicker">MY CARLOG</string>
     <string name="my_lead">나의 기록과 저장한 코스, 공유 설정을 관리해요.</string>
     <string name="my_profile_name">데모 드라이버</string>
     <string name="my_profile_title_empty">첫 드라이브를 완료하면 칭호가 표시돼요</string>
@@ -120,6 +121,11 @@
     <string name="my_backup_imported">로그 %1$d건 · 저장 코스 %2$d개 · 좋아요 코스 %3$d개를 가져왔어요.</string>
     <string name="my_backup_import_error">가져오지 못했어요: %1$s</string>
     <string name="my_recent_drives">나의 CARLOG 로그</string>
+    <string name="my_all_drives">전체 기록 →</string>
+    <string name="my_privacy_settings_heading">기록·공개 설정</string>
+    <string name="my_private_default">🔒 주행 기록 기본값: 비공개</string>
+    <string name="my_private_default_desc">이 기기의 데모 기록은 직접 공유하지 않는 한 공개되지 않아요.</string>
+    <string name="my_connection_heading">휴대폰·데이터</string>
     <string name="my_no_drives">아직 저장된 로그가 없어요. 주행을 마치면 여기에 모여요.</string>
     <string name="my_drive_row_meta">%1$s km · %2$d분</string>
     <string name="my_open_drive_log">%1$s 주행 로그 상세 열기</string>

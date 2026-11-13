@@ -30,6 +30,7 @@ interface DriveActions {
     fun finishDemoDrive()
     fun returnHome()
     fun showCourses()
+    fun showRecords()
     fun showDriveLog(record: DriveRecord)
     fun returnToMy()
 }
@@ -202,7 +203,7 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 }
 /** Car-display MY screen modeled after the vehicle settings panel in the HTML demo. */
-class MyFragment : Fragment(R.layout.fragment_my) {
+class MyFragment : Fragment(R.layout.fragment_my_refresh) {
     private val exportBackup = registerForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
         if (uri == null) return@registerForActivityResult
         val context = context ?: return@registerForActivityResult
@@ -264,6 +265,9 @@ class MyFragment : Fragment(R.layout.fragment_my) {
                 .setPositiveButton(android.R.string.ok, null)
                 .show()
         }
+        view.findViewById<View>(R.id.btnMyAllRecords).setOnClickListener {
+            (activity as? DriveActions)?.showRecords()
+        }
     }
 
     private fun refreshMyData(root: View) {
@@ -297,7 +301,7 @@ class MyFragment : Fragment(R.layout.fragment_my) {
             })
             return
         }
-        records.take(8).forEachIndexed { index, record ->
+        records.take(3).forEachIndexed { index, record ->
             val row = LinearLayout(requireContext()).apply {
                 orientation = LinearLayout.HORIZONTAL
                 gravity = android.view.Gravity.CENTER_VERTICAL
@@ -351,7 +355,7 @@ class MyFragment : Fragment(R.layout.fragment_my) {
                 setPadding(dp(18), 0, dp(8), 0)
             })
             container.addView(row)
-            if (index < minOf(records.size, 8) - 1) {
+            if (index < minOf(records.size, 3) - 1) {
                 container.addView(View(requireContext()).apply {
                     setBackgroundColor(ContextCompat.getColor(context, R.color.cl_edge))
                     layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(1))

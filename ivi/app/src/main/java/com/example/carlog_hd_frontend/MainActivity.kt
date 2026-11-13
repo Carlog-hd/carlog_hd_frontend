@@ -178,6 +178,10 @@ class MainActivity : AppCompatActivity(), DriveActions {
         select(Tab.COURSE)
     }
 
+    override fun showRecords() {
+        select(Tab.DRIVE)
+    }
+
     override fun showDriveLog(record: DriveRecord) {
         logOrigin = current
         supportFragmentManager.beginTransaction()

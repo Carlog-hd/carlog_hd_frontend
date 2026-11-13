@@ -77,6 +77,28 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
         view.findViewById<View>(R.id.btnStartNewDrive).setOnClickListener {
             (activity as? DriveActions)?.startDemoDrive()
         }
+        val latest = records.firstOrNull()
+        val previous = view.findViewById<MaterialButton>(R.id.btnPrevScene)
+        val next = view.findViewById<MaterialButton>(R.id.btnNextScene)
+        previous.isEnabled = latest != null
+        next.isEnabled = latest != null
+        if (latest != null) {
+            val scenes = listOf(
+                getString(R.string.record_studio_scene_departure, latest.destination),
+                getString(R.string.record_studio_scene_distance, latest.distanceKm),
+                getString(R.string.record_studio_scene_duration, latest.durationSeconds / 60),
+                getString(R.string.record_studio_scene_finish),
+            )
+            var scene = 0
+            fun renderScene() {
+                view.findViewById<TextView>(R.id.studioSlideTitle).text = scenes[scene]
+                view.findViewById<TextView>(R.id.studioSlideLabel).text =
+                    getString(R.string.record_studio_scene_count, scene + 1)
+            }
+            previous.setOnClickListener { scene = (scene + scenes.size - 1) % scenes.size; renderScene() }
+            next.setOnClickListener { scene = (scene + 1) % scenes.size; renderScene() }
+            renderScene()
+        }
         val list = view.findViewById<LinearLayout>(R.id.recordList)
         if (records.isEmpty()) {
             list.addView(TextView(requireContext()).apply {

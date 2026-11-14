@@ -91,6 +91,9 @@
                 <FrameLayout android:layout_width="300dp" android:layout_height="400dp"
                     android:layout_gravity="center_horizontal" android:layout_marginTop="22dp"
                     android:background="@drawable/bg_recent_cover">
+                    <ImageView android:id="@+id/studioCoverImage" android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:scaleType="centerCrop"
+                        android:visibility="gone" android:contentDescription="@string/record_studio_cover_description" />
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:layout_gravity="bottom" android:orientation="vertical"
                         android:padding="24dp">
@@ -107,17 +110,6 @@
                             android:textSize="18sp" />
                     </LinearLayout>
                 </FrameLayout>
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp" android:gravity="center" android:orientation="horizontal">
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnPrevScene" style="@style/Carlog.Button.GhostSmall"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/record_scene_prev" />
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnNextScene" style="@style/Carlog.Button.GhostSmall"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp" android:text="@string/record_scene_next" />
-                </LinearLayout>
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="20dp" android:background="@drawable/bg_stat"
                     android:orientation="vertical" android:padding="24dp">

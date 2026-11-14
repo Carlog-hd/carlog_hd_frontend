@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cl_dex_medal_size">56dp</dimen>
+
+    <dimen name="cl_dex_medal_padding">15dp</dimen>
+
+    <dimen name="cl_dex_card_radius">18dp</dimen>
+
+    <dimen name="cl_dex_card_gap">5dp</dimen>
+
+    <dimen name="cl_dex_detail_medal_size">84dp</dimen>
+
+    <dimen name="cl_dex_detail_medal_padding">23dp</dimen>
+
+    <dimen name="cl_dex_new_stroke">2dp</dimen>
+
+    <dimen name="cl_dex_progress_height">8dp</dimen>
+
+    <dimen name="cl_dex_progress_radius">4dp</dimen>
+
+    <color name="cl_dex_locked_bg">#E3E7ED</color>
+
+    <color name="cl_dex_locked_fg">#AAB2BF</color>
+
+    <color name="cl_dex_progress_track">#EDF0F4</color>
+
+    <style
+        name="Widget.Carlog.DexCard"
+        parent="Widget.Carlog.Card">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_margin">@dimen/cl_dex_card_gap</item>
+        <item name="cardCornerRadius">@dimen/cl_dex_card_radius</item>
+    </style>
+
+    <style
+        name="Widget.Carlog.DexProgress"
+        parent="Widget.MaterialComponents.LinearProgressIndicator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/cl_space_8</item>
+        <item name="android:indeterminate">false</item>
+        <item name="trackThickness">@dimen/cl_dex_progress_height</item>
+        <item name="trackCornerRadius">@dimen/cl_dex_progress_radius</item>
+        <item name="indicatorColor">@color/cl_accent</item>
+        <item name="trackColor">@color/cl_dex_progress_track</item>
+    </style>
+
+    <color name="cl_dex_smooth_start">#12B5A5</color>
+
+    <color name="cl_dex_smooth_end">#3DD6C4</color>
+
+    <color name="cl_dex_coast_start">#3D6BFF</color>
+
+    <color name="cl_dex_coast_end">#6FA0FF</color>
+
+    <color name="cl_dex_cruise_start">#FF6B3D</color>
+
+    <color name="cl_dex_cruise_end">#FFB547</color>
+
+    <color name="cl_dex_dawn_start">#7B5CFF</color>
+
+    <color name="cl_dex_dawn_end">#B39CFF</color>
+
+    <color name="cl_dex_night_start">#1D2B4F</color>
+
+    <color name="cl_dex_night_end">#4A5F9C</color>
+
+    <color name="cl_dex_keeper_start">#0E1A2B</color>
+
+    <color name="cl_dex_keeper_end">#4B5768</color>
+</resources>

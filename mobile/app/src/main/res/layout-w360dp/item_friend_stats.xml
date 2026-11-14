@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Carlog.StatsRow">
+    <com.carlog.mobile.ui.common.StatView
+        android:id="@+id/stat_friend_distance"
+        style="@style/Widget.Carlog.Stat"
+        app:statValue="@string/friend_distance_value"
+        app:statLabel="@string/friend_distance_label" />
+
+    <com.carlog.mobile.ui.common.StatView
+        android:id="@+id/stat_friend_time"
+        style="@style/Widget.Carlog.Stat"
+        app:statValue="@string/friend_time_value"
+        app:statLabel="@string/friend_time_label" />
+
+    <com.carlog.mobile.ui.common.StatView
+        android:id="@+id/stat_friend_avg"
+        style="@style/Widget.Carlog.Stat"
+        app:statValue="@string/friend_avg_value"
+        app:statLabel="@string/friend_avg_label" />
+
+    <com.carlog.mobile.ui.common.StatView
+        android:id="@+id/stat_friend_stops"
+        style="@style/Widget.Carlog.Stat"
+        app:statValue="@string/friend_stops_value"
+        app:statLabel="@string/friend_stops_label" />
+</LinearLayout>

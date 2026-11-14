@@ -50,6 +50,7 @@ mobile/app/src/main/
 │       ├── discover/            # 발견
 │       ├── logs/                # 내 기록, 기록 상세
 │       ├── share/               # 공유 편집, 미리보기, 공유 수단
+│       ├── course/              # 친구 로그, 차량 전송
 │       ├── dex/                 # 도감
 │       └── my/                  # MY
 └── res/
@@ -79,9 +80,12 @@ mobile/app/src/main/
 | M04 | 공유 편집 | `ui/share/ShareEditFragment` | `fragment_share_edit.xml` |
 | M05 | 피드 미리보기 | `ui/share/SharePreviewFragment` | `fragment_share_preview.xml` |
 | M05 | 공유 수단 | `ui/share/ShareOptionsFragment` | `fragment_share_options.xml` |
-| M06 | 친구 로그 | - | - |
-| M07 | 차량 전송 | - | - |
+| M06 | 친구 로그 | `ui/course/FriendLogFragment` | `fragment_friend_log.xml` |
+| M07 | 차량 전송 확인 | `ui/course/SendToCarFragment` | `fragment_send_to_car.xml` |
+| M07 | 전송 중 | `ui/course/TransferSendingFragment` | `fragment_transfer_sending.xml` |
+| M07 | 전송 완료 | `ui/course/TransferSuccessFragment` | `fragment_transfer_success.xml` |
 | M08 | 도감 | `ui/dex/DexFragment` | `fragment_dex.xml` |
+| M08 | 칭호 상세 | `ui/dex/TitleDetailFragment` | `fragment_title_detail.xml` |
 | M08 | MY | `ui/my/MyFragment` | `fragment_my.xml` |
 
 ### 화면 이동
@@ -101,6 +105,14 @@ mobile/app/src/main/
 - 너비 360dp 이상에서는 통계·공유 수단이 4열이며, 좁은 화면에서는 2열로 표시됩니다. 시트 높이는 화면의 최대 86%이고 내용이 길면 스크롤됩니다.
 - 피드 게시, 링크 복사, 메시지 공유, 이미지 저장 및 반응 버튼은 디자인만 구현되어 있습니다.
 - M05 전용 문구·스타일은 `strings_preview.xml`, `styles_preview.xml`에 있습니다. 기존 공통 리소스는 수정하지 않았습니다.
+
+### M06~M08 목업
+- **M06**: 하늘의 '7번 국도 새벽 바닷길' 고정 예시입니다. 공개 지도, 주행 통계, 속도 그래프, 경유지, 같은 코스의 다른 기록, 댓글 입력 영역을 표시합니다.
+- **M07**: 전송 전 확인, 전송 중, 전송 완료를 별도 XML로 제공합니다. 경유지 체크박스는 표시 상태만 바뀌며 지도와 연동하지 않습니다. 실제 차량 전송이나 상태 전환은 없습니다.
+- **M08**: 도감에는 9종 칭호(획득 6종, 미획득 3종, NEW 3종)와 챌린지 3개를 표시합니다. 칭호 상세는 '부드러운 브레이커' 예시입니다. MY는 연결 차량과 개인정보 기본값을 표시하며 설정을 저장하지 않습니다.
+- 도감과 MY는 기존 하단 탭에서 확인할 수 있습니다. 친구 로그·전송·칭호 상세는 Android Studio의 **Design / Split**으로 확인합니다. 새 화면 이동과 게시·저장·전송 동작은 연결하지 않았습니다.
+- 화면 너비 360dp 미만에서는 친구 통계를 2열, 도감을 2열로 배치합니다. 바텀시트는 최대 높이 86% 이내에서 스크롤됩니다.
+- M06·M07 경유지 리소스는 `styles_course.xml`, M07·M08 시트 리소스는 `styles_modal.xml`에서 공유합니다. 기존 공통 스타일 및 M01~M05는 수정하지 않았습니다.
 
 ## Conventions
 

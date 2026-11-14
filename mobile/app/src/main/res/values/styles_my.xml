@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cl_my_profile_size">56dp</dimen>
+
+    <dimen name="cl_my_profile_text">20sp</dimen>
+</resources>

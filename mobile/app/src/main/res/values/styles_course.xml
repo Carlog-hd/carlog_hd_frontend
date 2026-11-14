@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cl_course_map_height">260dp</dimen>
+
+    <dimen name="cl_course_card_overlap">-24dp</dimen>
+
+    <dimen name="cl_course_waypoint_size">24dp</dimen>
+
+    <dimen name="cl_course_comment_avatar">28dp</dimen>
+
+    <dimen name="cl_course_spark_height">56dp</dimen>
+
+    <dimen name="cl_course_spark_width">300dp</dimen>
+
+    <dimen name="cl_course_map_width">360dp</dimen>
+
+    <dimen name="cl_course_input_height">48dp</dimen>
+
+    <color name="cl_course_route_glow">#38FF6B3D</color>
+
+    <color name="cl_course_mask_fill">#4D9AA3B2</color>
+
+    <color name="cl_course_mask_stroke">#9AA3B2</color>
+
+    <color name="cl_course_spark_fill">#267B5CFF</color>
+
+    <style
+        name="Widget.Carlog.WaypointMarker"
+        parent="Widget.Carlog.Avatar">
+        <item name="android:layout_width">@dimen/cl_course_waypoint_size</item>
+        <item name="android:layout_height">@dimen/cl_course_waypoint_size</item>
+        <item name="android:textSize">@dimen/cl_text_badge</item>
+    </style>
+
+    <style
+        name="Widget.Carlog.CourseIcon"
+        parent="">
+        <item name="android:layout_width">@dimen/cl_icon_round_size</item>
+        <item name="android:layout_height">@dimen/cl_icon_round_size</item>
+        <item name="android:background">@drawable/bg_icon_round</item>
+        <item name="android:padding">@dimen/cl_space_8</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+
+    <dimen name="cl_course_title_icon_size">12dp</dimen>
+</resources>

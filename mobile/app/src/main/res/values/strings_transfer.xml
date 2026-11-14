@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="transfer_start">출발 · 현재 위치 → 삼척 해변</string>
+
+    <string name="transfer_waypoint_0">출발 경유지 삼척 해변 선택</string>
+
+    <string name="transfer_waypoint_1">장호항 경유지 선택</string>
+
+    <string name="transfer_waypoint_2">죽변 등대 경유지 선택</string>
+
+    <string name="transfer_title">내 차 내비로 보내기</string>
+
+    <string name="transfer_hint">실제 궤적 대신 주요 경유지로 경로를 탐색해요</string>
+
+    <string name="transfer_connection_hint">차량 화면에 안내 시작 알림이 떠요</string>
+
+    <string name="transfer_send">차량으로 전송</string>
+
+    <string name="transfer_sending_title">차량으로 코스를 보내는 중</string>
+
+    <string name="transfer_success_title">차량으로 전송했어요</string>
+
+    <string name="transfer_success_hint">차량 화면에서 ‘안내 시작’을 누르면\n7번 국도 새벽 바닷길 경로로 안내해요</string>
+
+    <string name="transfer_confirm">확인</string>
+</resources>

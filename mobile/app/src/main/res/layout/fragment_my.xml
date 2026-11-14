@@ -1,44 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- M08 MY -->
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- M08 MY. 차량 연결·동기화·개인정보 설정은 고정 예시이며 토글 값은 저장되지 않는다. -->
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_my"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
-
+    android:fillViewport="true"
+    tools:context=".ui.my.MyFragment"
+    tools:theme="@style/Theme.CarlogMobile">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="@dimen/cl_space_20">
-
-        <!-- 화면 제목 -->
-        <LinearLayout style="@style/Widget.Carlog.PageHeader">
-
+        <LinearLayout
+            style="@style/Widget.Carlog.PageHeader">
             <TextView
                 style="@style/Carlog.Text.PageTitle"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/tab_my" />
-
         </LinearLayout>
 
-        <!-- TODO: M08 MY 화면 구성 -->
-        <LinearLayout style="@style/Widget.Carlog.Section">
+        <LinearLayout
+            style="@style/Widget.Carlog.Section">
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    style="@style/Widget.Carlog.CardContent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        style="@style/Widget.Carlog.Avatar"
+                        android:layout_width="@dimen/cl_my_profile_size"
+                        android:layout_height="@dimen/cl_my_profile_size"
+                        android:textSize="@dimen/cl_my_profile_text"
+                        android:backgroundTint="@color/cl_accent"
+                        android:importantForAccessibility="no"
+                        android:text="@string/my_avatar" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/cl_space_14">
+                        <TextView
+                            style="@style/Carlog.Text.SectionTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/my_driver" />
+
+                        <TextView
+                            style="@style/Widget.Carlog.TitleChip.Teal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:drawableStartCompat="@drawable/ic_title_shield"
+                            android:text="@string/my_title_badge" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/Widget.Carlog.Section">
+            <LinearLayout
+                style="@style/Widget.Carlog.SectionHeader">
+                <TextView
+                    style="@style/Carlog.Text.SectionTitle.Fill"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:accessibilityHeading="true"
+                    android:text="@string/my_vehicle_title" />
+            </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <LinearLayout
+                    style="@style/Widget.Carlog.CardContent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/cl_icon_round_size"
+                        android:layout_height="@dimen/cl_icon_round_size"
+                        android:importantForAccessibility="no"
+                        app:srcCompat="@drawable/ic_car"
+                        style="@style/Widget.Carlog.CourseIcon"
+                        android:backgroundTint="@color/cl_chip_blue_bg"
+                        app:tint="@color/cl_blue" />
 
-                <LinearLayout style="@style/Widget.Carlog.CardContent">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/cl_space_12">
+                        <TextView
+                            style="@style/Carlog.Text.Body.Bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/course_connected" />
+
+                        <TextView
+                            style="@style/Carlog.Text.Caption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/cl_space_4"
+                            android:text="@string/my_sync" />
+                    </LinearLayout>
 
                     <TextView
-                        style="@style/Carlog.Text.Caption"
+                        style="@style/Widget.Carlog.TitleChip.Teal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="M08 MY 화면 작업 예정" />
+                        android:text="@string/my_connection_on" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
+        <LinearLayout
+            style="@style/Widget.Carlog.Section">
+            <LinearLayout
+                style="@style/Widget.Carlog.SectionHeader">
+                <TextView
+                    style="@style/Carlog.Text.SectionTitle.Fill"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:accessibilityHeading="true"
+                    android:text="@string/my_privacy_title" />
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        style="@style/Widget.Carlog.ListItem">
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/cl_icon_round_size"
+                            android:layout_height="@dimen/cl_icon_round_size"
+                            android:importantForAccessibility="no"
+                            app:srcCompat="@drawable/ic_lock"
+                            style="@style/Widget.Carlog.CourseIcon"
+                            android:backgroundTint="@color/cl_chip_teal_bg"
+                            app:tint="@color/cl_teal" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:layout_marginStart="@dimen/cl_space_12"
+                            android:layout_marginEnd="@dimen/cl_space_8">
+                            <TextView
+                                style="@style/Carlog.Text.Body.Bold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/my_privacy_0" />
+
+                            <TextView
+                                style="@style/Carlog.Text.Caption"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/cl_space_4"
+                                android:text="@string/my_privacy_hint_0" />
+                        </LinearLayout>
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch_my_privacy_0"
+                            style="@style/Widget.Carlog.Switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:contentDescription="@string/my_privacy_0" />
+                    </LinearLayout>
+
+                    <View
+                        style="@style/Widget.Carlog.Divider" />
+
+                    <LinearLayout
+                        style="@style/Widget.Carlog.ListItem">
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/cl_icon_round_size"
+                            android:layout_height="@dimen/cl_icon_round_size"
+                            android:importantForAccessibility="no"
+                            app:srcCompat="@drawable/ic_pin"
+                            style="@style/Widget.Carlog.CourseIcon"
+                            android:backgroundTint="@color/cl_chip_teal_bg"
+                            app:tint="@color/cl_teal" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:layout_marginStart="@dimen/cl_space_12"
+                            android:layout_marginEnd="@dimen/cl_space_8">
+                            <TextView
+                                style="@style/Carlog.Text.Body.Bold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/my_privacy_1" />
+
+                            <TextView
+                                style="@style/Carlog.Text.Caption"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/cl_space_4"
+                                android:text="@string/my_privacy_hint_1" />
+                        </LinearLayout>
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch_my_privacy_1"
+                            style="@style/Widget.Carlog.Switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:contentDescription="@string/my_privacy_1" />
+                    </LinearLayout>
+
+                    <View
+                        style="@style/Widget.Carlog.Divider" />
+
+                    <LinearLayout
+                        style="@style/Widget.Carlog.ListItem">
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/cl_icon_round_size"
+                            android:layout_height="@dimen/cl_icon_round_size"
+                            android:importantForAccessibility="no"
+                            app:srcCompat="@drawable/ic_eye"
+                            style="@style/Widget.Carlog.CourseIcon"
+                            android:backgroundTint="@color/cl_chip_teal_bg"
+                            app:tint="@color/cl_teal" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:layout_marginStart="@dimen/cl_space_12"
+                            android:layout_marginEnd="@dimen/cl_space_8">
+                            <TextView
+                                style="@style/Carlog.Text.Body.Bold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/my_privacy_2" />
+
+                            <TextView
+                                style="@style/Carlog.Text.Caption"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/cl_space_4"
+                                android:text="@string/my_privacy_hint_2" />
+                        </LinearLayout>
+
+                        <TextView
+                            style="@style/Carlog.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/my_private" />
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

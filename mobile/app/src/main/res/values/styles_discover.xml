@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- M02 발견 화면 전용 색상 / 크기 / 스타일 -->
+<resources>
+    <color name="cl_recommend_end">#22314F</color>
+    <color name="cl_recommend_label">#9FB0CC</color>
+
+    <dimen name="cl_course_thumb_width">116dp</dimen>
+    <dimen name="cl_course_thumb_height">112dp</dimen>
+    <dimen name="cl_text_course_title">14.5sp</dimen>
+    <dimen name="cl_icon_size_info">15dp</dimen>
+
+    <!-- 추천 카드 안의 정보 (장소 / 날씨 / 시간 / 주행가능거리): 아이콘 + 흰 글씨, 눌리지 않음 -->
+    <style name="Widget.Carlog.InfoChip" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipBackgroundColor">@android:color/transparent</item>
+        <item name="chipSurfaceColor">@android:color/transparent</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="chipMinHeight">22dp</item>
+        <item name="chipStartPadding">0dp</item>
+        <item name="chipEndPadding">0dp</item>
+        <item name="iconStartPadding">0dp</item>
+        <item name="iconEndPadding">0dp</item>
+        <item name="textStartPadding">@dimen/cl_space_4</item>
+        <item name="textEndPadding">0dp</item>
+        <item name="chipIconSize">@dimen/cl_icon_size_info</item>
+        <item name="chipIconTint">@color/cl_white</item>
+        <item name="android:textColor">@color/cl_white</item>
+        <item name="android:textSize">@dimen/cl_text_chip</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+        <item name="ensureMinTouchTargetSize">false</item>
+        <item name="rippleColor">@android:color/transparent</item>
+    </style>
+</resources>

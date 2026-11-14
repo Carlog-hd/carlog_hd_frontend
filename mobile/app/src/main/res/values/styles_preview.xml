@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- M05 전용 리소스. 공통 카드, 버튼, 통계 스타일을 그대로 재사용한다. -->
+<resources>
+    <color name="cl_preview_scrim">#730A101C</color>
+    <color name="cl_preview_handle">#D8DCE3</color>
+    <color name="cl_preview_card_stroke">#FFD3C2</color>
+    <color name="cl_preview_route_glow">#38FF6B3D</color>
+    <color name="cl_preview_mask_fill">#4D9AA3B2</color>
+    <color name="cl_preview_mask_stroke">#9AA3B2</color>
+
+    <dimen name="cl_preview_sheet_padding_h">18dp</dimen>
+    <dimen name="cl_preview_sheet_padding_bottom">28dp</dimen>
+    <dimen name="cl_preview_handle_width">40dp</dimen>
+    <dimen name="cl_preview_handle_height">5dp</dimen>
+    <dimen name="cl_preview_handle_radius">3dp</dimen>
+    <dimen name="cl_preview_title_size">19sp</dimen>
+    <dimen name="cl_preview_option_text_size">11.5sp</dimen>
+    <dimen name="cl_preview_option_icon_size">56dp</dimen>
+    <dimen name="cl_preview_option_icon_padding">16dp</dimen>
+    <dimen name="cl_preview_option_icon_radius">18dp</dimen>
+    <dimen name="cl_preview_option_min_height">88dp</dimen>
+    <dimen name="cl_preview_card_stroke_width">2dp</dimen>
+    <dimen name="cl_preview_map_width">360dp</dimen>
+
+    <style name="Widget.Carlog.PreviewSheetContent" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingStart">@dimen/cl_preview_sheet_padding_h</item>
+        <item name="android:paddingEnd">@dimen/cl_preview_sheet_padding_h</item>
+        <item name="android:paddingTop">@dimen/cl_space_10</item>
+        <item name="android:paddingBottom">@dimen/cl_preview_sheet_padding_bottom</item>
+    </style>
+
+    <style name="Carlog.Text.PreviewSheetTitle" parent="Carlog.Text">
+        <item name="android:textSize">@dimen/cl_preview_title_size</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:accessibilityHeading">true</item>
+    </style>
+
+    <style name="Widget.Carlog.PreviewCard" parent="Widget.Carlog.Card">
+        <item name="strokeColor">@color/cl_preview_card_stroke</item>
+        <item name="strokeWidth">@dimen/cl_preview_card_stroke_width</item>
+    </style>
+
+    <style name="Widget.Carlog.PreviewOption" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:minHeight">@dimen/cl_preview_option_min_height</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">top|center_horizontal</item>
+        <item name="android:paddingTop">@dimen/cl_space_4</item>
+        <item name="android:paddingBottom">@dimen/cl_space_4</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="Widget.Carlog.PreviewOptionIcon" parent="">
+        <item name="android:layout_width">@dimen/cl_preview_option_icon_size</item>
+        <item name="android:layout_height">@dimen/cl_preview_option_icon_size</item>
+        <item name="android:padding">@dimen/cl_preview_option_icon_padding</item>
+        <item name="android:background">@drawable/bg_preview_option</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+
+    <style name="Carlog.Text.PreviewOptionLabel" parent="Carlog.Text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/cl_space_6</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/cl_ink2</item>
+        <item name="android:textSize">@dimen/cl_preview_option_text_size</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+</resources>

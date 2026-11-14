@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  최근 로그 한 줄 (데모 기록 탭 .li): 지도 썸네일 + 제목·요약 + 화살표
+  지금은 데모 데이터(동해 해안도로 드라이브)를 고정으로 표시한다.
+  나중에 RecyclerView 아이템으로 그대로 사용할 수 있도록 별도 파일로 분리.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Carlog.ListItem"
+    android:clickable="true"
+    android:focusable="true"
+    tools:ignore="HardcodedText">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="@dimen/cl_log_thumb_width"
+        android:layout_height="@dimen/cl_log_thumb_height"
+        app:cardCornerRadius="@dimen/cl_log_thumb_radius"
+        app:cardElevation="0dp">
+
+        <com.carlog.mobile.ui.common.MapBoxView
+            android:id="@+id/map_box"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/cl_space_12"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_log_name"
+            style="@style/Carlog.Text.Body.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="동해 해안도로 드라이브" />
+
+        <TextView
+            android:id="@+id/tv_log_summary"
+            style="@style/Carlog.Text.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/cl_space_4"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="오늘 · 132.4km · 공유 전 · 휴게소 이어가기 1회" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/cl_icon_size_medium"
+        android:layout_height="@dimen/cl_icon_size_medium"
+        android:layout_marginStart="@dimen/cl_space_8"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_chevron_right"
+        app:tint="@color/cl_ink3" />
+</LinearLayout>

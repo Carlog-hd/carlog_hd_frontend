@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 데모 myFeedCard(): M04의 기본 공개 설정을 적용한 고정 예시. 실제 편집 상태는 아직 연동하지 않는다. -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Carlog.PreviewCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/Widget.Carlog.CardContent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_preview_avatar"
+                style="@style/Widget.Carlog.Avatar"
+                android:backgroundTint="@color/cl_accent"
+                android:importantForAccessibility="no"
+                android:text="@string/preview_author" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/cl_space_10"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:id="@+id/tv_preview_author"
+                        style="@style/Carlog.Text.Body.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/preview_author" />
+
+                    <TextView
+                        android:id="@+id/tv_preview_posted_at"
+                        style="@style/Carlog.Text.Caption"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/cl_space_4"
+                        android:text="@string/preview_posted_at" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_preview_drive_meta"
+                    style="@style/Carlog.Text.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/cl_space_4"
+                    android:text="@string/preview_drive_meta" />
+
+                <TextView
+                    android:id="@+id/tv_preview_title_chip"
+                    style="@style/Widget.Carlog.TitleChip.Teal"
+                    android:layout_marginTop="@dimen/cl_space_8"
+                    android:text="@string/preview_badge"
+                    app:drawableStartCompat="@drawable/ic_title_shield" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.carlog.mobile.ui.common.MapBoxView
+            android:id="@+id/map_preview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/cl_map_height"
+            android:contentDescription="@string/preview_map_description"
+            android:importantForAccessibility="yes"
+            app:mapImage="@drawable/img_map_preview_placeholder"
+            app:mapTagText="@string/preview_drive_title" />
+
+        <include layout="@layout/item_share_preview_stats" />
+
+        <View
+            style="@style/Widget.Carlog.Divider"
+            android:layout_marginTop="@dimen/cl_space_8" />
+
+        <LinearLayout style="@style/Widget.Carlog.FeedActions">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_preview_like"
+                style="@style/Widget.Carlog.FeedAction"
+                android:text="@string/preview_reaction_count"
+                android:contentDescription="@string/preview_like_description"
+                app:icon="@drawable/ic_heart" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_preview_comment"
+                style="@style/Widget.Carlog.FeedAction"
+                android:text="@string/preview_reaction_count"
+                android:contentDescription="@string/preview_comment_description"
+                app:icon="@drawable/ic_chat" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_preview_reshare"
+                style="@style/Widget.Carlog.FeedAction"
+                android:text="@string/preview_reshare"
+                app:icon="@drawable/ic_share" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

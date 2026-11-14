@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:tools="http://schemas.android.com/tools">
+    <string name="dex_smooth_title">부드러운 브레이커</string>
+
+    <string name="dex_smooth_description">급제동 0회로 100km 주행</string>
+
+    <string name="dex_state_new">NEW · 오늘 획득</string>
+
+    <string name="dex_smooth_accessibility">부드러운 브레이커. 오늘 획득. 급제동 0회로 100km 주행</string>
+
+    <string name="dex_coast_title">해안선 수집가</string>
+
+    <string name="dex_coast_accessibility">해안선 수집가. 오늘 획득. 해안도로 구간 3곳 기록</string>
+
+    <string name="dex_cruise_title">크루즈 마스터</string>
+
+    <string name="dex_cruise_accessibility">크루즈 마스터. 오늘 획득. 크루즈 컨트롤 20분 유지</string>
+
+    <string name="dex_dawn_title">새벽 탐험가</string>
+
+    <string name="dex_state_earned">획득</string>
+
+    <string name="dex_dawn_accessibility">새벽 탐험가. 획득. 오전 6시 이전 출발 주행</string>
+
+    <string name="dex_night_title">야경 사냥꾼</string>
+
+    <string name="dex_night_accessibility">야경 사냥꾼. 획득. 야간 도심 전망 코스 완주</string>
+
+    <string name="dex_mount_title">와인딩 러버</string>
+
+    <string name="dex_state_locked">미획득</string>
+
+    <string name="dex_mount_accessibility">와인딩 러버. 미획득. 굽은 산길 30km 이상</string>
+
+    <string name="dex_keeper_title">제한속도 지킴이</string>
+
+    <string name="dex_keeper_accessibility">제한속도 지킴이. 획득. 제한속도 준수율 98% 이상</string>
+
+    <string name="dex_sunset_title">노을 추적자</string>
+
+    <string name="dex_sunset_accessibility">노을 추적자. 미획득. 일몰 시간대 해안 주행</string>
+
+    <string name="dex_marathon_title">로드 마라토너</string>
+
+    <string name="dex_marathon_accessibility">로드 마라토너. 미획득. 한 번에 300km 이상</string>
+
+    <string name="dex_challenge_0">급제동 없는 주행 10회</string>
+
+    <string name="dex_challenge_count_0" tools:ignore="TypographyFractions">8 / 10</string>
+
+    <string name="dex_challenge_progress_0">급제동 없는 주행 10회, 10개 중 8개 달성</string>
+
+    <string name="dex_challenge_1">해안도로 5곳 수집</string>
+
+    <string name="dex_challenge_count_1" tools:ignore="TypographyFractions">4 / 5</string>
+
+    <string name="dex_challenge_progress_1">해안도로 5곳 수집, 5개 중 4개 달성</string>
+
+    <string name="dex_challenge_2">새벽 드라이브 3회</string>
+
+    <string name="dex_challenge_count_2" tools:ignore="TypographyFractions">1 / 3</string>
+
+    <string name="dex_challenge_progress_2">새벽 드라이브 3회, 3개 중 1개 달성</string>
+
+    <string name="dex_title">칭호 도감</string>
+
+    <string name="dex_count">6 / 9</string>
+
+    <string name="dex_count_description">칭호 9개 중 6개 획득</string>
+
+    <string name="dex_challenges_title">진행 중 챌린지</string>
+
+    <string name="dex_close">닫기</string>
+</resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- CARLOG 휴대폰 앱 색상 (carlog-demo.html 휴대폰 화면 기준) -->
+<resources>
+    <!-- 기본 텍스트 / 배경 (:root) -->
+    <color name="cl_ink">#0E1A2B</color>           <!-- 기본 텍스트, Primary 버튼 -->
+    <color name="cl_ink2">#4B5768</color>          <!-- 보조 텍스트 -->
+    <color name="cl_ink3">#8A94A3</color>          <!-- 흐린 텍스트 (.muted) -->
+    <color name="cl_line">#E6E9EF</color>          <!-- 구분선, 테두리 -->
+    <color name="cl_bg">#F3F5F9</color>            <!-- 화면 배경 -->
+    <color name="cl_card">#FFFFFF</color>          <!-- 카드 배경 -->
+    <color name="cl_white">#FFFFFF</color>
+
+    <!-- 포인트 색상 -->
+    <color name="cl_accent">#FF6B3D</color>        <!-- 메인 포인트 (주황), 경로선 -->
+    <color name="cl_accent2">#FFB547</color>
+    <color name="cl_teal">#12B5A5</color>          <!-- 토글 ON -->
+    <color name="cl_blue">#3D6BFF</color>          <!-- 경유지 -->
+    <color name="cl_violet">#7B5CFF</color>        <!-- 모먼트 -->
+
+    <!-- 보조 표면 -->
+    <color name="cl_surface_sub">#E8EBF1</color>   <!-- Sub 버튼, 세그먼트 배경, 아이콘 버튼 눌림 -->
+    <color name="cl_toggle_off">#D3D8E0</color>
+    <color name="cl_toast_bg">#F00E1A2B</color>    <!-- ink 94% -->
+
+    <!-- 어두운 카드 (홈 차량 기록 도착 카드 .arrived) -->
+    <color name="cl_dark_card_start">#1A2740</color>
+    <color name="cl_dark_card_end">#0E1A2B</color>
+    <color name="cl_on_dark_muted">#AFC0DA</color>  <!-- 어두운 배경 위 보조 텍스트 -->
+
+    <!-- 칭호 칩 (.title-chip) -->
+    <color name="cl_chip_accent_bg">#FFF1EB</color>
+    <color name="cl_chip_accent_fg">#D9481C</color>
+    <color name="cl_chip_teal_bg">#E3F7F4</color>
+    <color name="cl_chip_teal_fg">#0B8A7E</color>
+    <color name="cl_chip_violet_bg">#EFEAFF</color>
+    <color name="cl_chip_violet_fg">#5B3FDB</color>
+    <color name="cl_chip_blue_bg">#E8EEFF</color>
+    <color name="cl_chip_blue_fg">#2B50D9</color>
+
+    <!-- 지도 플레이스홀더 -->
+    <color name="cl_map_land">#EEF1EA</color>
+    <color name="cl_map_sea">#CFE5F4</color>
+    <color name="cl_map_road">#FFFFFF</color>
+    <color name="cl_map_road2">#DCE0E6</color>
+    <color name="cl_map_contour">#DDE6D4</color>
+    <color name="cl_map_park">#DCEBD2</color>
+    <color name="cl_map_ghost">#B9C0CC</color>     <!-- 잘라낸 구간 점선 -->
+    <color name="cl_map_plan">#7FA2FF</color>      <!-- 계획 경로 -->
+</resources>

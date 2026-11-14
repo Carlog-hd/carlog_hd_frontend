@@ -53,18 +53,47 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 
 ## 실행 화면
 
-아래 캡처는 Pleos Connect 에뮬레이터에서 CARLOG를 실행한 화면입니다. 창 크기와 일부 UI는 개발 시점에 따라 다를 수 있습니다.
 
-### 홈과 코스 상세
+### 차량 앱
+
+아래 화면은 Pleos Connect 에뮬레이터에서 실행한 차량용 CARLOG 프로토타입입니다.
 
 <table>
   <tr>
-    <th>홈 대시보드</th>
-    <th>코스 상세와 경유지</th>
+    <td width="50%">
+      <strong>홈 대시보드</strong><br>
+      <img src="docs/screenshots/home-dashboard.png" alt="CARLOG 홈 대시보드" width="100%">
+      <p>목적지 안내를 시작하고 최근 주행 수와 칭호, 휴대폰에서 받은 코스 진입점을 확인합니다.</p>
+    </td>
+    <td width="50%">
+      <strong>주행 화면</strong><br>
+      <img src="docs/screenshots/drive-session.png" alt="CARLOG 주행 화면" width="100%">
+      <p>다음 회전 안내와 남은 거리·도착 예정 시각, 주행 시간·거리를 보여주며 일시 정지 또는 도착 처리를 할 수 있습니다.</p>
+    </td>
   </tr>
   <tr>
-    <td><img src="docs/screenshots/home-dashboard.png" alt="CARLOG 홈 대시보드" width="480"></td>
-    <td><img src="docs/screenshots/course-detail.png" alt="CARLOG 코스 상세 화면" width="480"></td>
+    <td>
+      <strong>발견 · 코스 상세</strong><br>
+      <img src="docs/screenshots/course-detail.png" alt="CARLOG 코스 상세 화면" width="100%">
+      <p>추천 코스의 지도와 공개 경유지를 확인하고, 경유지 사이 거리·시간을 살펴 저장·좋아요·안내 시작을 할 수 있습니다.</p>
+    </td>
+    <td>
+      <strong>도감 · 칭호</strong><br>
+      <img src="docs/screenshots/titles-dex.png" alt="CARLOG 도감 칭호 화면" width="100%">
+      <p>차량 이벤트와 주행 경험에 연결된 칭호를 모아 보고, 획득 여부를 확인합니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>MY · 이번 달 요약</strong><br>
+      <img src="docs/screenshots/my-month-summary.png" alt="CARLOG MY 이번 달 요약 화면" width="100%">
+      <p>이번 달 주행 횟수·거리·평균 속도·받은 좋아요 수와 휴대폰 연동 및 기록 설정을 확인합니다.</p>
+    </td>
+    <td>
+      <strong>MY · 나의 로그</strong><br>
+      <img src="docs/screenshots/my-log-list.png" alt="CARLOG MY 주행 로그 목록" width="100%">
+      <p>저장된 주행을 거리·시간과 좋아요 수로 훑어보고, 항목을 선택해 개별 로그 상세를 엽니다.</p>
+    </td>
   </tr>
 </table>
 
@@ -81,6 +110,100 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
   <img src="docs/screenshots/pleos-emulator-map-loading.png" alt="Pleos Connect 에뮬레이터가 지도 정보를 불러오는 화면" width="800">
 </details>
 
+### 휴대폰 앱
+
+차량에서 기록된 드라이브 로그를 휴대폰에서 확인하고, 공개 범위를 정해 공유하는 화면입니다. (Android 에뮬레이터, 1080×2400)
+
+<table>
+  <tr>
+    <td width="50%">
+      <strong>홈 · 드라이브 피드</strong><br>
+      <img src="mobile/app/docs/screenshots/m01-home.png" alt="CARLOG 휴대폰 홈과 드라이브 피드" width="280">
+      <p>최근 주행 요약과 친구들의 드라이브 피드를 확인합니다.</p>
+    </td>
+    <td width="50%">
+      <strong>발견 · 추천 코스</strong><br>
+      <img src="mobile/app/docs/screenshots/m02-discover.png" alt="CARLOG 휴대폰 발견과 추천 코스" width="280">
+      <p>추천 코스와 다른 운전자가 실제로 달린 기록을 살펴봅니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>내 기록</strong><br>
+      <img src="mobile/app/docs/screenshots/m03-logs.png" alt="CARLOG 휴대폰 내 기록 목록" width="280">
+      <p>내 주행 기록과 저장한 코스를 목록으로 확인합니다.</p>
+    </td>
+    <td>
+      <strong>기록 상세</strong><br>
+      <img src="mobile/app/docs/screenshots/m03-log-detail.png" alt="CARLOG 휴대폰 주행 기록 상세" width="280">
+      <p>주행 경로와 통계, 주요 모먼트와 획득한 칭호를 확인합니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>공유 전 편집</strong><br>
+      <img src="mobile/app/docs/screenshots/m04-share-edit.png" alt="CARLOG 휴대폰 공유 전 편집" width="280">
+      <p>공개 범위와 항목, 출발·도착지 숨김과 구간 자르기 설정을 보여줍니다.</p>
+    </td>
+    <td>
+      <strong>피드 미리보기</strong><br>
+      <img src="mobile/app/docs/screenshots/m05-preview.png" alt="CARLOG 휴대폰 피드 미리보기" width="280">
+      <p>친구에게 보일 공개 지도와 주행 통계, 칭호를 미리 확인합니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>공유 수단</strong><br>
+      <img src="mobile/app/docs/screenshots/m05-options.png" alt="CARLOG 휴대폰 공유 수단" width="280">
+      <p>피드 게시, 링크 복사, 메시지와 이미지 카드 공유 항목을 보여줍니다.</p>
+    </td>
+    <td>
+      <strong>친구 로그 상세</strong><br>
+      <img src="mobile/app/docs/screenshots/m06-friend.png" alt="CARLOG 휴대폰 친구 로그 상세" width="280">
+      <p>친구의 공개 코스와 주행 통계, 속도 변화와 경유지를 살펴봅니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>차량 전송 확인</strong><br>
+      <img src="mobile/app/docs/screenshots/m07-send.png" alt="CARLOG 휴대폰 차량 전송 확인" width="280">
+      <p>차량으로 보낼 코스의 경유지와 목적지, 연결 차량을 확인합니다.</p>
+    </td>
+    <td>
+      <strong>차량 전송 중</strong><br>
+      <img src="mobile/app/docs/screenshots/m07-sending.png" alt="CARLOG 휴대폰 차량 전송 진행 상태" width="280">
+      <p>차량으로 코스를 보내는 동안 표시할 진행 상태를 보여줍니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>차량 전송 완료</strong><br>
+      <img src="mobile/app/docs/screenshots/m07-success.png" alt="CARLOG 휴대폰 차량 전송 완료 안내" width="280">
+      <p>전송 완료 메시지와 차량에서 안내를 시작하는 방법을 보여줍니다.</p>
+    </td>
+    <td>
+      <strong>도감 · 칭호</strong><br>
+      <img src="mobile/app/docs/screenshots/m08-dex.png" alt="CARLOG 휴대폰 칭호 도감" width="280">
+      <p>칭호의 획득 여부와 새 칭호, 진행 중인 챌린지를 확인합니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>칭호 상세</strong><br>
+      <img src="mobile/app/docs/screenshots/m08-title.png" alt="CARLOG 휴대폰 칭호 상세" width="280">
+      <p>칭호의 배지와 이름, 획득 조건을 자세히 살펴봅니다.</p>
+    </td>
+    <td>
+      <strong>MY · 프로필과 설정</strong><br>
+      <img src="mobile/app/docs/screenshots/m08-my.png" alt="CARLOG 휴대폰 MY 프로필과 설정" width="280">
+      <p>내 프로필과 대표 칭호, 연결 차량과 개인정보 기본값을 확인합니다.</p>
+    </td>
+  </tr>
+</table>
+
+> 휴대폰 앱은 디자인 목업 단계로, 데이터 연동 없이 데모 데이터를 표시합니다. 자세한 내용은 [`mobile/README.md`](mobile/README.md)를 참고하세요.
+
+
 ## 기술 구성
 
 | 구분 | 사용 기술 |
@@ -96,7 +219,8 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 ```text
 carlog_hd_frontend/
 ├── ivi/               # 차량 인포테인먼트(IVI) 앱 Android 프로젝트
-├── apk/               # 공모전 제출용 release APK
+├── mobile/            # 휴대폰 앱 Android 프로젝트 (mobile/README.md 참고)
+├── apk/               # 공모전 제출용 release APK (차량 앱·휴대폰 앱)
 └── carlog-demo.html   # 차량 IVI·휴대전화 화면 인터랙티브 데모
 ```
 
@@ -115,7 +239,10 @@ IVI 앱 소스는 `ivi/app/src/main/java/com/example/carlog_hd_frontend/` 아래
 
 ## 실행 방법
 
-> 빌드 없이 설치하려면 [`apk/CarLog_CARLOG_release.apk`](apk/CarLog_CARLOG_release.apk)를 사용하세요.
+> 빌드 없이 설치하려면 아래 release APK를 사용하세요.
+>
+> - 차량(IVI) 앱: [`apk/Vrrr_Carlog_ivi_release.apk`](apk/Vrrr_Carlog_ivi_release.apk)
+> - 휴대폰 앱: [`apk/Vrrr_Carlog_mobile_release.apk`](apk/Vrrr_Carlog_mobile_release.apk)
 
 ### 개발 환경
 
@@ -129,6 +256,8 @@ IVI 앱 소스는 `ivi/app/src/main/java/com/example/carlog_hd_frontend/` 아래
 1. 저장소를 clone하고 Android Studio에서 `ivi` 폴더를 엽니다.
 2. JDK 17과 Android SDK Platform 34를 설정합니다.
 3. Gradle 동기화가 끝나면 에뮬레이터를 선택하고 `app` 구성을 실행합니다.
+
+> 휴대폰 앱은 별도 Gradle 프로젝트입니다. `mobile` 폴더를 열어 실행하며, 자세한 방법은 [`mobile/README.md`](mobile/README.md)를 참고하세요.
 
 ### 명령줄 빌드
 

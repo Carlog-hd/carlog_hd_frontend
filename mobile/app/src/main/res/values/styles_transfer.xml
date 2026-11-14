@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cl_transfer_map_height">140dp</dimen>
+
+    <dimen name="cl_transfer_status_size">72dp</dimen>
+
+    <dimen name="cl_transfer_status_padding">18dp</dimen>
+
+    <dimen name="cl_transfer_status_radius">24dp</dimen>
+
+    <dimen name="cl_transfer_dot_size">7dp</dimen>
+
+    <color name="cl_transfer_status_bg">#EEF2FF</color>
+</resources>

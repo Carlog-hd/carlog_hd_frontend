@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  M02 발견
+  - 지금 상황에 맞춘 추천 카드 (장소 / 날씨 / 시간 / 주행가능거리)
+  - 태그 필터 (전체 / 해안 / 산길 / 야경)
+  - 친구가 실제로 달린 코스 목록
+-->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/cl_space_20">
+
+        <!-- 화면 제목 -->
+        <LinearLayout style="@style/Widget.Carlog.PageHeader">
+
+            <TextView
+                style="@style/Carlog.Text.PageTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/discover_title" />
+        </LinearLayout>
+
+        <!-- 지금 상황에 맞춘 추천 -->
+        <LinearLayout style="@style/Widget.Carlog.Section">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    style="@style/Widget.Carlog.CardContent"
+                    android:background="@drawable/bg_recommend">
+
+                    <TextView
+                        style="@style/Carlog.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/discover_recommend_label"
+                        android:textColor="@color/cl_recommend_label" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/cl_space_8"
+                        app:chipSpacingHorizontal="@dimen/cl_space_14"
+                        app:chipSpacingVertical="@dimen/cl_space_4">
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.Carlog.InfoChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="강릉"
+                            app:chipIcon="@drawable/ic_pin" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.Carlog.InfoChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="맑음 14°"
+                            app:chipIcon="@drawable/ic_sun" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.Carlog.InfoChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="오후 4시"
+                            app:chipIcon="@drawable/ic_clock" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.Carlog.InfoChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="주행가능 320km"
+                            app:chipIcon="@drawable/ic_gauge" />
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <TextView
+                        android:id="@+id/tv_recommend_message"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/cl_space_10"
+                        android:text="해 지기 전 달릴 수 있는 해안 코스를 골랐어요"
+                        android:textColor="@color/cl_white"
+                        android:textSize="@dimen/cl_text_button"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <!-- 태그 필터 (.chips): 가로 스크롤 -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/cl_screen_padding"
+            android:paddingEnd="@dimen/cl_screen_padding"
+            android:paddingBottom="@dimen/cl_space_12"
+            android:scrollbars="none">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:checkedChip="@id/chip_filter_all"
+                app:chipSpacingHorizontal="@dimen/cl_space_6"
+                app:selectionRequired="true"
+                app:singleLine="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_filter_all"
+                    style="@style/Widget.Carlog.FilterChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/discover_filter_all" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_filter_coast"
+                    style="@style/Widget.Carlog.FilterChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/discover_filter_coast" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_filter_mountain"
+                    style="@style/Widget.Carlog.FilterChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/discover_filter_mountain" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_filter_night"
+                    style="@style/Widget.Carlog.FilterChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/discover_filter_night" />
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <!-- 코스 목록: 지금은 같은 데모 카드를 반복 표시. 데이터 연동 시 RecyclerView + item_course_card로 교체 -->
+        <LinearLayout style="@style/Widget.Carlog.Section">
+
+            <include
+                android:id="@+id/course_card_1"
+                layout="@layout/item_course_card" />
+
+            <include
+                android:id="@+id/course_card_2"
+                layout="@layout/item_course_card" />
+
+            <include
+                android:id="@+id/course_card_3"
+                layout="@layout/item_course_card" />
+
+            <include
+                android:id="@+id/course_card_4"
+                layout="@layout/item_course_card" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  [템플릿] 탭 첫 화면 (홈 / 발견 / 기록 / 도감 / MY)
+  새 화면을 만들 때 이 파일을 복사해서 시작하세요. (이 파일 자체는 화면에 쓰이지 않음)
+  구성: 큰 제목 + 오른쪽 아이콘 → 섹션(제목 줄 + 카드) 반복
+-->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:ignore="UnusedResources,HardcodedText">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/cl_space_20">
+
+        <!-- 화면 제목 (.phead) -->
+        <LinearLayout style="@style/Widget.Carlog.PageHeader">
+
+            <TextView
+                style="@style/Carlog.Text.PageTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="화면 제목" />
+
+            <ImageButton
+                style="@style/Widget.Carlog.IconButton"
+                android:contentDescription="@string/cd_notifications"
+                android:src="@drawable/ic_bell" />
+
+        </LinearLayout>
+
+        <!-- 섹션 (.sec) -->
+        <LinearLayout style="@style/Widget.Carlog.Section">
+
+            <!-- 섹션 제목 줄 (.sec h2) -->
+            <LinearLayout style="@style/Widget.Carlog.SectionHeader">
+
+                <TextView
+                    style="@style/Carlog.Text.SectionTitle.Fill"
+                    android:text="섹션 제목" />
+
+                <TextView
+                    style="@style/Carlog.Text.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전체 보기" />
+
+            </LinearLayout>
+
+            <!-- 카드 (.card + .pad) -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout style="@style/Widget.Carlog.CardContent">
+
+                    <TextView
+                        style="@style/Carlog.Text.Body.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="카드 제목" />
+
+                    <TextView
+                        style="@style/Carlog.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/cl_space_4"
+                        android:text="보조 설명" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

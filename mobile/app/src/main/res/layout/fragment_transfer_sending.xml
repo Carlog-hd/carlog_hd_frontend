@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 정적 바텀시트 목업. 최대 높이 86%, 내용 스크롤만 제공하며 표시·닫기·전송 동작은 미연결. -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.course.TransferSendingFragment"
+    tools:theme="@style/Theme.CarlogMobile">
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/cl_modal_scrim"
+        android:importantForAccessibility="no"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_modal_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.14" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/guideline_modal_top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_fragment_transfer_sending"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_sheet"
+            android:scrollbars="none">
+            <LinearLayout
+                style="@style/Widget.Carlog.ModalContent">
+                <include
+                    layout="@layout/view_modal_handle" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/cl_space_20"
+                    android:paddingBottom="@dimen/cl_space_8">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/cl_transfer_status_size"
+                        android:layout_height="@dimen/cl_transfer_status_size"
+                        android:importantForAccessibility="no"
+                        app:srcCompat="@drawable/ic_car"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/bg_transfer_status"
+                        android:padding="@dimen/cl_transfer_status_padding"
+                        android:backgroundTint="@color/cl_transfer_status_bg"
+                        app:tint="@color/cl_blue" />
+
+                    <TextView
+                        style="@style/Carlog.Text.SectionTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/cl_space_10"
+                        android:accessibilityHeading="true"
+                        android:text="@string/transfer_sending_title" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/cl_space_14">
+                        <View
+                            android:layout_width="@dimen/cl_transfer_dot_size"
+                            android:layout_height="@dimen/cl_transfer_dot_size"
+                            android:background="@drawable/bg_circle"
+                            android:backgroundTint="@color/cl_blue"
+                            android:alpha="0.35"
+                            android:layout_marginStart="@dimen/cl_space_4"
+                            android:layout_marginEnd="@dimen/cl_space_4"
+                            android:importantForAccessibility="no" />
+
+                        <View
+                            android:layout_width="@dimen/cl_transfer_dot_size"
+                            android:layout_height="@dimen/cl_transfer_dot_size"
+                            android:background="@drawable/bg_circle"
+                            android:backgroundTint="@color/cl_blue"
+                            android:alpha="1"
+                            android:layout_marginStart="@dimen/cl_space_4"
+                            android:layout_marginEnd="@dimen/cl_space_4"
+                            android:importantForAccessibility="no" />
+
+                        <View
+                            android:layout_width="@dimen/cl_transfer_dot_size"
+                            android:layout_height="@dimen/cl_transfer_dot_size"
+                            android:background="@drawable/bg_circle"
+                            android:backgroundTint="@color/cl_blue"
+                            android:alpha="0.35"
+                            android:layout_marginStart="@dimen/cl_space_4"
+                            android:layout_marginEnd="@dimen/cl_space_4"
+                            android:importantForAccessibility="no" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

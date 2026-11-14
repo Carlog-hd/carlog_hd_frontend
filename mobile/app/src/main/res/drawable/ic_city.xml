@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="@dimen/cl_icon_size"
+    android:height="@dimen/cl_icon_size"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:pathData="M3,21 V9 H9 V21 M9,21 V4 H16 V21 M16,21 V12 H21 V21"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@color/cl_ink"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

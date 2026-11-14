@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- M04 공유 편집 화면 문구 -->
+<resources>
+    <string name="share_edit_title">공유 전 편집</string>
+    <string name="share_edit_hint">공개되는 구간 약 <b>106km</b> · 회색 점선은 공개되지 않아요</string>
+
+    <string name="share_edit_privacy_title">개인정보 보호</string>
+    <string name="share_edit_hide_start">출발지 숨기기</string>
+    <string name="share_edit_hide_end">도착지 숨기기</string>
+
+    <string name="share_edit_trim_title">코스 구간 잘라내기</string>
+    <string name="share_edit_trim_sub">공개하지 않을 구간</string>
+    <string name="share_edit_trim_front">앞부분 잘라내기</string>
+    <string name="share_edit_trim_back">뒷부분 잘라내기</string>
+
+    <string name="share_edit_items_title">공개할 정보</string>
+    <string name="share_item_distance">거리</string>
+    <string name="share_item_time">소요시간</string>
+    <string name="share_item_avg_speed">평균속도</string>
+    <string name="share_item_stops">정차 정보</string>
+    <string name="share_item_score">안전점수</string>
+    <string name="share_item_titles">칭호</string>
+    <string name="share_item_weather">시간대·날씨</string>
+    <string name="share_item_moments">모먼트</string>
+
+    <string name="share_edit_scope_title">공개 범위</string>
+    <string name="share_scope_me">나만</string>
+    <string name="share_scope_friends">친구</string>
+    <string name="share_scope_link">링크</string>
+    <string name="share_scope_all">전체</string>
+
+    <string name="share_edit_preview">미리보기</string>
+    <string name="share_edit_share">공유하기</string>
+    <string name="cd_trim_front">앞부분 잘라낼 거리</string>
+    <string name="cd_trim_back">뒷부분 잘라낼 거리</string>
+</resources>

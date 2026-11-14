@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- CARLOG 휴대폰 앱 크기 / 여백 (carlog-demo.html 기준) -->
+<resources>
+    <!-- 간격 -->
+    <dimen name="cl_space_4">4dp</dimen>
+    <dimen name="cl_space_6">6dp</dimen>
+    <dimen name="cl_space_8">8dp</dimen>
+    <dimen name="cl_space_10">10dp</dimen>
+    <dimen name="cl_space_12">12dp</dimen>
+    <dimen name="cl_space_14">14dp</dimen>
+    <dimen name="cl_space_16">16dp</dimen>
+    <dimen name="cl_space_20">20dp</dimen>
+
+    <!-- 화면 / 섹션 (.sec, .phead) -->
+    <dimen name="cl_screen_padding">16dp</dimen>
+    <dimen name="cl_header_padding">20dp</dimen>
+
+    <!-- 카드 (.card, .pad) -->
+    <dimen name="cl_card_radius">20dp</dimen>
+    <dimen name="cl_card_padding_h">16dp</dimen>
+    <dimen name="cl_card_padding_v">14dp</dimen>
+    <dimen name="cl_card_elevation">1dp</dimen>
+    <dimen name="cl_hero_card_radius">22dp</dimen>   <!-- 강조 카드 (.arrived) -->
+
+    <!-- 버튼 (.btn, .btn.sm) -->
+    <dimen name="cl_button_height">52dp</dimen>
+    <dimen name="cl_button_radius">16dp</dimen>
+    <dimen name="cl_button_medium_height">44dp</dimen>
+    <dimen name="cl_button_small_height">38dp</dimen>
+    <dimen name="cl_button_small_radius">12dp</dimen>
+    <dimen name="cl_button_small_padding_h">14dp</dimen>
+
+    <!-- 아이콘 (.iconbtn, .ico-round, .av) -->
+    <dimen name="cl_icon_size">24dp</dimen>
+    <dimen name="cl_icon_size_medium">18dp</dimen>
+    <dimen name="cl_icon_size_tiny">14dp</dimen>
+    <dimen name="cl_icon_size_small">20dp</dimen>
+    <dimen name="cl_icon_size_action">17dp</dimen>
+    <dimen name="cl_icon_button_size">40dp</dimen>
+    <dimen name="cl_icon_round_size">36dp</dimen>
+    <dimen name="cl_icon_radius">12dp</dimen>
+    <dimen name="cl_avatar_size">34dp</dimen>
+
+    <!-- 칩 (.chip, .title-chip) -->
+    <dimen name="cl_chip_height">34dp</dimen>
+    <dimen name="cl_chip_padding_h">14dp</dimen>
+    <dimen name="cl_title_chip_padding_h">8dp</dimen>
+    <dimen name="cl_title_chip_padding_v">3dp</dimen>
+    <dimen name="cl_pill_radius">100dp</dimen>
+
+    <!-- 리스트 아이템 (.li) -->
+    <dimen name="cl_list_item_padding_h">16dp</dimen>
+    <dimen name="cl_list_item_padding_v">14dp</dimen>
+    <dimen name="cl_divider">1dp</dimen>
+
+    <!-- 지도 박스 (.mapbox) -->
+    <dimen name="cl_map_height">180dp</dimen>
+
+    <!-- 하단 탭 / 시트 / 토스트 -->
+    <dimen name="cl_bottom_nav_height">64dp</dimen>
+    <dimen name="cl_sheet_radius">28dp</dimen>
+    <dimen name="cl_toast_radius">14dp</dimen>
+
+    <!-- 글자 크기 -->
+    <dimen name="cl_text_display">30sp</dimen>       <!-- 큰 숫자 (.ch1) -->
+    <dimen name="cl_text_page_title">26sp</dimen>    <!-- 화면 제목 (.phead h1) -->
+    <dimen name="cl_text_logo">22sp</dimen>
+    <dimen name="cl_text_card_title">18sp</dimen>    <!-- 강조 카드 제목 (.arrived h3) -->
+    <dimen name="cl_text_section">17sp</dimen>       <!-- 섹션 제목 (.sec h2) -->
+    <dimen name="cl_text_nav_title">16sp</dimen>     <!-- 상단바 제목 (.navbar .t) -->
+    <dimen name="cl_text_stat">16sp</dimen>          <!-- 통계 값 (.stat b) -->
+    <dimen name="cl_text_button">15sp</dimen>
+    <dimen name="cl_text_body">14sp</dimen>
+    <dimen name="cl_text_chip">13sp</dimen>
+    <dimen name="cl_text_action">12.5sp</dimen>      <!-- 피드 버튼, 보조 설명 -->
+    <dimen name="cl_text_caption">12sp</dimen>       <!-- .muted -->
+    <dimen name="cl_text_badge">11sp</dimen>         <!-- 칭호 칩 -->
+    <dimen name="cl_text_small">10.5sp</dimen>       <!-- 통계 라벨, 탭 라벨 -->
+
+    <!-- 줄 높이 (한글/숫자 혼합 시 높이 통일) -->
+    <dimen name="cl_line_height_stat">20sp</dimen>
+    <dimen name="cl_line_height_small">14sp</dimen>
+</resources>

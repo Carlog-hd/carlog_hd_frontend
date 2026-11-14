@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- M08 칭호 도감. 최근 주행 이후 6개 획득·3개 미획득, 새 칭호 3개의 고정 예시. -->
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_dex"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ui.dex.DexFragment"
+    tools:theme="@style/Theme.CarlogMobile">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/cl_space_20">
+        <LinearLayout
+            style="@style/Widget.Carlog.PageHeader">
+            <TextView
+                style="@style/Carlog.Text.PageTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dex_title" />
+
+            <TextView
+                style="@style/Carlog.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/dex_count_description"
+                android:text="@string/dex_count" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/Widget.Carlog.Section">
+            <GridLayout
+                android:id="@+id/grid_dex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="@integer/cl_dex_columns"
+                android:alignmentMode="alignMargins"
+                android:useDefaultMargins="false">
+                <include
+                    layout="@layout/item_dex_smooth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="@dimen/cl_dex_card_gap"
+                    android:layout_gravity="fill_horizontal" />
+
+                <include
+                    layout="@layout/item_dex_coast"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="@dimen/cl_dex_card_gap"
+                    android:layout_gravity="fill_horizontal" />
+
+                <include
+                    layout="@layout/item_dex_cruise"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="@dimen/cl_dex_card_gap"
+                    android:layout_gravity="fill_horizontal" />
+
+                <include
+                    layout="@layout/item_dex_dawn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="@dimen/cl_dex_card_gap"
+                    android:layout_gravity="fill_horizontal" />
+
+                <include
+                    layout="@layout/item_dex_night"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="@dimen/cl_dex_card_gap"
+                    android:layout_gravity="fill_horizontal" />
+
+                <include
+                    layout="@layout/item_dex_mount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="@dimen/cl_dex_card_gap"
+                    android:layout_gravity="fill_horizontal" />
+
+                <include
+                    layout="@layout/item_dex_keeper"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="@dimen/cl_dex_card_gap"
+                    android:layout_gravity="fill_horizontal" />
+
+                <include
+                    layout="@layout/item_dex_sunset"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="@dimen/cl_dex_card_gap"
+                    android:layout_gravity="fill_horizontal" />
+
+                <include
+                    layout="@layout/item_dex_marathon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="@dimen/cl_dex_card_gap"
+                    android:layout_gravity="fill_horizontal" />
+            </GridLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/Widget.Carlog.Section">
+            <LinearLayout
+                style="@style/Widget.Carlog.SectionHeader">
+                <TextView
+                    style="@style/Carlog.Text.SectionTitle.Fill"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:accessibilityHeading="true"
+                    android:text="@string/dex_challenges_title" />
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/cl_space_8">
+                <LinearLayout
+                    style="@style/Widget.Carlog.CardContent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        <TextView
+                            style="@style/Carlog.Text.Body.Bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/dex_challenge_0" />
+
+                        <TextView
+                            style="@style/Carlog.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/cl_space_8"
+                            android:text="@string/dex_challenge_count_0" />
+                    </LinearLayout>
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress_challenge_0"
+                        style="@style/Widget.Carlog.DexProgress"
+                        android:max="10"
+                        android:progress="8"
+                        android:contentDescription="@string/dex_challenge_progress_0" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/cl_space_8">
+                <LinearLayout
+                    style="@style/Widget.Carlog.CardContent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        <TextView
+                            style="@style/Carlog.Text.Body.Bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/dex_challenge_1" />
+
+                        <TextView
+                            style="@style/Carlog.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/cl_space_8"
+                            android:text="@string/dex_challenge_count_1" />
+                    </LinearLayout>
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress_challenge_1"
+                        style="@style/Widget.Carlog.DexProgress"
+                        android:max="5"
+                        android:progress="4"
+                        android:contentDescription="@string/dex_challenge_progress_1" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/cl_space_8">
+                <LinearLayout
+                    style="@style/Widget.Carlog.CardContent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        <TextView
+                            style="@style/Carlog.Text.Body.Bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/dex_challenge_2" />
+
+                        <TextView
+                            style="@style/Carlog.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/cl_space_8"
+                            android:text="@string/dex_challenge_count_2" />
+                    </LinearLayout>
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress_challenge_2"
+                        style="@style/Widget.Carlog.DexProgress"
+                        android:max="3"
+                        android:progress="1"
+                        android:contentDescription="@string/dex_challenge_progress_2" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

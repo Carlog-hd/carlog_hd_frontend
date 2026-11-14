@@ -29,7 +29,7 @@
                     android:layout_height="390dp" android:layout_marginTop="14dp"
                     android:background="@drawable/bg_recent_cover">
                     <ImageView android:id="@+id/resultPreviewImage" android:layout_width="match_parent"
-                        android:layout_height="match_parent" android:scaleType="centerCrop"
+                        android:layout_height="match_parent" android:scaleType="fitCenter"
                         android:visibility="gone" />
                     <VideoView android:id="@+id/resultPreviewVideo" android:layout_width="match_parent"
                         android:layout_height="match_parent" android:visibility="gone" />

@@ -48,6 +48,8 @@ interface DriveActions {
 /** Home screen with a runnable, local-only guidance simulation. */
 class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val featuredStory = DriveHistoryStore.featuredBanpoStory(requireContext())
+        if (featuredStory != null) DriveLogContentStore.seedBanpoPhotos(requireContext(), featuredStory.id)
         val records = DriveHistoryStore.all(requireContext())
         val latest = records.firstOrNull()
         view.findViewById<TextView>(R.id.statSavedDrives).text = records.size.toString()
@@ -58,7 +60,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         if (latest != null) {
             view.findViewById<TextView>(R.id.recentBadge).text =
                 java.text.SimpleDateFormat("M월의 드라이브", Locale.KOREAN).format(java.util.Date(latest.completedAt))
-            view.findViewById<TextView>(R.id.recentTitle).text = "${latest.destination}까지의 드라이브"
+            view.findViewById<TextView>(R.id.recentTitle).text =
+                if (latest.destination.endsWith("드라이브")) latest.destination
+                else "${latest.destination}까지의 드라이브"
             view.findViewById<TextView>(R.id.recentMeta).text = getString(
                 R.string.home_recent_meta, latest.destination, latest.distanceKm, latest.durationSeconds / 60,
             )
@@ -99,6 +103,8 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
         logTab.setOnClickListener { showStudio(false) }
         studioTab.setOnClickListener { showStudio(true) }
         showStudio(false)
+        val featuredStory = DriveHistoryStore.featuredBanpoStory(requireContext())
+        if (featuredStory != null) DriveLogContentStore.seedBanpoPhotos(requireContext(), featuredStory.id)
         val records = DriveHistoryStore.all(requireContext())
         val groups = records.groupBy { it.destination }
         val dateFormat = java.text.SimpleDateFormat("M.d HH:mm", Locale.KOREA)
@@ -108,8 +114,9 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
             (activity as? DriveActions)?.startDemoDrive()
         }
         val latest = records.firstOrNull()
+        val studioRecord = featuredStory ?: latest
         val openStudioLog = view.findViewById<MaterialButton>(R.id.btnOpenStudioLog)
-        openStudioLog.isEnabled = latest != null
+        openStudioLog.isEnabled = studioRecord != null
         if (latest != null) {
             view.findViewById<View>(R.id.recordLatestSummary).visibility = View.VISIBLE
             view.findViewById<TextView>(R.id.recordLatestDestination).text = latest.destination
@@ -129,11 +136,13 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
             view.findViewById<View>(R.id.btnOpenLatestRecord).setOnClickListener {
                 (activity as? DriveActions)?.showDriveLog(latest)
             }
-            val clips = DriveLogContentStore.clips(requireContext(), latest.id)
+        }
+        if (studioRecord != null) {
+            val clips = DriveLogContentStore.clips(requireContext(), studioRecord.id)
             view.findViewById<TextView>(R.id.studioJournal).text =
-                DriveLogContentStore.caption(requireContext(), latest.id)
+                DriveLogContentStore.caption(requireContext(), studioRecord.id)
                     ?: getString(R.string.record_studio_caption_empty)
-            view.findViewById<TextView>(R.id.studioSlideTitle).text = latest.destination
+            view.findViewById<TextView>(R.id.studioSlideTitle).text = studioRecord.destination
             view.findViewById<TextView>(R.id.studioSlideLabel).text = if (clips.isEmpty()) {
                 getString(R.string.record_media_empty_status)
             } else {
@@ -154,7 +163,7 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
                     visibility = View.VISIBLE
                 }
             }
-            openStudioLog.setOnClickListener { (activity as? DriveActions)?.showDriveLog(latest) }
+            openStudioLog.setOnClickListener { (activity as? DriveActions)?.showDriveLog(studioRecord) }
         }
         val list = view.findViewById<LinearLayout>(R.id.recordList)
         if (records.isEmpty()) {
@@ -914,7 +923,9 @@ class TripResultFragment : Fragment(R.layout.fragment_trip_story) {
                 courseId = args.getString(ARG_COURSE_ID),
             )
         view.findViewById<com.example.carlog_hd_frontend.ui.map.RouteMapView>(R.id.resultRouteMap).apply {
-            route = DemoCourses.byId(record.courseId)?.route ?: CarlogRoutes.MINE
+            route = DemoCourses.byId(record.courseId)?.route
+                ?: if (record.destination == DriveHistoryStore.BANPO_DESTINATION) CarlogRoutes.NIGHT
+                else CarlogRoutes.MINE
             progress = 1f
             showTrack = true
             showCar = false

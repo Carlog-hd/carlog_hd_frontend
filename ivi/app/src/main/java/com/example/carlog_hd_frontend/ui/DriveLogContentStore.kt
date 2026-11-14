@@ -4,6 +4,7 @@ import android.content.Context
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.webkit.MimeTypeMap
+import com.example.carlog_hd_frontend.R
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -30,6 +31,61 @@ object DriveLogContentStore {
     private const val MAX_CLIPS = 30
     private const val MAX_SOURCE_BYTES = 500L * 1024 * 1024
     private const val PHOTO_DURATION_MS = 3_500L
+
+    /** Copy the three supplied photos into this story once, preserving later edits. */
+    fun seedBanpoPhotos(context: Context, recordId: String) {
+        val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        val marker = "banpo_photos_seeded:$recordId"
+        val resources = listOf(R.raw.banpo_hangang_bridge, R.raw.banpo_hangang_sunset,
+            R.raw.banpo_hangang_drive)
+        if (prefs.getBoolean(marker, false)) {
+            val existing = clips(context, recordId)
+            val normalized = existing.map { clip ->
+                val index = resources.indices.firstOrNull { clip.id == "banpo-photo-${it + 1}" }
+                if (index == null) clip else ensureBanpoCopy(context, recordId, index, resources[index])
+                    ?.let { clip.copy(uri = it) } ?: clip
+            }
+            if (normalized != existing) saveClips(context, recordId, normalized)
+            return
+        }
+        val starter = resources.mapIndexedNotNull { index, resourceId ->
+            ensureBanpoCopy(context, recordId, index, resourceId)?.let { uri ->
+                StoryClip("banpo-photo-${index + 1}", uri, "image/jpeg", PHOTO_DURATION_MS)
+            }
+        }
+        if (starter.size != resources.size) return
+        val combined = (starter + clips(context, recordId))
+            .distinctBy(StoryClip::id).take(MAX_CLIPS)
+        val array = JSONArray().apply { combined.forEach { put(it.toJson()) } }
+        val editor = prefs.edit()
+            .putString("clips:$recordId", array.toString())
+            .putBoolean(marker, true)
+        if (!prefs.contains("caption:$recordId")) {
+            editor.putString("caption:$recordId", context.getString(R.string.banpo_story_caption))
+        }
+        editor.commit()
+    }
+
+    private fun ensureBanpoCopy(context: Context, recordId: String, index: Int, resourceId: Int): Uri? =
+        runCatching {
+            val directory = clipDirectory(context, recordId)
+            val file = File(directory, "banpo-photo-${index + 1}.jpg")
+            if (!file.exists() || file.length() == 0L) {
+                val pending = File(directory, "banpo-photo-${index + 1}.tmp")
+                try {
+                    context.resources.openRawResource(resourceId).use { input ->
+                        pending.outputStream().use { output -> input.copyTo(output) }
+                    }
+                    require(pending.length() > 0L)
+                    if (file.exists()) file.delete()
+                    require(pending.renameTo(file))
+                } catch (error: Exception) {
+                    pending.delete()
+                    throw error
+                }
+            }
+            Uri.fromFile(file)
+        }.getOrNull()
 
     fun clips(context: Context, recordId: String): List<StoryClip> {
         val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)

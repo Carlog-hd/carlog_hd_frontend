@@ -20,7 +20,26 @@ data class DriveRecord(
 object DriveHistoryStore {
     private const val PREFS = "carlog_demo"
     private const val KEY_RECORDS = "drive_records"
+    private const val KEY_BANPO_STORY_ID = "banpo_story_record_id"
     private const val MAX_RECORDS = 50
+    const val BANPO_DESTINATION = "반포 한강대교 드라이브"
+    private const val LEGACY_DEMO_DESTINATION = "남이섬 선착장"
+
+    /** Keep one editable Banpo story tied to an existing local demo drive. */
+    fun featuredBanpoStory(context: Context): DriveRecord? {
+        val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        val records = all(context)
+        val pinnedId = prefs.getString(KEY_BANPO_STORY_ID, null)
+        records.firstOrNull { it.id == pinnedId }?.let { return it }
+        val existing = records.firstOrNull {
+            it.destination == BANPO_DESTINATION && it.courseId == null
+        }
+        val selected = existing ?: records.firstOrNull {
+            it.destination == LEGACY_DEMO_DESTINATION && it.courseId == null
+        }?.copy(destination = BANPO_DESTINATION)?.also { save(context, it) }
+        if (selected != null) prefs.edit().putString(KEY_BANPO_STORY_ID, selected.id).apply()
+        return selected
+    }
 
     fun all(context: Context): List<DriveRecord> {
         val json = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)

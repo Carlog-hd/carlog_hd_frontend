@@ -25,8 +25,8 @@
     <string name="home_lead">자동차가 기록한 특별한 순간을 모아 하나의 이야기로 만들어 드릴게요.</string>
     <string name="home_destination">목적지</string>
     <string name="home_nav_pill">PLEOS 내비게이션</string>
-    <string name="home_route_map_desc">서울 마포구에서 남이섬 선착장까지 예정 경로 지도</string>
-    <string name="home_dest_name_sample">남이섬 선착장</string>
+    <string name="home_route_map_desc">서울에서 반포 한강대교까지 예정 경로 지도</string>
+    <string name="home_dest_name_sample">반포 한강대교 드라이브</string>
     <string name="home_dest_meta_sample">서울 마포구 출발 · 60.4 km · 약 1시간 7분</string>
     <string name="home_start_guidance">안내 시작</string>
     <string name="home_my_driver">나의 드라이버</string>
@@ -60,7 +60,7 @@
     <string name="record_count">저장된 드라이브 %1$d건</string>
     <string name="record_empty">아직 기록이 없어요. 새 드라이브를 시작해 보세요.</string>
     <string name="record_studio_title">숏폼 스튜디오</string>
-    <string name="record_studio_lead">최근 드라이브에 담은 실제 장면을 확인하고, 기록 상세에서 순서와 길이를 편집해 보세요.</string>
+    <string name="record_studio_lead">드라이브에 담은 장면을 확인하고, 기록 상세에서 순서와 길이를 편집해 보세요.</string>
     <string name="record_studio_empty">첫 드라이브의 이야기가 여기서 시작돼요</string>
     <string name="record_studio_scene_label">주행 기록을 기다리고 있어요</string>
     <string name="record_studio_hint">사진·영상은 정차한 상태에서 가져와 편집할 수 있어요. 차량 카메라 자동 촬영과 휴대폰 전송은 아직 연결되지 않았습니다.</string>
@@ -68,6 +68,7 @@
     <string name="record_studio_caption_empty">아직 작성한 문구가 없어요. 기록 상세에서 남길 수 있어요.</string>
     <string name="record_studio_actual_clips">저장된 장면 %1$d개</string>
     <string name="record_studio_cover_description">최근 드라이브의 첫 번째 장면</string>
+    <string name="banpo_story_caption">반포 한강대교 드라이브 · 한강의 노을과 밤 풍경을 사진 세 장으로 엮은 초안이에요.</string>
     <string name="record_studio_open_log">기록 상세 · 편집하기 →</string>
     <string name="record_latest_summary_title">최근 드라이브</string>
     <string name="record_latest_distance">주행 거리\n%1$.1f km</string>

@@ -100,13 +100,92 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 
 차량에서 기록된 드라이브 로그를 휴대폰에서 확인하고, 공개 범위를 정해 공유하는 화면입니다. (Android 에뮬레이터, 1080×2400)
 
-| M01 홈 | M02 발견 | M03 내 기록 | M03 기록 상세 |
-| :---: | :---: | :---: | :---: |
-| <img src="mobile/app/docs/screenshots/m01-home.png" width="200" alt="M01 홈"> | <img src="mobile/app/docs/screenshots/m02-discover.png" width="200" alt="M02 발견"> | <img src="mobile/app/docs/screenshots/m03-logs.png" width="200" alt="M03 내 기록"> | <img src="mobile/app/docs/screenshots/m03-log-detail.png" width="200" alt="M03 기록 상세"> |
-
-| M04 공유 편집 | M05 피드 미리보기 | M05 공유 수단 |
-| :---: | :---: | :---: |
-| <img src="mobile/app/docs/screenshots/m04-share-edit.png" width="200" alt="M04 공유 편집"> | <img src="mobile/app/docs/screenshots/m05-preview.png" width="200" alt="M05 피드 미리보기"> | <img src="mobile/app/docs/screenshots/m05-options.png" width="200" alt="M05 공유 수단"> |
+<table>
+  <tr>
+    <td width="50%">
+      <strong>홈 · 드라이브 피드</strong><br>
+      <img src="mobile/app/docs/screenshots/m01-home.png" alt="CARLOG 휴대폰 홈과 드라이브 피드" width="280">
+      <p>최근 주행 요약과 친구들의 드라이브 피드를 확인합니다.</p>
+    </td>
+    <td width="50%">
+      <strong>발견 · 추천 코스</strong><br>
+      <img src="mobile/app/docs/screenshots/m02-discover.png" alt="CARLOG 휴대폰 발견과 추천 코스" width="280">
+      <p>추천 코스와 다른 운전자가 실제로 달린 기록을 살펴봅니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>내 기록</strong><br>
+      <img src="mobile/app/docs/screenshots/m03-logs.png" alt="CARLOG 휴대폰 내 기록 목록" width="280">
+      <p>내 주행 기록과 저장한 코스를 목록으로 확인합니다.</p>
+    </td>
+    <td>
+      <strong>기록 상세</strong><br>
+      <img src="mobile/app/docs/screenshots/m03-log-detail.png" alt="CARLOG 휴대폰 주행 기록 상세" width="280">
+      <p>주행 경로와 통계, 주요 모먼트와 획득한 칭호를 확인합니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>공유 전 편집</strong><br>
+      <img src="mobile/app/docs/screenshots/m04-share-edit.png" alt="CARLOG 휴대폰 공유 전 편집" width="280">
+      <p>공개 범위와 항목, 출발·도착지 숨김과 구간 자르기 설정을 보여줍니다.</p>
+    </td>
+    <td>
+      <strong>피드 미리보기</strong><br>
+      <img src="mobile/app/docs/screenshots/m05-preview.png" alt="CARLOG 휴대폰 피드 미리보기" width="280">
+      <p>친구에게 보일 공개 지도와 주행 통계, 칭호를 미리 확인합니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>공유 수단</strong><br>
+      <img src="mobile/app/docs/screenshots/m05-options.png" alt="CARLOG 휴대폰 공유 수단" width="280">
+      <p>피드 게시, 링크 복사, 메시지와 이미지 카드 공유 항목을 보여줍니다.</p>
+    </td>
+    <td>
+      <strong>친구 로그 상세</strong><br>
+      <img src="mobile/app/docs/screenshots/m06-friend.png" alt="CARLOG 휴대폰 친구 로그 상세" width="280">
+      <p>친구의 공개 코스와 주행 통계, 속도 변화와 경유지를 살펴봅니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>차량 전송 확인</strong><br>
+      <img src="mobile/app/docs/screenshots/m07-send.png" alt="CARLOG 휴대폰 차량 전송 확인" width="280">
+      <p>차량으로 보낼 코스의 경유지와 목적지, 연결 차량을 확인합니다.</p>
+    </td>
+    <td>
+      <strong>차량 전송 중</strong><br>
+      <img src="mobile/app/docs/screenshots/m07-sending.png" alt="CARLOG 휴대폰 차량 전송 진행 상태" width="280">
+      <p>차량으로 코스를 보내는 동안 표시할 진행 상태를 보여줍니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>차량 전송 완료</strong><br>
+      <img src="mobile/app/docs/screenshots/m07-success.png" alt="CARLOG 휴대폰 차량 전송 완료 안내" width="280">
+      <p>전송 완료 메시지와 차량에서 안내를 시작하는 방법을 보여줍니다.</p>
+    </td>
+    <td>
+      <strong>도감 · 칭호</strong><br>
+      <img src="mobile/app/docs/screenshots/m08-dex.png" alt="CARLOG 휴대폰 칭호 도감" width="280">
+      <p>칭호의 획득 여부와 새 칭호, 진행 중인 챌린지를 확인합니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>칭호 상세</strong><br>
+      <img src="mobile/app/docs/screenshots/m08-title.png" alt="CARLOG 휴대폰 칭호 상세" width="280">
+      <p>칭호의 배지와 이름, 획득 조건을 자세히 살펴봅니다.</p>
+    </td>
+    <td>
+      <strong>MY · 프로필과 설정</strong><br>
+      <img src="mobile/app/docs/screenshots/m08-my.png" alt="CARLOG 휴대폰 MY 프로필과 설정" width="280">
+      <p>내 프로필과 대표 칭호, 연결 차량과 개인정보 기본값을 확인합니다.</p>
+    </td>
+  </tr>
+</table>
 
 > 휴대폰 앱은 디자인 목업 단계로, 데이터 연동 없이 데모 데이터를 표시합니다. 자세한 내용은 [`mobile/README.md`](mobile/README.md)를 참고하세요.
 

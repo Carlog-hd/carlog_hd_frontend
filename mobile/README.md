@@ -21,6 +21,12 @@
 - JDK 17
 - Android SDK Platform 34
 
+> 빌드 없이 설치하려면 [`apk/CarLog_mobile_release.apk`](../apk/CarLog_mobile_release.apk)를 사용하세요.
+>
+> ```bash
+> adb install -r apk/CarLog_mobile_release.apk
+> ```
+
 ### 실행
 1. 저장소를 클론하고 Android Studio에서 **`mobile` 폴더**를 엽니다.
    - 차량(IVI) 앱은 별도 프로젝트인 `ivi` 폴더에 있습니다.

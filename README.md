@@ -205,7 +205,7 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 carlog_hd_frontend/
 ├── ivi/               # 차량 인포테인먼트(IVI) 앱 Android 프로젝트
 ├── mobile/            # 휴대폰 앱 Android 프로젝트 (mobile/README.md 참고)
-├── apk/               # 공모전 제출용 release APK
+├── apk/               # 공모전 제출용 release APK (차량 앱·휴대폰 앱)
 └── carlog-demo.html   # 차량 IVI·휴대전화 화면 인터랙티브 데모
 ```
 
@@ -224,7 +224,10 @@ IVI 앱 소스는 `ivi/app/src/main/java/com/example/carlog_hd_frontend/` 아래
 
 ## 실행 방법
 
-> 빌드 없이 설치하려면 [`apk/CarLog_CARLOG_release.apk`](apk/CarLog_CARLOG_release.apk)를 사용하세요.
+> 빌드 없이 설치하려면 아래 release APK를 사용하세요.
+>
+> - 차량(IVI) 앱: [`apk/CarLog_CARLOG_release.apk`](apk/CarLog_CARLOG_release.apk)
+> - 휴대폰 앱: [`apk/CarLog_mobile_release.apk`](apk/CarLog_mobile_release.apk)
 
 ### 개발 환경
 

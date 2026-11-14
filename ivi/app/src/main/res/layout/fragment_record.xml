@@ -54,16 +54,18 @@
                             android:background="@drawable/bg_stat" android:padding="18dp"
                             android:textColor="@color/cl_fg" android:textSize="23sp" />
                     </LinearLayout>
-                    <TextView style="@style/Carlog.Text.PanelTitle"
+                    <TextView android:id="@+id/recordLatestDate"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:layout_marginTop="22dp" android:text="@string/record_moments_title" />
-                    <LinearLayout android:id="@+id/recordMomentList"
+                        android:layout_marginTop="14dp" android:textColor="@color/cl_muted"
+                        android:textSize="20sp" />
+                    <TextView android:id="@+id/recordLatestMediaCount"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp" android:orientation="vertical" />
+                        android:layout_marginTop="8dp" android:textColor="@color/cl_aqua"
+                        android:textSize="22sp" android:textStyle="bold" />
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnSummaryStudio" style="@style/Carlog.Button.GhostSmall"
+                        android:id="@+id/btnOpenLatestRecord" style="@style/Carlog.Button.GhostSmall"
                         android:layout_width="wrap_content" android:layout_height="64dp"
-                        android:layout_marginTop="14dp" android:text="@string/record_to_studio" />
+                        android:layout_marginTop="14dp" android:text="@string/record_open_latest" />
                     <View android:layout_width="match_parent" android:layout_height="1dp"
                         android:layout_marginTop="24dp" android:layout_marginBottom="22dp"
                         android:background="@color/cl_edge" />

@@ -90,7 +90,10 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
         studioTab.setOnClickListener { showStudio(true) }
         showStudio(false)
         val records = DriveHistoryStore.all(requireContext())
-        view.findViewById<TextView>(R.id.recordCount).text = getString(R.string.record_count, records.size)
+        val groups = records.groupBy { it.destination }
+        val dateFormat = java.text.SimpleDateFormat("M.d HH:mm", Locale.KOREA)
+        view.findViewById<TextView>(R.id.recordCount).text =
+            getString(R.string.record_total_summary, records.size, groups.size)
         view.findViewById<View>(R.id.btnStartNewDrive).setOnClickListener {
             (activity as? DriveActions)?.startDemoDrive()
         }
@@ -108,24 +111,18 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
                 getString(R.string.record_latest_distance, latest.distanceKm)
             view.findViewById<TextView>(R.id.recordLatestDuration).text =
                 getString(R.string.record_latest_duration, latest.durationSeconds / 60)
-            val momentList = view.findViewById<LinearLayout>(R.id.recordMomentList)
-            listOf(
-                getString(R.string.record_moment_depart),
-                getString(R.string.record_moment_distance, latest.distanceKm),
-                getString(R.string.record_moment_arrive, latest.destination),
-            ).forEach { moment ->
-                momentList.addView(TextView(requireContext()).apply {
-                    text = moment
-                    setTextColor(ContextCompat.getColor(context, R.color.cl_fg))
-                    textSize = 22f
-                    setPadding(dp(20), dp(14), dp(20), dp(14))
-                    setBackgroundResource(R.drawable.bg_stat)
-                }, LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                ).apply { bottomMargin = dp(10) })
+            view.findViewById<TextView>(R.id.recordLatestDate).text = getString(
+                R.string.record_latest_date, dateFormat.format(java.util.Date(latest.completedAt)),
+            )
+            val mediaCount = DriveLogContentStore.media(requireContext(), latest.id).size
+            view.findViewById<TextView>(R.id.recordLatestMediaCount).text = if (mediaCount == 0) {
+                getString(R.string.record_media_empty_status)
+            } else {
+                getString(R.string.record_media_count, mediaCount)
             }
-            view.findViewById<View>(R.id.btnSummaryStudio).setOnClickListener { showStudio(true) }
+            view.findViewById<View>(R.id.btnOpenLatestRecord).setOnClickListener {
+                (activity as? DriveActions)?.showDriveLog(latest)
+            }
             view.findViewById<TextView>(R.id.studioJournal).text =
                 DriveLogContentStore.caption(requireContext(), latest.id)
                     ?: getString(
@@ -161,7 +158,8 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
             })
             return
         }
-        records.take(8).forEach { record ->
+        groups.values.forEach { group ->
+            val record = group.first()
             list.addView(LinearLayout(requireContext()).apply {
                 orientation = LinearLayout.HORIZONTAL
                 gravity = android.view.Gravity.CENTER_VERTICAL
@@ -170,7 +168,26 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
                 isClickable = true
                 isFocusable = true
                 contentDescription = getString(R.string.my_open_drive_log, record.destination)
-                setOnClickListener { (activity as? DriveActions)?.showDriveLog(record) }
+                setOnClickListener {
+                    if (group.size == 1) {
+                        (activity as? DriveActions)?.showDriveLog(record)
+                    } else {
+                        val entries = group.map { item ->
+                            getString(
+                                R.string.record_group_picker_item,
+                                dateFormat.format(java.util.Date(item.completedAt)),
+                                item.distanceKm,
+                                DriveLogContentStore.media(requireContext(), item.id).size,
+                            )
+                        }.toTypedArray()
+                        AlertDialog.Builder(requireContext())
+                            .setTitle(getString(R.string.record_group_picker_title, record.destination, group.size))
+                            .setItems(entries) { _, selected ->
+                                (activity as? DriveActions)?.showDriveLog(group[selected])
+                            }
+                            .show()
+                    }
+                }
                 addView(LinearLayout(context).apply {
                     orientation = LinearLayout.VERTICAL
                     addView(TextView(context).apply {
@@ -181,9 +198,9 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
                     })
                     addView(TextView(context).apply {
                         text = getString(
-                            R.string.my_drive_row_meta,
-                            String.format(Locale.getDefault(), "%.1f", record.distanceKm),
-                            record.durationSeconds / 60,
+                            R.string.record_group_count,
+                            group.size,
+                            dateFormat.format(java.util.Date(record.completedAt)),
                         )
                         setTextColor(ContextCompat.getColor(context, R.color.cl_muted))
                         textSize = 21f

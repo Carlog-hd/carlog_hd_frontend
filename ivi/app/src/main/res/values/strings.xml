@@ -74,7 +74,7 @@
     <string name="record_studio_journal_title">차가 쓴 오늘의 일기</string>
     <string name="record_studio_journal_sample">%1$s까지 %2$.1f km를 %3$d분 동안 달렸어요. 오늘의 드라이브를 다시 만나 보세요.</string>
     <string name="record_studio_open_log">기록 상세 · 편집하기 →</string>
-    <string name="record_latest_summary_title">최근 드라이브 · 기록 완료</string>
+    <string name="record_latest_summary_title">최근 드라이브</string>
     <string name="record_latest_distance">주행 거리\n%1$.1f km</string>
     <string name="record_latest_duration">주행 시간\n%1$d분</string>
     <string name="record_moments_title">차가 기억한 순간</string>
@@ -82,6 +82,14 @@
     <string name="record_moment_distance">%1$.1f km를 달렸어요</string>
     <string name="record_moment_arrive">%1$s에 도착했어요</string>
     <string name="record_to_studio">자동 숏폼 보러가기 →</string>
+    <string name="record_open_latest">드라이브 스토리 열기 →</string>
+    <string name="record_latest_date">%1$s · 주행 완료</string>
+    <string name="record_media_count">담긴 장면 %1$d개</string>
+    <string name="record_media_empty_status">아직 담긴 장면이 없어요 · 기록을 열어 추가해 보세요</string>
+    <string name="record_group_count">%1$d회 주행 · 최신 %2$s</string>
+    <string name="record_group_picker_title">%1$s의 드라이브 %2$d회</string>
+    <string name="record_group_picker_item">%1$s · %2$.1f km · 장면 %3$d개</string>
+    <string name="record_total_summary">전체 %1$d회 · 목적지 %2$d곳</string>
 
     <!-- Simulation demo -->
     <string name="drive_pause">정차 / 일시정지</string>

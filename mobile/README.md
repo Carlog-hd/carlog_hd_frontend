@@ -21,10 +21,10 @@
 - JDK 17
 - Android SDK Platform 34
 
-> 빌드 없이 설치하려면 [`apk/Vrrr_Carlog_moblile_relaase.apk`](../apk/Vrrr_Carlog_moblile_relaase.apk)를 사용하세요.
+> 빌드 없이 설치하려면 [`apk/Vrrr_Carlog_mobile_release.apk`](../apk/Vrrr_Carlog_mobile_release.apk)를 사용하세요.
 >
 > ```bash
-> adb install -r apk/Vrrr_Carlog_moblile_relaase.apk
+> adb install -r apk/Vrrr_Carlog_mobile_release.apk
 > ```
 
 ### 실행

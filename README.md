@@ -226,8 +226,8 @@ IVI 앱 소스는 `ivi/app/src/main/java/com/example/carlog_hd_frontend/` 아래
 
 > 빌드 없이 설치하려면 아래 release APK를 사용하세요.
 >
-> - 차량(IVI) 앱: [`apk/Vrrr_Carlog_ivi_relaase.apk`](apk/Vrrr_Carlog_ivi_relaase.apk)
-> - 휴대폰 앱: [`apk/Vrrr_Carlog_moblile_relaase.apk`](apk/Vrrr_Carlog_moblile_relaase.apk)
+> - 차량(IVI) 앱: [`apk/Vrrr_Carlog_ivi_release.apk`](apk/Vrrr_Carlog_ivi_release.apk)
+> - 휴대폰 앱: [`apk/Vrrr_Carlog_mobile_release.apk`](apk/Vrrr_Carlog_mobile_release.apk)
 
 ### 개발 환경
 

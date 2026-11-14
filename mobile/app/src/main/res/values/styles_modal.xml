@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cl_modal_padding_h">18dp</dimen>
+
+    <dimen name="cl_modal_padding_bottom">28dp</dimen>
+
+    <dimen name="cl_modal_handle_width">40dp</dimen>
+
+    <dimen name="cl_modal_handle_height">5dp</dimen>
+
+    <dimen name="cl_modal_handle_radius">3dp</dimen>
+
+    <dimen name="cl_modal_title_size">19sp</dimen>
+
+    <color name="cl_modal_scrim">#730A101C</color>
+
+    <color name="cl_modal_handle">#D8DCE3</color>
+
+    <style
+        name="Widget.Carlog.ModalContent"
+        parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingStart">@dimen/cl_modal_padding_h</item>
+        <item name="android:paddingEnd">@dimen/cl_modal_padding_h</item>
+        <item name="android:paddingTop">@dimen/cl_space_10</item>
+        <item name="android:paddingBottom">@dimen/cl_modal_padding_bottom</item>
+    </style>
+
+    <style
+        name="Carlog.Text.ModalTitle"
+        parent="Carlog.Text">
+        <item name="android:textSize">@dimen/cl_modal_title_size</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:accessibilityHeading">true</item>
+    </style>
+</resources>

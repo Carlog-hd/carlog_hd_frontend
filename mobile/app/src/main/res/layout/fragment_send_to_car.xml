@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 정적 바텀시트 목업. 최대 높이 86%, 내용 스크롤만 제공하며 표시·닫기·전송 동작은 미연결. -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.course.SendToCarFragment"
+    tools:theme="@style/Theme.CarlogMobile">
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/cl_modal_scrim"
+        android:importantForAccessibility="no"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_modal_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.14" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/guideline_modal_top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_fragment_send_to_car"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_sheet"
+            android:scrollbars="none">
+            <LinearLayout
+                style="@style/Widget.Carlog.ModalContent">
+                <include
+                    layout="@layout/view_modal_handle" />
+
+                <TextView
+                    style="@style/Carlog.Text.ModalTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transfer_title" />
+
+                <TextView
+                    style="@style/Carlog.Text.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/cl_space_4"
+                    android:text="@string/transfer_hint" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/cl_space_14"
+                    android:layout_marginBottom="@dimen/cl_space_6"
+                    app:cardCornerRadius="@dimen/cl_button_radius">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/cl_transfer_map_height"
+                        android:src="@drawable/img_map_course_placeholder"
+                        android:scaleType="fitXY"
+                        android:contentDescription="@string/course_map_description" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <include
+                    layout="@layout/item_transfer_waypoints" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/cl_space_12"
+                    android:layout_marginTop="@dimen/cl_space_14"
+                    android:layout_marginBottom="@dimen/cl_space_14"
+                    android:background="@drawable/bg_transfer_connection">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/cl_icon_size_small"
+                        android:layout_height="@dimen/cl_icon_size_small"
+                        android:importantForAccessibility="no"
+                        app:srcCompat="@drawable/ic_car"
+                        app:tint="@color/cl_blue" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/cl_space_10">
+                        <TextView
+                            style="@style/Carlog.Text.Body.Bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/course_connected" />
+
+                        <TextView
+                            style="@style/Carlog.Text.Caption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/cl_space_4"
+                            android:text="@string/transfer_connection_hint" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_transfer_send"
+                    style="@style/Widget.Carlog.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/ic_send"
+                    android:text="@string/transfer_send" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

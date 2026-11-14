@@ -1,15 +1,9 @@
 package com.example.carlog_hd_frontend.ui
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.webkit.MimeTypeMap
-import androidx.core.content.ContextCompat
-import com.example.carlog_hd_frontend.R
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -25,7 +19,7 @@ data class StoryClip(
     val endMs: Long = durationMs,
 ) {
     val isVideo: Boolean get() = mimeType.startsWith("video/")
-    val playDurationMs: Long get() = (endMs - startMs).coerceAtLeast(1_000)
+    val playDurationMs: Long get() = (endMs - startMs).coerceAtLeast(100)
 }
 
 data class ClipImportResult(val added: Int, val failed: Int)
@@ -98,31 +92,6 @@ object DriveLogContentStore {
         return ClipImportResult(added, failed)
     }
 
-    fun addDemoScenes(context: Context, recordId: String): Int {
-        val current = clips(context, recordId).toMutableList()
-        val samples = listOf(R.drawable.cover_course_river, R.drawable.cover_course_coast, R.drawable.cover_course_night)
-        var added = 0
-        samples.take((MAX_CLIPS - current.size).coerceAtLeast(0)).forEach { drawableId ->
-            val file = File(clipDirectory(context, recordId), "demo-${UUID.randomUUID()}.png")
-            val bitmap = Bitmap.createBitmap(720, 1_280, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
-            canvas.drawColor(Color.rgb(12, 20, 31))
-            ContextCompat.getDrawable(context, drawableId)?.apply { setBounds(0, 230, 720, 1_050); draw(canvas) }
-            Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                color = Color.rgb(215, 250, 118)
-                textSize = 42f
-                isFakeBoldText = true
-                canvas.drawText("CARLOG · DEMO", 44f, 112f, this)
-            }
-            file.outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 95, it) }
-            bitmap.recycle()
-            current.add(StoryClip(UUID.randomUUID().toString(), Uri.fromFile(file), "image/png", PHOTO_DURATION_MS))
-            added++
-        }
-        if (added > 0) saveClips(context, recordId, current)
-        return added
-    }
-
     fun moveClip(context: Context, recordId: String, from: Int, to: Int): Boolean {
         val current = clips(context, recordId).toMutableList()
         if (from !in current.indices || to !in current.indices) return false
@@ -157,6 +126,14 @@ object DriveLogContentStore {
     fun saveCaption(context: Context, recordId: String, caption: String) {
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
             .edit().putString("caption:$recordId", caption).apply()
+    }
+
+    /** Confirm the current draft on disk when the driver taps Save. */
+    fun saveDraft(context: Context, recordId: String): Boolean {
+        val array = JSONArray().apply { clips(context, recordId).forEach { put(it.toJson()) } }
+        return context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
+            .putString("clips:$recordId", array.toString())
+            .commit()
     }
 
     private fun saveClips(context: Context, recordId: String, clips: List<StoryClip>) {

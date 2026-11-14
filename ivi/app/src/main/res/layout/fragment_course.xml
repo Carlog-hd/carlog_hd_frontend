@@ -63,16 +63,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical" />
-            <TextView
-                android:id="@+id/courseListNotice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:background="@drawable/bg_stat"
-                android:padding="18dp"
-                android:text="@string/course_public_notice"
-                android:textColor="@color/cl_muted"
-                android:textSize="18sp" />
             <LinearLayout
                 android:id="@+id/courseGuest"
                 android:layout_width="match_parent"

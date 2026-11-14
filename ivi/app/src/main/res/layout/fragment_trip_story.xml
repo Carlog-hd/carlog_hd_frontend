@@ -65,11 +65,24 @@
                 android:padding="24dp">
                 <TextView style="@style/Carlog.Text.PanelTitle" android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:text="@string/story_clips_heading" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp" android:orientation="horizontal">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnStoryEdit" style="@style/Carlog.Button.GhostSmall"
+                        android:layout_width="0dp" android:layout_height="64dp"
+                        android:layout_weight="1" android:text="@string/story_edit" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnStorySave" style="@style/Carlog.Button.GhostSmall"
+                        android:layout_width="0dp" android:layout_height="64dp"
+                        android:layout_marginStart="10dp" android:layout_weight="1"
+                        android:text="@string/story_save" />
+                </LinearLayout>
                 <TextView android:id="@+id/resultMediaEmpty" android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:layout_marginTop="12dp"
                     android:text="@string/story_clips_empty" android:textColor="@color/cl_muted"
                     android:textSize="20sp" />
-                <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content"
+                <HorizontalScrollView android:id="@+id/resultMediaScroll"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="14dp" android:scrollbars="none">
                     <LinearLayout android:id="@+id/resultMediaList" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:orientation="horizontal" />
@@ -103,18 +116,11 @@
                             android:layout_marginStart="8dp" android:layout_weight="1"
                             android:text="@string/story_clip_delete" />
                     </LinearLayout>
-                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp" android:text="@string/story_swipe_hint"
-                        android:textColor="@color/cl_muted" android:textSize="17sp" />
                 </LinearLayout>
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAddLogMedia" style="@style/Carlog.Button"
                     android:layout_width="match_parent" android:layout_height="72dp"
                     android:layout_marginTop="18dp" android:text="@string/story_add_media" />
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAddDemoScenes" style="@style/Carlog.Button.GhostSmall"
-                    android:layout_width="match_parent" android:layout_height="64dp"
-                    android:layout_marginTop="10dp" android:text="@string/story_add_demo" />
                 <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="12dp" android:text="@string/story_source_note"
                     android:textColor="@color/cl_muted" android:textSize="18sp" />

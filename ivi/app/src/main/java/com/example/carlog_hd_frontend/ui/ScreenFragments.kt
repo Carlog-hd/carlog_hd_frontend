@@ -3,7 +3,6 @@ package com.example.carlog_hd_frontend.ui
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.content.Intent
 import android.content.ContentUris
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -13,9 +12,9 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.HorizontalScrollView
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -583,7 +582,6 @@ class CourseFragment : Fragment(R.layout.fragment_course) {
         val guestSelected = selectedFilter == FILTER_GUEST
         container.visibility = if (guestSelected) View.GONE else View.VISIBLE
         root.findViewById<View>(R.id.courseGuest).visibility = if (guestSelected) View.VISIBLE else View.GONE
-        root.findViewById<View>(R.id.courseListNotice).visibility = if (guestSelected) View.GONE else View.VISIBLE
         if (guestSelected) return
         val choices = filteredCourses()
         if (choices.isEmpty()) {
@@ -774,6 +772,7 @@ class TripResultFragment : Fragment(R.layout.fragment_trip_story) {
     private var previewPlaying = false
     private var previewIndex = 0
     private var selectedClipIndex = 0
+    private var editMode = false
 
     private val requestMediaPermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { grants ->
         if (grants.values.any { it }) showMediaLibrary()
@@ -858,6 +857,8 @@ class TripResultFragment : Fragment(R.layout.fragment_trip_story) {
                 view?.findViewById<View>(R.id.btnAddLogMedia)?.isEnabled = true
                 val record = DriveHistoryStore.all(context).firstOrNull { it.id == recordId }
                 view?.let { root ->
+                    if (result.added > 0) selectedClipIndex =
+                        DriveLogContentStore.clips(context, recordId).lastIndex
                     renderLogMedia(root, recordId)
                     if (record != null) renderLogCaption(root, record)
                     renderPreviewIdle(root, recordId)
@@ -922,14 +923,20 @@ class TripResultFragment : Fragment(R.layout.fragment_trip_story) {
         renderLogCaption(view, record)
         renderPreviewIdle(view, recordId)
         view.findViewById<View>(R.id.btnAddLogMedia).setOnClickListener {
+            editMode = true
+            renderLogMedia(view, recordId)
             openMediaLibrary()
         }
-        view.findViewById<View>(R.id.btnAddDemoScenes).setOnClickListener {
-            val added = DriveLogContentStore.addDemoScenes(requireContext(), recordId)
+        view.findViewById<View>(R.id.btnStoryEdit).setOnClickListener {
+            editMode = true
             renderLogMedia(view, recordId)
-            renderPreviewIdle(view, recordId)
-            renderLogCaption(view, record)
-            Toast.makeText(requireContext(), getString(R.string.story_demo_added, added), Toast.LENGTH_SHORT).show()
+        }
+        view.findViewById<View>(R.id.btnStorySave).setOnClickListener {
+            if (DriveLogContentStore.saveDraft(requireContext(), recordId)) {
+                editMode = false
+                renderLogMedia(view, recordId)
+                Toast.makeText(requireContext(), R.string.story_saved, Toast.LENGTH_SHORT).show()
+            } else Toast.makeText(requireContext(), R.string.story_save_failed, Toast.LENGTH_SHORT).show()
         }
         view.findViewById<View>(R.id.btnEditLog).setOnClickListener {
             showLogEditor(record, recordId)
@@ -941,28 +948,6 @@ class TripResultFragment : Fragment(R.layout.fragment_trip_story) {
         view.findViewById<View>(R.id.btnClipLater).setOnClickListener { moveSelectedClip(recordId, 1) }
         view.findViewById<View>(R.id.btnClipTrim).setOnClickListener { showTrimDialog(recordId) }
         view.findViewById<View>(R.id.btnClipDelete).setOnClickListener { confirmDeleteClip(recordId) }
-        var swipeStartY = 0f
-        view.findViewById<View>(R.id.resultPreviewFrame).setOnTouchListener { target, event ->
-            when (event.actionMasked) {
-                MotionEvent.ACTION_DOWN -> {
-                    swipeStartY = event.y
-                    target.parent.requestDisallowInterceptTouchEvent(true)
-                    true
-                }
-                MotionEvent.ACTION_UP -> {
-                    if (kotlin.math.abs(event.y - swipeStartY) > dp(90) && !previewPlaying) {
-                        confirmDeleteClip(recordId)
-                    }
-                    target.parent.requestDisallowInterceptTouchEvent(false)
-                    true
-                }
-                MotionEvent.ACTION_CANCEL -> {
-                    target.parent.requestDisallowInterceptTouchEvent(false)
-                    true
-                }
-                else -> true
-            }
-        }
         view.findViewById<MaterialButton>(R.id.btnResultHome).setText(
             if (historyDetail) R.string.my_log_back_to_my else R.string.result_home_button,
         )
@@ -1009,8 +994,10 @@ class TripResultFragment : Fragment(R.layout.fragment_trip_story) {
         }
         selectedClipIndex = selectedClipIndex.coerceIn(0, (media.size - 1).coerceAtLeast(0))
         root.findViewById<View>(R.id.selectedClipControls).visibility =
-            if (media.isEmpty()) View.GONE else View.VISIBLE
+            if (media.isEmpty() || !editMode) View.GONE else View.VISIBLE
         root.findViewById<View>(R.id.btnPreviewShorts).isEnabled = media.isNotEmpty()
+        root.findViewById<View>(R.id.btnStoryEdit).isEnabled = !editMode
+        root.findViewById<View>(R.id.btnStorySave).isEnabled = editMode
         media.forEachIndexed { index, clip ->
             val tile = LinearLayout(requireContext()).apply {
                 orientation = LinearLayout.VERTICAL
@@ -1043,7 +1030,7 @@ class TripResultFragment : Fragment(R.layout.fragment_trip_story) {
             tile.addView(preview)
             tile.addView(TextView(requireContext()).apply {
                 text = if (clip.isVideo) getString(R.string.story_clip_info_video, index + 1,
-                    clip.startMs / 1_000, clip.endMs / 1_000)
+                    clip.startMs / 1_000.0, clip.endMs / 1_000.0)
                 else getString(R.string.story_clip_info_photo, index + 1, clip.playDurationMs / 1_000)
                 setTextColor(ContextCompat.getColor(context, R.color.cl_fg))
                 textSize = 17f
@@ -1057,12 +1044,16 @@ class TripResultFragment : Fragment(R.layout.fragment_trip_story) {
             val clip = media[selectedClipIndex]
             root.findViewById<TextView>(R.id.resultSelectedClipInfo).text = if (clip.isVideo) {
                 getString(R.string.story_clip_info_video, selectedClipIndex + 1,
-                    clip.startMs / 1_000, clip.endMs / 1_000)
+                    clip.startMs / 1_000.0, clip.endMs / 1_000.0)
             } else {
                 getString(R.string.story_clip_info_photo, selectedClipIndex + 1, clip.playDurationMs / 1_000)
             }
             root.findViewById<View>(R.id.btnClipEarlier).isEnabled = selectedClipIndex > 0
             root.findViewById<View>(R.id.btnClipLater).isEnabled = selectedClipIndex < media.lastIndex
+        }
+        root.findViewById<HorizontalScrollView>(R.id.resultMediaScroll).post {
+            root.findViewById<HorizontalScrollView>(R.id.resultMediaScroll)
+                .smoothScrollTo((selectedClipIndex * dp(214) - dp(80)).coerceAtLeast(0), 0)
         }
     }
 
@@ -1145,25 +1136,37 @@ class TripResultFragment : Fragment(R.layout.fragment_trip_story) {
         }
         val startLabel = TextView(requireContext()).apply { textSize = 20f }
         val endLabel = TextView(requireContext()).apply { textSize = 20f }
-        val maxSeconds = (clip.durationMs / 1_000).coerceIn(1, 36_000).toInt()
+        val stepMs = (clip.durationMs / 36_000).coerceAtLeast(100L)
+        val maxSteps = ((clip.durationMs + stepMs - 1) / stepMs).toInt()
         val startBar = SeekBar(requireContext()).apply {
-            max = (maxSeconds - 1).coerceAtLeast(0)
-            progress = (clip.startMs / 1_000).toInt().coerceAtMost(max)
+            max = (maxSteps - 1).coerceAtLeast(0)
+            progress = (clip.startMs / stepMs).toInt().coerceAtMost(max)
         }
         val endBar = SeekBar(requireContext()).apply {
-            max = maxSeconds
-            progress = (clip.endMs / 1_000).toInt().coerceIn(1, max)
+            max = maxSteps
+            progress = ((clip.endMs + stepMs - 1) / stepMs).toInt().coerceIn(1, max)
         }
         fun updateLabels() {
             if (clip.isVideo) {
-                startLabel.text = getString(R.string.story_trim_start, startBar.progress)
-                endLabel.text = getString(R.string.story_trim_end, endBar.progress)
+                startLabel.text = getString(R.string.story_trim_start,
+                    (startBar.progress * stepMs).coerceAtMost(clip.durationMs) / 1_000.0)
+                endLabel.text = getString(R.string.story_trim_end,
+                    (endBar.progress * stepMs).coerceAtMost(clip.durationMs) / 1_000.0)
             } else {
                 endLabel.text = getString(R.string.story_photo_duration, endBar.progress)
             }
         }
         val listener = object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(bar: SeekBar?, progress: Int, fromUser: Boolean) = updateLabels()
+            override fun onProgressChanged(bar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser && clip.isVideo) {
+                    if (bar === startBar && startBar.progress >= endBar.progress) {
+                        endBar.progress = (startBar.progress + 1).coerceAtMost(endBar.max)
+                    } else if (bar === endBar && endBar.progress <= startBar.progress) {
+                        startBar.progress = (endBar.progress - 1).coerceAtLeast(0)
+                    }
+                }
+                updateLabels()
+            }
             override fun onStartTrackingTouch(bar: SeekBar?) = Unit
             override fun onStopTrackingTouch(bar: SeekBar?) = Unit
         }
@@ -1185,9 +1188,9 @@ class TripResultFragment : Fragment(R.layout.fragment_trip_story) {
             .setNegativeButton(android.R.string.cancel, null)
             .setPositiveButton(R.string.my_log_edit_save) { _, _ ->
                 val updated = if (clip.isVideo) {
-                    val end = (endBar.progress * 1_000L).coerceAtMost(clip.durationMs)
-                    val start = (startBar.progress * 1_000L).coerceAtMost((end - 1_000).coerceAtLeast(0))
-                    clip.copy(startMs = start, endMs = end.coerceAtLeast(start + 1_000))
+                    val end = (endBar.progress * stepMs).coerceAtMost(clip.durationMs)
+                    val start = (startBar.progress * stepMs).coerceAtMost((end - 100).coerceAtLeast(0))
+                    clip.copy(startMs = start, endMs = end.coerceAtLeast(start + 100))
                 } else {
                     val duration = endBar.progress.coerceAtLeast(1) * 1_000L
                     clip.copy(durationMs = duration, startMs = 0, endMs = duration)

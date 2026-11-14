@@ -30,9 +30,9 @@
     <string name="drive_note">주행 중에는 화면 조작 없이 기록만 진행돼요. 기록 확인은 도착 후에 할 수 있어요.</string>
 
     <!-- 코스 탭 (ivDiscover, 민지 님 코스를 받은 상태 샘플) -->
-    <string name="course_kicker">FOLLOW A FRIEND\'S DRIVE</string>
-    <string name="course_discover_headline">친구가 실제로 달린 코스</string>
-    <string name="course_discover_lead">대표 이미지를 눌러 코스 경로와 경유지를 확인해 보세요.</string>
+    <string name="course_kicker">DISCOVER THE ROAD</string>
+    <string name="course_discover_headline">다른 사람의 길을 발견해요.</string>
+    <string name="course_discover_lead">피드를 보고 마음에 드는 드라이브를 내비게이션에 불러올 수 있어요.</string>
     <string name="course_back_to_list">‹ 코스 목록</string>
     <string name="course_cover_desc">%1$s 대표 풍경</string>
     <string name="course_headline_sample">민지 님의 드라이브 · 북한강 따라 가평까지</string>
@@ -58,6 +58,20 @@
     <string name="course_filter_coast">해안</string>
     <string name="course_filter_night">야경</string>
     <string name="course_filter_saved">저장한 코스</string>
+    <string name="course_filter_popular">인기 CARLOG</string>
+    <string name="course_filter_following">친구의 기록</string>
+    <string name="course_filter_courses">추천 코스</string>
+    <string name="course_filter_guest">길 위의 방명록</string>
+    <string name="course_guest_title">📍 길 위의 방명록</string>
+    <string name="course_guest_sample_one">속초 해안도로 전망대 · 루나\n“여기서 보는 노을이 정말 예뻐요.”</string>
+    <string name="course_guest_sample_two">미시령 옛길 정상 · 우중산책\n“비 오는 날 안개가 영화 같아요. 천천히 달리세요.”</string>
+    <string name="course_guest_write_title">방명록 남기기</string>
+    <string name="course_guest_demo_notice">정차한 상태에서 이 기기의 데모 방명록에 메시지를 남길 수 있어요. 다른 사용자에게 전송되지는 않습니다.</string>
+    <string name="course_guest_place_hint">장소 이름</string>
+    <string name="course_guest_message_hint">이 길을 지나는 사람에게 한마디…</string>
+    <string name="course_guest_add">방명록 남기기</string>
+    <string name="course_guest_added">%1$s · 나\n“%2$s”</string>
+    <string name="course_guest_required">장소와 메시지를 입력해 주세요.</string>
     <string name="course_save">코스 저장</string>
     <string name="course_like">♡ 좋아요</string>
     <string name="course_unlike">♥ 좋아요</string>
@@ -73,8 +87,11 @@
     <string name="course_note_dynamic">공개된 경유지만 내비게이션 안내에 전달합니다. 출발 위치와 원본 주행 궤적은 공개하지 않아요.</string>
 
     <!-- 차량 MY 화면 -->
-    <string name="my_headline">나의 CARLOG</string>
-    <string name="my_lead">나의 주행 로그와 이번 달 활동, 휴대폰 연동을 한곳에서 관리해요.</string>
+    <string name="my_headline">내 차와 함께 쌓아온 이야기.</string>
+    <string name="my_kicker">MY CARLOG</string>
+    <string name="my_lead">나의 기록과 저장한 코스, 공유 설정을 관리해요.</string>
+    <string name="my_profile_name">데모 드라이버</string>
+    <string name="my_profile_title_empty">첫 드라이브를 완료하면 칭호가 표시돼요</string>
     <string name="my_month_summary">이번 달 요약</string>
     <string name="my_month_drives">주행 횟수</string>
     <string name="my_month_distance">주행 거리</string>
@@ -94,7 +111,7 @@
     <string name="my_resume_after_stop_description">30분 안에 다시 출발하면 이전 기록에 이어갈지 물어봐요.</string>
     <string name="my_setting_saved">MY 설정을 저장했어요.</string>
     <string name="my_backup_title">CARLOG 데이터 백업</string>
-    <string name="my_backup_description">주행 로그, 저장·좋아요 코스, MY 설정을 JSON 파일로 옮겨요.</string>
+    <string name="my_backup_description">주행 정보, 저장·좋아요 코스, MY 설정을 JSON으로 옮겨요. 사진·영상과 스토리 편집 내용은 포함되지 않아요.</string>
     <string name="my_backup_export">내보내기</string>
     <string name="my_backup_import">가져오기</string>
     <string name="my_backup_open_failed">선택한 파일을 열 수 없습니다.</string>
@@ -103,6 +120,11 @@
     <string name="my_backup_imported">로그 %1$d건 · 저장 코스 %2$d개 · 좋아요 코스 %3$d개를 가져왔어요.</string>
     <string name="my_backup_import_error">가져오지 못했어요: %1$s</string>
     <string name="my_recent_drives">나의 CARLOG 로그</string>
+    <string name="my_all_drives">전체 기록 →</string>
+    <string name="my_privacy_settings_heading">기록·공개 설정</string>
+    <string name="my_private_default">🔒 주행 기록 기본값: 비공개</string>
+    <string name="my_private_default_desc">이 기기의 데모 기록은 직접 공유하지 않는 한 공개되지 않아요.</string>
+    <string name="my_connection_heading">휴대폰·데이터</string>
     <string name="my_no_drives">아직 저장된 로그가 없어요. 주행을 마치면 여기에 모여요.</string>
     <string name="my_drive_row_meta">%1$s km · %2$d분</string>
     <string name="my_open_drive_log">%1$s 주행 로그 상세 열기</string>
@@ -110,7 +132,7 @@
     <string name="my_log_recorded_at">주행 일시 · %1$s</string>
     <string name="my_log_saved_label">저장된 주행 기록</string>
     <string name="my_log_likes_format">받은 좋아요 · ♥ %1$d</string>
-    <string name="my_log_back_to_my">MY 로그로 돌아가기</string>
+    <string name="my_log_back_to_my">이전 화면으로 돌아가기</string>
     <string name="my_log_map_title">나의 주행 경로</string>
     <string name="my_log_map_description">주행 로그에 저장된 경로 지도</string>
     <string name="my_log_media_title">사진과 동영상</string>
@@ -129,13 +151,61 @@
     <string name="my_log_video_item">▶ 동영상 %1$d</string>
     <string name="my_log_photo_item">사진 %1$d</string>
     <string name="my_log_media_open_failed">이 파일을 열 수 있는 앱을 찾지 못했어요.</string>
+    <string name="story_detail_kicker">MY DRIVE STORY</string>
+    <string name="story_preview_heading">초안 미리보기</string>
+    <string name="story_preview_empty">아직 담긴 장면이 없어요. 오른쪽에서 사진·동영상을 추가해 보세요.</string>
+    <string name="story_preview_play">▶ 초안 재생</string>
+    <string name="story_preview_stop">■ 재생 중지</string>
+    <string name="story_preview_done">초안 재생 완료</string>
+    <string name="story_preview_progress">장면 %1$d / %2$d · %3$d초</string>
+    <string name="story_caption_heading">스토리 문구</string>
+    <string name="story_caption_edit">문구 편집</string>
+    <string name="story_caption_saved">스토리 문구를 저장했어요.</string>
+    <string name="story_clips_heading">스토리 조각</string>
+    <string name="story_clips_empty">사진·동영상을 추가하면 이 순서대로 초안이 재생돼요.</string>
+    <string name="story_clip_info_video">%1$d번 · 동영상 · %2$.1f~%3$.1f초</string>
+    <string name="story_clip_info_photo">%1$d번 · 사진 · %2$d초</string>
+    <string name="story_clip_earlier">← 앞으로</string>
+    <string name="story_clip_later">뒤로 →</string>
+    <string name="story_clip_trim">길이</string>
+    <string name="story_clip_delete">삭제</string>
+    <string name="story_delete_confirm">이 조각을 초안에서 삭제할까요? 앱에 저장된 복사본도 지워집니다.</string>
+    <string name="story_add_media">＋ 사진·동영상 가져오기</string>
+    <string name="story_edit">편집</string>
+    <string name="story_save">저장</string>
+    <string name="story_saved">스토리 편집 내용을 저장했어요.</string>
+    <string name="story_save_failed">스토리 편집 내용을 저장하지 못했어요.</string>
+    <string name="story_source_note">가져온 사진·영상은 이 기기에 복사해 저장합니다.</string>
+    <string name="story_importing">장면을 이 기기에 저장하는 중…</string>
+    <string name="story_import_result">장면 %1$d개 저장 · 실패 %2$d개</string>
+    <string name="story_media_permission_needed">기기의 사진이나 영상을 보려면 미디어 접근 권한이 필요해요.</string>
+    <string name="story_media_library_empty">기기에서 가져올 사진이나 영상을 찾지 못했어요.</string>
+    <string name="story_media_library_title">가져올 장면 선택</string>
+    <string name="story_media_import">선택한 장면 가져오기</string>
+    <string name="story_trim_title">재생 구간 조절</string>
+    <string name="story_trim_start">시작 %1$.1f초</string>
+    <string name="story_trim_end">끝 %1$.1f초</string>
+    <string name="story_photo_duration">사진 표시 %1$d초</string>
+    <string name="story_duration_saved">장면 길이를 저장했어요.</string>
+    <string name="story_distance_value">주행 거리 · %1$.1f km</string>
+    <string name="story_duration_value">주행 시간 · %1$d분 %2$02d초</string>
+    <string name="story_average_value">평균 속도 · %1$d km/h</string>
 
     <!-- 칭호 탭 (ivTitles) -->
-    <string name="titles_kicker">TITLES</string>
-    <string name="titles_headline">운전 습관이 칭호가 돼요.</string>
-    <string name="titles_lead">점수 대신, 차량 신호로 판정한 운전 성향을 칭호로 모아요.</string>
+    <string name="titles_kicker">COLLECT YOUR JOURNEY</string>
+    <string name="titles_headline">달릴수록 모이는 나만의 도감.</string>
+    <string name="titles_lead">주행을 마치며 얻은 칭호와 새로운 여행의 기록을 모아요.</string>
     <string name="titles_earned">획득</string>
     <string name="titles_locked">미획득</string>
+    <string name="titles_collection_heading">드라이버 칭호 컬렉션</string>
+    <string name="titles_collection_count">%1$d / %2$d</string>
+    <string name="titles_theme_heading">포인트 &amp; 테마</string>
+    <string name="titles_theme_preview">🎞️ 레트로 필름 테마</string>
+    <string name="titles_theme_note">테마 획득과 포인트 사용은 휴대폰 서비스 연결 후 이용할 수 있어요.</string>
+    <string name="titles_challenge_heading">시즌 챌린지</string>
+    <string name="titles_challenge_first">첫 드라이브 완료</string>
+    <string name="titles_challenge_waiting">첫 드라이브를 기다리고 있어요</string>
+    <string name="titles_challenge_note">현재는 이 에뮬레이터의 주행 기록으로 첫 도전을 확인합니다.</string>
 
     <string name="title_firefly_name">깜빡깜빡 반딧불이 드라이버</string>
     <string name="title_firefly_rule">차선 변경 시 방향지시등 100% 사용</string>

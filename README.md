@@ -53,6 +53,7 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 
 ## 실행 화면
 
+
 ### 차량 앱
 
 아래 화면은 Pleos Connect 에뮬레이터에서 실행한 차량용 CARLOG 프로토타입입니다.
@@ -95,6 +96,19 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
     </td>
   </tr>
 </table>
+
+### Android Studio 에뮬레이터 캡처
+
+<details>
+  <summary>에뮬레이터에서 앱을 실행한 전체 화면 보기</summary>
+  <br>
+  <p><strong>홈 화면</strong></p>
+  <img src="docs/screenshots/android-studio-home-screen.png" alt="Android Studio에서 실행한 CARLOG 홈 화면" width="800">
+  <p><strong>코스 화면</strong></p>
+  <img src="docs/screenshots/android-studio-course-screen.png" alt="Android Studio에서 실행한 CARLOG 코스 화면" width="800">
+  <p><strong>지도 로딩 중인 에뮬레이터 상태</strong></p>
+  <img src="docs/screenshots/pleos-emulator-map-loading.png" alt="Pleos Connect 에뮬레이터가 지도 정보를 불러오는 화면" width="800">
+</details>
 
 ### 휴대폰 앱
 
@@ -188,6 +202,7 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 </table>
 
 > 휴대폰 앱은 디자인 목업 단계로, 데이터 연동 없이 데모 데이터를 표시합니다. 자세한 내용은 [`mobile/README.md`](mobile/README.md)를 참고하세요.
+
 
 ## 기술 구성
 

@@ -49,6 +49,37 @@ object CarlogRoutes {
         waypoints = listOf(0.22f, 0.5f, 0.76f),
     )
 
+    val LAKE = CarlogRoute(
+        pathData = "M65,325 C150,365 205,230 275,245 S365,330 430,205 S565,130 635,80",
+        start = PointF(65f, 325f), end = PointF(635f, 80f),
+        waypoints = listOf(0.24f, 0.5f, 0.76f),
+    )
+    val SUNSET = CarlogRoute(
+        pathData = "M55,350 C135,275 180,320 255,260 S345,180 415,225 S565,110 645,65",
+        start = PointF(55f, 350f), end = PointF(645f, 65f),
+        waypoints = listOf(0.26f, 0.5f, 0.78f),
+    )
+    val BRIDGE = CarlogRoute(
+        pathData = "M60,90 C170,95 175,275 285,260 S380,110 475,160 S580,300 650,345",
+        start = PointF(60f, 90f), end = PointF(650f, 345f),
+        waypoints = listOf(0.23f, 0.5f, 0.75f),
+    )
+    val FOREST = CarlogRoute(
+        pathData = "M60,345 C145,320 125,205 225,210 S305,320 390,235 S510,165 645,60",
+        start = PointF(60f, 345f), end = PointF(645f, 60f),
+        waypoints = listOf(0.2f, 0.48f, 0.75f),
+    )
+    val ISLAND = CarlogRoute(
+        pathData = "M70,130 C160,60 240,95 250,190 S305,320 415,325 S545,205 640,105",
+        start = PointF(70f, 130f), end = PointF(640f, 105f),
+        waypoints = listOf(0.25f, 0.5f, 0.75f),
+    )
+    val DUSK = CarlogRoute(
+        pathData = "M60,300 C135,270 175,350 245,285 S335,180 405,210 S545,95 650,105",
+        start = PointF(60f, 300f), end = PointF(650f, 105f),
+        waypoints = listOf(0.24f, 0.52f, 0.78f),
+    )
+
     /** attrs.xml carlogRoute enum 값 순서와 같아야 합니다. */
     fun byIndex(index: Int): CarlogRoute = if (index == 1) MINJI else MINE
 

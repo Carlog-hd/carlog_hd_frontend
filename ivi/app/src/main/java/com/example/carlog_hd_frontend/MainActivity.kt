@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ import com.example.carlog_hd_frontend.ui.DriveRecord
 import com.example.carlog_hd_frontend.ui.DemoCourses
 import com.example.carlog_hd_frontend.ui.HomeFragment
 import com.example.carlog_hd_frontend.ui.MyFragment
+import com.example.carlog_hd_frontend.ui.RecordFragment
 import com.example.carlog_hd_frontend.ui.TitlesFragment
 import com.example.carlog_hd_frontend.ui.TripResultFragment
 import java.util.Locale
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity(), DriveActions {
 
     private enum class Tab(@IdRes val navId: Int, val recording: Boolean, val create: () -> Fragment) {
         HOME(R.id.navHome, recording = false, create = ::HomeFragment),
-        DRIVE(R.id.navDrive, recording = true, create = ::DriveFragment),
+        DRIVE(R.id.navDrive, recording = true, create = ::RecordFragment),
         COURSE(R.id.navCourse, recording = false, create = ::CourseFragment),
         TITLES(R.id.navTitles, recording = false, create = ::TitlesFragment),
         MY(R.id.navMy, recording = false, create = ::MyFragment),
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity(), DriveActions {
 
     private val handler = Handler(Looper.getMainLooper())
     private var current = Tab.HOME
+    private var logOrigin = Tab.MY
     private var seconds = 0
     private var isDriving = false
     private var isPaused = false
@@ -60,18 +63,18 @@ class MainActivity : AppCompatActivity(), DriveActions {
 
         Tab.values().forEach { tab ->
             findViewById<View>(tab.navId).setOnClickListener {
-                if (tab == Tab.DRIVE && !isDriving) startDemoDrive(courseId = null) else select(tab)
+                select(tab, force = tab == current && !isDriving)
             }
         }
 
         val restored = savedInstanceState?.getString(KEY_TAB)?.let { runCatching { Tab.valueOf(it) }.getOrNull() }
         if (restored != null) {
             current = restored
-            select(restored, force = true)
-            seconds = savedInstanceState?.getInt(KEY_SECONDS, 0) ?: 0
-            isDriving = savedInstanceState?.getBoolean(KEY_IS_DRIVING, false) ?: false
-            isPaused = savedInstanceState?.getBoolean(KEY_IS_PAUSED, false) ?: false
+            seconds = savedInstanceState.getInt(KEY_SECONDS, 0)
+            isDriving = savedInstanceState.getBoolean(KEY_IS_DRIVING, false)
+            isPaused = savedInstanceState.getBoolean(KEY_IS_PAUSED, false)
             selectedCourseId = savedInstanceState.getString(KEY_COURSE_ID)
+            select(restored, force = true)
             if (isDriving) {
                 supportFragmentManager.executePendingTransactions()
                 updateDriveScreen()
@@ -97,10 +100,15 @@ class MainActivity : AppCompatActivity(), DriveActions {
     }
 
     private fun select(tab: Tab, force: Boolean = false) {
+        if (isDriving && tab != Tab.DRIVE) {
+            Toast.makeText(this, R.string.drive_navigation_locked, Toast.LENGTH_SHORT).show()
+            return
+        }
         if (tab == current && !force) return
         current = tab
+        val fragment = if (tab == Tab.DRIVE && isDriving) DriveFragment() else tab.create()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.screenContainer, tab.create())
+            .replace(R.id.screenContainer, fragment)
             .runOnCommit { if (tab == Tab.DRIVE && isDriving) updateDriveScreen() }
             .commit()
         updateChrome()
@@ -152,7 +160,7 @@ class MainActivity : AppCompatActivity(), DriveActions {
         DriveHistoryStore.save(this, record)
         isDriving = false
         isPaused = false
-        current = Tab.HOME
+        current = Tab.DRIVE
         supportFragmentManager.beginTransaction()
             .replace(R.id.screenContainer, TripResultFragment.newInstance(record))
             .commit()
@@ -170,8 +178,12 @@ class MainActivity : AppCompatActivity(), DriveActions {
         select(Tab.COURSE)
     }
 
+    override fun showRecords() {
+        select(Tab.DRIVE)
+    }
+
     override fun showDriveLog(record: DriveRecord) {
-        current = Tab.MY
+        logOrigin = current
         supportFragmentManager.beginTransaction()
             .replace(R.id.screenContainer, TripResultFragment.newInstance(record, historyDetail = true))
             .commit()
@@ -179,7 +191,7 @@ class MainActivity : AppCompatActivity(), DriveActions {
     }
 
     override fun returnToMy() {
-        select(Tab.MY, force = true)
+        select(logOrigin, force = true)
     }
 
     private fun updateDriveScreen() {

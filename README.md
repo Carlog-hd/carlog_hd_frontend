@@ -36,19 +36,23 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 
 | 화면 | 기능 |
 | --- | --- |
-| 홈 | 드라이브 시작, 최근 주행과 칭호 요약, 발견 화면 진입 |
-| 주행 | 주행 진행·남은 거리·예상 도착 정보 표시, 일시 정지·재개·종료 |
-| 발견 | 풍경형 코스 카드, 지역 필터, 코스 상세·지도·경유지, 저장·좋아요, 코스 안내 시뮬레이션 |
-| 도감 | 운전 경험과 연결된 칭호 카드 및 이모지 배지 |
-| MY | 이번 달 주행 요약, 로그 목록과 좋아요 수, 자동 기록 설정, JSON 백업 가져오기·내보내기 |
-| 로그 상세 | 주행 경로와 거리·시간·평균 속도, 사진·동영상 첨부, 로그 초안·편집, 숏츠 초안 미리보기 |
+| 홈 | 최근 드라이브와 운전자 칭호 요약, 기록 화면 진입, 추천 코스 확인 |
+| 기록 | 최근 드라이브 요약, 목적지별 주행 묶음, 저장된 기록 목록, 새 드라이브 시작 |
+| 주행 | 다음 안내·남은 거리·도착 예정 시각, 주행 시간·거리·평균 속도, 자동 기록 상태 표시 |
+| 드라이브 스토리 | 사진·동영상 장면 추가, 순서·재생 길이·문구 편집, 삭제·저장, 초안 재생 |
+| 숏폼 스튜디오 | 저장한 장면과 스토리 문구를 세로형 드라이브 카드로 미리보기 |
+| 발견 | 카테고리별 코스 카드, 코스 상세·경유지·지도, 저장·좋아요, 안내 시작, 길 위의 방명록 |
+| 도감 | 차량 이벤트와 주행 경험으로 얻는 드라이버 칭호 및 시즌 도전 현황 |
+| MY | 월간 주행 요약, 로그 목록, 공개·자동 기록 설정, 휴대폰 연동, JSON 백업 가져오기·내보내기 |
 
 ### 현재 프로토타입에서 확인할 수 있는 것
 
-- 샘플 코스를 선택하고 상세 경유지와 구간별 거리·시간을 확인합니다.
-- 안내 시뮬레이션의 진행에 맞춰 주행 화면의 거리와 시간이 갱신됩니다.
-- 주행을 마치면 기록이 기기에 저장되고 MY 목록에서 상세 화면을 다시 엽니다.
-- 사진·동영상을 로그에 연결하고, 자동 작성된 로그 문구를 편집합니다.
+- 추천 코스를 선택해 공개 경유지와 구간별 거리·시간을 확인하고 안내를 시작합니다.
+- 안내 시뮬레이션이 진행되면 주행 시간·거리·평균 속도와 경로 진행률이 갱신됩니다.
+- 주행을 마치면 기록이 목적지별로 묶여 저장되고 기록 및 MY 화면에서 다시 열 수 있습니다.
+- 반포 한강대교 샘플 기록에 사진·동영상 장면을 추가하고 순서, 길이, 스토리 문구를 편집합니다.
+- 편집한 장면을 숏폼 스튜디오에서 세로형 드라이브 스토리 초안으로 확인합니다.
+- 발견 화면에서 추천 코스와 길 위의 방명록을 살펴보고, 도감에서 획득 칭호를 확인합니다.
 - 주행 기록·저장 코스·좋아요 코스·MY 설정을 JSON 파일로 가져오거나 내보냅니다.
 
 ## 실행 화면
@@ -56,59 +60,70 @@ CARLOG는 차량이 이미 알고 있는 이동 경로와 주행 시간, 권한�
 
 ### 차량 앱
 
-아래 화면은 Pleos Connect 에뮬레이터에서 실행한 차량용 CARLOG 프로토타입입니다.
+아래 화면은 Pleos Connect 에뮬레이터에서 최신 차량용 CARLOG 프로토타입을 직접 실행해 캡처했습니다. 차량 기본 영역과 CARLOG 앱 영역을 함께 보여 줍니다.
 
 <table>
   <tr>
     <td width="50%">
-      <strong>홈 대시보드</strong><br>
+      <strong>홈 · 최근 드라이브</strong><br>
       <img src="docs/screenshots/home-dashboard.png" alt="CARLOG 홈 대시보드" width="100%">
-      <p>목적지 안내를 시작하고 최근 주행 수와 칭호, 휴대폰에서 받은 코스 진입점을 확인합니다.</p>
+      <p>최근 드라이브와 저장된 기록 수, 획득 칭호, 추천 코스를 한 화면에서 확인합니다.</p>
     </td>
     <td width="50%">
       <strong>주행 화면</strong><br>
       <img src="docs/screenshots/drive-session.png" alt="CARLOG 주행 화면" width="100%">
-      <p>다음 회전 안내와 남은 거리·도착 예정 시각, 주행 시간·거리를 보여주며 일시 정지 또는 도착 처리를 할 수 있습니다.</p>
+      <p>다음 회전과 남은 거리, 도착 예정 시각, 주행 통계를 표시하며 자동 기록 상태를 함께 보여 줍니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>기록 · 최근 드라이브</strong><br>
+      <img src="docs/screenshots/record-overview.png" alt="CARLOG 주행 기록 화면" width="100%">
+      <p>최근 드라이브를 요약하고 같은 목적지의 주행을 묶어 기록 목록을 간결하게 확인합니다.</p>
+    </td>
+    <td>
+      <strong>드라이브 스토리 편집</strong><br>
+      <img src="docs/screenshots/drive-story-editor.png" alt="CARLOG 드라이브 스토리 편집 화면" width="100%">
+      <p>사진·동영상 장면의 순서와 길이를 조정하고 삭제하거나, 스토리 문구를 편집해 저장합니다.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>숏폼 스튜디오</strong><br>
+      <img src="docs/screenshots/shortform-studio.png" alt="CARLOG 숏폼 스튜디오 화면" width="100%">
+      <p>저장한 장면과 문구가 적용된 세로형 드라이브 스토리 초안을 미리 확인합니다.</p>
+    </td>
+    <td>
+      <strong>발견 · 드라이브 피드</strong><br>
+      <img src="docs/screenshots/discover-feed.png" alt="CARLOG 발견 드라이브 피드" width="100%">
+      <p>인기 기록, 친구의 기록, 추천 코스 등 카테고리별 드라이브를 카드로 탐색합니다.</p>
     </td>
   </tr>
   <tr>
     <td>
       <strong>발견 · 코스 상세</strong><br>
       <img src="docs/screenshots/course-detail.png" alt="CARLOG 코스 상세 화면" width="100%">
-      <p>추천 코스의 지도와 공개 경유지를 확인하고, 경유지 사이 거리·시간을 살펴 저장·좋아요·안내 시작을 할 수 있습니다.</p>
+      <p>공개 경유지와 구간별 거리·시간을 확인하고 코스를 저장하거나 차량 안내를 시작합니다.</p>
     </td>
     <td>
-      <strong>도감 · 칭호</strong><br>
-      <img src="docs/screenshots/titles-dex.png" alt="CARLOG 도감 칭호 화면" width="100%">
-      <p>차량 이벤트와 주행 경험에 연결된 칭호를 모아 보고, 획득 여부를 확인합니다.</p>
+      <strong>길 위의 방명록</strong><br>
+      <img src="docs/screenshots/road-guestbook.png" alt="CARLOG 길 위의 방명록 화면" width="100%">
+      <p>정차 상태에서 장소와 메시지를 남기고, 샘플 방명록을 확인하는 흐름을 보여 줍니다.</p>
     </td>
   </tr>
   <tr>
     <td>
-      <strong>MY · 이번 달 요약</strong><br>
-      <img src="docs/screenshots/my-month-summary.png" alt="CARLOG MY 이번 달 요약 화면" width="100%">
-      <p>이번 달 주행 횟수·거리·평균 속도·받은 좋아요 수와 휴대폰 연동 및 기록 설정을 확인합니다.</p>
+      <strong>도감 · 드라이버 칭호</strong><br>
+      <img src="docs/screenshots/titles-dex.png" alt="CARLOG 도감 칭호 화면" width="100%">
+      <p>차량 이벤트와 주행 경험에 연결된 칭호의 획득 상태와 시즌 도전을 확인합니다.</p>
     </td>
     <td>
-      <strong>MY · 나의 로그</strong><br>
-      <img src="docs/screenshots/my-log-list.png" alt="CARLOG MY 주행 로그 목록" width="100%">
-      <p>저장된 주행을 거리·시간과 좋아요 수로 훑어보고, 항목을 선택해 개별 로그 상세를 엽니다.</p>
+      <strong>MY · 기록과 설정</strong><br>
+      <img src="docs/screenshots/my-dashboard.png" alt="CARLOG MY 기록과 설정 화면" width="100%">
+      <p>월간 주행 요약, 최근 로그, 공개 범위, 자동 기록, 휴대폰 연동과 데이터 백업을 관리합니다.</p>
     </td>
   </tr>
 </table>
-
-### Android Studio 에뮬레이터 캡처
-
-<details>
-  <summary>에뮬레이터에서 앱을 실행한 전체 화면 보기</summary>
-  <br>
-  <p><strong>홈 화면</strong></p>
-  <img src="docs/screenshots/android-studio-home-screen.png" alt="Android Studio에서 실행한 CARLOG 홈 화면" width="800">
-  <p><strong>코스 화면</strong></p>
-  <img src="docs/screenshots/android-studio-course-screen.png" alt="Android Studio에서 실행한 CARLOG 코스 화면" width="800">
-  <p><strong>지도 로딩 중인 에뮬레이터 상태</strong></p>
-  <img src="docs/screenshots/pleos-emulator-map-loading.png" alt="Pleos Connect 에뮬레이터가 지도 정보를 불러오는 화면" width="800">
-</details>
 
 ### 휴대폰 앱
 

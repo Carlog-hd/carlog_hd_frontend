@@ -264,13 +264,23 @@ IVI 앱 소스는 `ivi/app/src/main/java/com/example/carlog_hd_frontend/` 아래
 - JDK 17
 - Android SDK Platform 34
 - Android Studio 또는 Android SDK가 설치된 환경
-- Android Emulator (차량 화면 비율의 에뮬레이터 권장)
+- Android Emulator와 Pleos Connect v2.1.0 차량용 시스템 이미지
+
+### 테스트 환경 및 에뮬레이터 설정
+
+| 항목 | 확인한 환경 |
+| --- | --- |
+| 에뮬레이터 | Pleos Connect v2.1.0 |
+| Android API / 아키텍처 | API 34 / x86_64 |
+| 화면 규격 | 2560 × 1440 px, 가로 화면 (160 dpi) |
+
+Android Studio의 Device Manager에서 Pleos Connect v2.1.0 차량용 에뮬레이터를 준비하고 실행합니다. README의 화면 캡처는 이 규격으로 실행한 뒤 문서용으로 축소했습니다.
 
 ### Android Studio에서 실행
 
 1. 저장소를 clone하고 Android Studio에서 `ivi` 폴더를 엽니다.
 2. JDK 17과 Android SDK Platform 34를 설정합니다.
-3. Gradle 동기화가 끝나면 에뮬레이터를 선택하고 `app` 구성을 실행합니다.
+3. Gradle 동기화가 끝나면 위 Pleos Connect 에뮬레이터를 선택하고 `app` 구성을 실행합니다.
 
 > 휴대폰 앱은 별도 Gradle 프로젝트입니다. `mobile` 폴더를 열어 실행하며, 자세한 방법은 [`mobile/README.md`](mobile/README.md)를 참고하세요.
 
